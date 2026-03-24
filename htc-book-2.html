@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#0a0a09;color-scheme:dark">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0a09">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>HTC — Book Your HTC Mastery Call</title><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=GFS+Didot&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a09; --bg2: #111110; --bg3: #161615;
+  --gold: #f5c957; --gold-l: #faffb3;
+  --gold-dim: rgba(245,201,87,0.06); --gold-b: rgba(245,201,87,0.2);
+  --white: #ede8de; --white-dim: rgba(237,232,222,0.5);
+  --text: rgba(237,232,222,0.35); --border: rgba(255,255,255,0.08);
+}
+html, body { background: #0a0a09 !important; color: var(--white); font-family: 'Inter', sans-serif; min-height: 100dvh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+html { -webkit-text-size-adjust: 100%; color-scheme: dark; }
+input, select { font-size: 16px !important; }
+* { -webkit-tap-highlight-color: transparent; }
+a, button { touch-action: manipulation; }
+
+.field-wrap {
+  display: flex; flex-direction: column; gap: 6px;
+  max-height: 0; overflow: hidden;
+  opacity: 0; transform: translateY(8px);
+  transition: max-height 0.4s ease, opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+.field-wrap.visible { max-height: 120px; opacity: 1; transform: translateY(0); pointer-events: all; }
+.field-wrap label { font-size: 9px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--text); }
+.field-wrap input, .field-wrap select {
+  background: transparent; border: none; border-bottom: 1px solid var(--border);
+  color: var(--white); font-family: 'Inter', sans-serif;
+  font-size: 15px; font-weight: 300; padding: 11px 0;
+  outline: none; width: 100%; transition: border-color 0.2s;
+}
+.field-wrap input:focus, .field-wrap select:focus { border-color: var(--gold); }
+.field-wrap input::placeholder { color: var(--text); }
+.field-wrap select option { background: #1a1a18; }
+
+.btn-gold {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--gold); color: var(--bg);
+  font-family: 'Inter', sans-serif; font-size: 10px;
+  font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+  padding: 18px 22px; border: none; cursor: pointer; width: 100%;
+  transition: all 0.2s;
+  max-height: 0; overflow: hidden; opacity: 0; pointer-events: none;
+}
+.btn-gold.visible { max-height: 80px; opacity: 1; pointer-events: all; }
+.btn-gold:active { background: var(--gold-l); transform: scale(0.99); }
+
+.note { font-size: 10px; font-weight: 300; color: var(--text); text-align: center; line-height: 1.6; max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.4s ease, opacity 0.35s ease; }
+.note.visible { max-height: 60px; opacity: 1; }
+
+.steps { display: flex; align-items: center; gap: 8px; }
+.step { display: flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: var(--text); transition: color 0.3s; }
+.step.active { color: var(--gold); }
+.step.done { color: var(--white-dim); }
+.step-num { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 9px; transition: all 0.3s; }
+.step.active .step-num { border-color: var(--gold); color: var(--gold); }
+.step.done .step-num { border-color: var(--white-dim); background: var(--white-dim); color: var(--bg); }
+.step-div { flex: 1; height: 1px; background: var(--border); max-width: 32px; }
+
+#step2 { display: none; flex-direction: column; gap: 24px; animation: fadeUp 0.4s ease both; }
+#step2.show { display: flex; }
+
+.cal-box { border: 1px solid var(--border); background: var(--bg2); }
+.cal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+.cal-month { font-family: 'GFS Didot', serif; font-size: 16px; font-weight: 400; color: var(--white); }
+.cal-nav-wrap { display: flex; gap: 6px; }
+.cal-nav { width: 30px; height: 30px; background: transparent; border: 1px solid var(--border); color: var(--white-dim); cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.cal-nav:active { border-color: var(--gold); color: var(--gold); }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); }
+.cal-day-label { background: var(--bg2); padding: 10px 0; text-align: center; font-size: 8px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--text); }
+.cal-day { background: var(--bg2); padding: 12px 0; text-align: center; font-size: 13px; font-weight: 300; color: var(--white-dim); cursor: pointer; transition: all 0.15s; }
+.cal-day.empty { background: var(--bg); cursor: default; }
+.cal-day.past { color: var(--border); cursor: default; }
+.cal-day.available:active { background: var(--gold-dim); color: var(--gold); }
+.cal-day.selected { background: var(--gold); color: var(--bg); font-weight: 600; }
+
+.time-section { border: 1px solid var(--border); background: var(--bg2); display: none; flex-direction: column; }
+.time-section.show { display: flex; }
+.time-header { padding: 14px 20px; border-bottom: 1px solid var(--border); font-size: 9px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
+.time-slots { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+.time-slot { background: var(--bg2); padding: 14px 12px; font-size: 13px; font-weight: 300; color: var(--white-dim); cursor: pointer; text-align: center; transition: all 0.15s; }
+.time-slot:active { background: var(--gold-dim); color: var(--gold); }
+.time-slot.selected { background: var(--gold); color: var(--bg); font-weight: 500; }
+
+.confirm-btn { display: none; align-items: center; justify-content: space-between; background: var(--gold); color: var(--bg); font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; padding: 18px 22px; border: none; cursor: pointer; width: 100%; transition: all 0.2s; }
+.confirm-btn.show { display: flex; }
+.confirm-btn:active { background: var(--gold-l); transform: scale(0.99); }
+
+#confirmed { display: none; flex-direction: column; gap: 20px; text-align: center; padding: 20px 0; animation: fadeUp 0.4s ease both; }
+#confirmed.show { display: flex; }
+.conf-icon { width: 52px; height: 52px; border-radius: 50%; background: var(--gold-dim); border: 1px solid var(--gold-b); display: flex; align-items: center; justify-content: center; margin: 0 auto; }
+.conf-title { font-family: 'GFS Didot', serif; font-size: 28px; font-weight: 400; color: var(--white); }
+.conf-title em { font-style: italic; color: var(--gold); }
+.conf-detail { font-size: 12px; font-weight: 300; color: var(--text); line-height: 1.7; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.header {
+  border-bottom:1px solid var(--border);
+  padding:28px 28px 24px;
+  display:flex; flex-direction:column; gap:16px;
+}
+.logo { font-size:11px; font-weight:500; letter-spacing:7px; text-transform:uppercase; color:var(--white); }
+.header-bottom { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+h1 { font-family:'GFS Didot',serif; font-size:36px; font-weight:400; line-height:1.05; color:var(--white); }
+h1 em { font-style:italic; color:var(--gold); }
+.pills { display:flex; gap:6px; flex-wrap:wrap; }
+.pill { font-size:9px; font-weight:300; letter-spacing:2px; text-transform:uppercase; color:var(--text); border:1px solid var(--border); padding:5px 10px; }
+.body { padding:28px; display:flex; flex-direction:column; gap:24px; }
+.fields { display:grid; grid-template-columns:1fr 1fr; gap:14px 24px; }
+.field-wrap.full { grid-column:1/-1; }
+@media(max-width:500px){ .fields { grid-template-columns:1fr; } .field-wrap.full { grid-column:1; } }
+</style></head>
+<body>
+<div class="header">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div class="logo">HTC</div>
+    <div style="font-size:9px;font-weight:300;letter-spacing:3px;text-transform:uppercase;color:var(--gold);opacity:0.6;display:flex;align-items:center;gap:7px">
+      <div style="width:4px;height:4px;border-radius:50%;background:var(--gold);animation:pulse 2s ease infinite"></div>3 spots left
+    </div>
+  </div>
+  <div class="header-bottom">
+    <div>
+      <div style="font-size:9px;font-weight:400;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">High Ticket Consulting</div>
+      <h1>Book Your<br><em>HTC Mastery Call</em></h1>
+    </div>
+    <div class="pills">
+      <div class="pill">45 min</div>
+      <div class="pill">Direct with Bruno</div>
+      <div class="pill">No pitch</div>
+    </div>
+  </div>
+</div>
+<div class="body">
+  <div class="steps">
+    <div class="step active" id="s1"><div class="step-num">1</div>Your Info</div>
+    <div class="step-div"></div>
+    <div class="step" id="s2"><div class="step-num">2</div>Pick a Time</div>
+  </div>
+  <div id="step1" style="display:flex;flex-direction:column;gap:20px">
+    <div class="fields">
+      <div class="field-wrap"><label>Phone</label><input type="tel" id="f_phone" placeholder="+1 (000) 000-0000"></div>
+      <div class="field-wrap"><label>Email</label><input type="email" id="f_email" placeholder="your@email.com"></div>
+      <div class="field-wrap"><label>First Name</label><input type="text" id="f_fname" placeholder="First name"></div>
+      <div class="field-wrap"><label>Last Name</label><input type="text" id="f_lname" placeholder="Last name"></div>
+      <div class="field-wrap"><label>90-Day Income Goal</label>
+        <select id="f_goal"><option value="" disabled selected>Select</option><option>$3K–$5K/month</option><option>$5K–$10K/month</option><option>$10K–$20K/month</option><option>$20K+/month</option></select></div>
+      <div class="field-wrap"><label>Closing Experience</label>
+        <select id="f_exp"><option value="" disabled selected>Select</option><option>No experience</option><option>Under 6 months</option><option>6–12 months</option><option>1–2 years</option><option>2+ years</option></select></div>
+      <div class="field-wrap"><label>Seriousness (1–10)</label><input type="number" id="f_serious" min="1" max="10" placeholder="1–10"></div>
+      <div class="field-wrap"><label>How did you find HTC?</label>
+        <select id="f_source"><option value="" disabled selected>Select</option><option>Instagram</option><option>TikTok</option><option>YouTube</option><option>Referral</option><option>Other</option></select></div>
+    </div>
+    <button class="btn-gold" id="unlockBtn" onclick="goStep2()">Unlock My Call Slot <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+    <div class="note" id="formNote">No pressure. No pitch. Just clarity.</div>
+  </div>
+  <div id="step2">
+    <div class="cal-greeting">
+      <div style="font-size:9px;font-weight:400;letter-spacing:5px;text-transform:uppercase;color:var(--gold)">Almost There</div>
+      <div style="font-family:'GFS Didot',serif;font-size:26px;font-weight:400;color:var(--white);line-height:1.1" id="calTitle">Pick Your Slot</div>
+      <div style="font-size:12px;font-weight:300;color:var(--text);line-height:1.6;margin-top:4px">Choose a day and time. Bruno will be there.</div>
+    </div>
+    <div class="cal-box">
+      <div class="cal-header">
+        <div class="cal-month" id="calMonth"></div>
+        <div class="cal-nav-wrap">
+          <button class="cal-nav" onclick="changeMonth(-1)">&#8592;</button>
+          <button class="cal-nav" onclick="changeMonth(1)">&#8594;</button>
+        </div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+    <div class="time-section" id="timeSection">
+      <div class="time-header" id="timeHeader">Select a Time</div>
+      <div class="time-slots" id="timeSlots"></div>
+    </div>
+    <button class="confirm-btn" id="confirmBtn" onclick="confirmBooking()">Confirm My Mastery Call <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+</div>
+  
+    <div id="confirmed">
+      <div class="conf-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f5c957" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div style="font-size:9px;font-weight:400;letter-spacing:4px;text-transform:uppercase;color:var(--gold);opacity:0.7">Booked</div>
+      <div class="conf-title">You're On The<br><em>Calendar</em></div>
+      <div class="conf-detail" id="confDetail">Check your email for confirmation.<br>Bruno will see you soon.</div>
+    </div>
+
+</div>
+<script>
+const fields = document.querySelectorAll('.field-wrap');
+const unlockBtn = document.getElementById('unlockBtn');
+const formNote = document.getElementById('formNote');
+let current = 0;
+function reveal(i) {
+  if (i < fields.length) { fields[i].classList.add('visible'); const inp = fields[i].querySelector('input,select'); if(inp) setTimeout(()=>inp.focus(),400); }
+  if (i >= fields.length-1) { setTimeout(()=>{ unlockBtn.classList.add('visible'); formNote.classList.add('visible'); },300); }
+}
+fields.forEach((w,i)=>{ const inp=w.querySelector('input,select'); if(!inp)return; inp.addEventListener('input',()=>{ if(inp.value&&i===current){current++;reveal(current);} }); inp.addEventListener('change',()=>{ if(inp.value&&i===current){current++;reveal(current);} }); });
+window.addEventListener('DOMContentLoaded',()=>setTimeout(()=>reveal(0),350));
+
+function goStep2() {
+  const fname = document.getElementById('f_fname').value||'there';
+  document.getElementById('step1').style.display='none';
+  document.getElementById('step2').classList.add('show');
+  document.getElementById('calTitle').textContent='Pick Your Slot, '+fname;
+  document.getElementById('s1').className='step done';
+  document.getElementById('s2').className='step active';
+  renderCal(); window.scrollTo({top:0,behavior:'smooth'});
+}
+
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const TIMES=['9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM','2:00 PM','2:30 PM','3:00 PM','3:30 PM','4:00 PM','4:30 PM'];
+let now=new Date(), cYear=now.getFullYear(), cMonth=now.getMonth(), selDay=null, selTime=null;
+
+function renderCal() {
+  document.getElementById('calMonth').textContent=MONTHS[cMonth]+' '+cYear;
+  const grid=document.getElementById('calGrid');
+  const first=new Date(cYear,cMonth,1).getDay();
+  const total=new Date(cYear,cMonth+1,0).getDate();
+  const today=new Date();
+  let html=DAYS.map(d=>`<div class="cal-day-label">${d}</div>`).join('');
+  for(let i=0;i<first;i++) html+=`<div class="cal-day empty"></div>`;
+  for(let d=1;d<=total;d++) {
+    const date=new Date(cYear,cMonth,d);
+    const isPast=date<new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    const isWeekend=date.getDay()===0||date.getDay()===6;
+    const cls=isPast||isWeekend?'past':'available';
+    const sel=selDay===d&&!isPast&&!isWeekend?' selected':'';
+    html+=`<div class="cal-day ${cls}${sel}" onclick="pickDay(${d},${isPast||isWeekend})">${d}</div>`;
+  }
+  grid.innerHTML=html;
+}
+function pickDay(d,disabled) {
+  if(disabled)return; selDay=d; selTime=null; renderCal();
+  document.getElementById('timeHeader').textContent=MONTHS[cMonth]+' '+d+', '+cYear;
+  document.getElementById('timeSlots').innerHTML=TIMES.map(t=>`<div class="time-slot" onclick="pickTime('${t}',this)">${t}</div>`).join('');
+  document.getElementById('timeSection').classList.add('show');
+  document.getElementById('confirmBtn').classList.remove('show');
+  setTimeout(()=>document.getElementById('timeSection').scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+function pickTime(t,el) {
+  selTime=t;
+  document.querySelectorAll('.time-slot').forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('confirmBtn').classList.add('show');
+  setTimeout(()=>document.getElementById('confirmBtn').scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+function changeMonth(dir) {
+  cMonth+=dir; if(cMonth>11){cMonth=0;cYear++;} if(cMonth<0){cMonth=11;cYear--;} 
+  selDay=null; selTime=null;
+  document.getElementById('timeSection').classList.remove('show');
+  document.getElementById('confirmBtn').classList.remove('show');
+  renderCal();
+}
+function confirmBooking() {
+  document.getElementById('step2').classList.remove('show');
+  document.getElementById('confirmed').classList.add('show');
+  document.getElementById('confDetail').innerHTML=MONTHS[cMonth]+' '+selDay+', '+cYear+' at '+selTime+'<br>Check your email for confirmation. Bruno will see you soon.';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body></html>

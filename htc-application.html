@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#0a0a09;color-scheme:dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0a09">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>HTC — Apply Now</title>
+<style>
+html,body,#root{background:#0a0a09!important;background-color:#0a0a09!important;}
+html{-webkit-text-size-adjust:100%;background:#0a0a09!important;color-scheme:dark;}
+input,select,textarea{font-size:16px!important;}
+*{-webkit-tap-highlight-color:transparent;}
+a,button{touch-action:manipulation;}
+
+:root{
+  --bg:#060605;--bg2:#0d0d0b;
+  --gold:#f5c957;--gold-l:#faffb3;
+  --gold-dim:rgba(245,201,87,0.06);--gold-b:rgba(245,201,87,0.18);
+  --white:#ede8de;--white-dim:rgba(237,232,222,0.55);--white-faint:rgba(237,232,222,0.25);
+  --text:rgba(237,232,222,0.38);--border:rgba(255,255,255,0.07);--border-gold:rgba(245,201,87,0.2);
+  --surface:#0a0a0a;
+}
+
+html, body, #root, #app {
+  background: #0a0a09 !important;
+  background-color: #0a0a09 !important;
+}
+html { -webkit-text-size-adjust: 100%; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root{
+  --bg:#060605;--bg2:#0d0d0b;
+  --gold:#f5c957;--gold-l:#faffb3;
+  --gold-dim:rgba(245,201,87,0.06);--gold-b:rgba(245,201,87,0.18);
+  --white:#ede8de;--white-dim:rgba(237,232,222,0.55);--white-faint:rgba(237,232,222,0.25);
+  --text:rgba(237,232,222,0.38);--border:rgba(255,255,255,0.07);--border-gold:rgba(245,201,87,0.2);
+  --surface:#0a0a0a;
+}
+
+  html, body {
+  background: #0a0a09 !important;
+  background-color: #0a0a09 !important;
+  min-height: 100dvh;
+
+    height: 100%;
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: var(--gold);
+    width: 0%;
+    transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+    z-index: 100;
+    box-shadow: 0 0 12px var(--gold);
+  }
+
+  /* LOGO */
+  .logo {
+    position: fixed;
+    top: 28px; left: 36px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    z-index: 100;
+  }
+
+  /* STEP COUNTER */
+  .step-counter {
+    position: fixed;
+    top: 30px; right: 36px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    z-index: 100;
+  }
+  .step-counter span { color: var(--gold); }
+
+  /* MAIN CONTAINER */
+  .form-wrapper {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* BACKGROUND GRAIN */
+  .form-wrapper::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* GOLD GLOW BG */
+  .glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,201,87,0.06) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* SLIDE CONTAINER */
+  .slides {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 640px;
+    padding: 0 24px;
+  }
+
+  /* INDIVIDUAL SLIDE */
+  .slide {
+    display: none;
+    flex-direction: column;
+    gap: 32px;
+    animation: slideUp 0.5s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  .slide.active { display: flex; }
+  .slide.exit { animation: slideDown 0.35s cubic-bezier(0.4,0,0.2,1) forwards; }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideDown {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-40px); }
+  }
+
+  /* QUESTION NUMBER */
+  .q-number {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .q-number::after {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  /* QUESTION TEXT */
+  .q-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 6vw, 52px);
+    line-height: 1.05;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+  .q-sub {
+    font-size: 15px;
+    color: var(--text);
+    margin-top: -16px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* INPUT */
+  .q-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 300;
+    padding: 12px 0;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.3s;
+    caret-color: var(--gold);
+  }
+  .q-input::placeholder { color: #333; }
+  .q-input:focus { border-color: var(--gold); }
+
+  /* CHOICE OPTIONS */
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    text-align: left;
+  }
+  .choice:hover {
+    border-color: var(--gold);
+    background: var(--gold-dim);
+    color: var(--white);
+  }
+  .choice.selected {
+    border-color: var(--gold);
+    background: var(--gold-dim);
+    color: var(--white);
+  }
+  .choice-key {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    background: var(--border);
+    color: var(--muted);
+    padding: 3px 8px;
+    border-radius: 3px;
+    min-width: 28px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .choice.selected .choice-key,
+  .choice:hover .choice-key {
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  /* SCALE SLIDER */
+  .scale-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+  }
+  .scale-dots {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .dot {
+    flex: 1;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .dot:hover { border-color: var(--gold); color: var(--gold); }
+  .dot.selected {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--black);
+    font-weight: 500;
+  }
+
+  /* CTA BUTTON */
+  .btn-next {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+    align-self: flex-start;
+  }
+  .btn-next:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(245,201,87,0.3);
+  }
+  .btn-next svg { transition: transform 0.2s; }
+  .btn-next:hover svg { transform: translateX(4px); }
+
+  .btn-hint {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* WELCOME SLIDE */
+  .welcome-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .welcome-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 9vw, 80px);
+    line-height: 0.95;
+    color: var(--white);
+    letter-spacing: 2px;
+  }
+  .welcome-title em {
+    color: var(--gold);
+    font-style: normal;
+  }
+  .welcome-body {
+  background: #0a0a09 !important;
+  background-color: #0a0a09 !important;
+  min-height: 100dvh;
+
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.7;
+    font-weight: 300;
+    max-width: 480px;
+  }
+  .welcome-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .meta-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .meta-value {
+    font-size: 15px;
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  /* COMPLETION SLIDE */
+  .complete-icon {
+    width: 64px;
+    height: 64px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+  }
+  .complete-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 7vw, 64px);
+    line-height: 1;
+    letter-spacing: 2px;
+  }
+  .complete-title em { color: var(--gold); font-style: normal; }
+  .complete-body {
+  background: #0a0a09 !important;
+  background-color: #0a0a09 !important;
+  min-height: 100dvh;
+
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* KEYBOARD NAV HINT */
+  .kb-hint {
+    position: fixed;
+    bottom: 28px;
+    right: 36px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #333;
+    letter-spacing: 1px;
+    z-index: 100;
+  }
+  .kb-hint kbd {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: #555;
+  }
+
+  /* ERROR */
+  .error-msg {
+    font-size: 13px;
+    color: #e05555;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 1px;
+    display: none;
+  }
+  .error-msg.show { display: block; }
+
+  @media (max-width: 600px) {
+    .logo { top: 20px; left: 20px; }
+    .step-counter { top: 22px; right: 20px; }
+    .kb-hint { display: none; }
+    .scale-dots { gap: 5px; }
+    .dot { height: 44px; }
+  }
+
+* { -webkit-tap-highlight-color: transparent; }
+body {
+  background: #0a0a09 !important;
+  background-color: #0a0a09 !important;
+  min-height: 100dvh;
+ overflow-x: hidden; }
+a, button { touch-action: manipulation; }
+input, select, textarea { font-size: 16px !important; } /* prevent iOS zoom */
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=GFS+Didot&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="logo">HTC</div>
+<div class="step-counter" id="stepCounter"><span id="currentStep">0</span> / <span id="totalSteps">5</span></div>
+<div class="glow"></div>
+
+<div class="form-wrapper">
+  <div class="slides" id="slidesContainer">
+
+    <!-- SLIDE 0: WELCOME -->
+    <div class="slide active" id="slide-0">
+      <div class="welcome-eyebrow">High Ticket Consulting</div>
+      <div class="welcome-title">The Free<br><em>5-Day</em><br>Closer Training</div>
+      <div class="welcome-body">
+        Most people spend years stuck in low-ticket jobs, watching others close $10k months. This training changes that. 5 days. Real frameworks. Zero fluff.
+      </div>
+      <div class="welcome-meta">
+        <div class="meta-item">
+          <div class="meta-label">Duration</div>
+          <div class="meta-value">5 Days</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Format</div>
+          <div class="meta-value">Video + Live</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Cost</div>
+          <div class="meta-value">Free</div>
+        </div>
+      </div>
+      <div>
+        <button class="btn-next" onclick="nextSlide()">
+          Apply Now
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <div class="btn-hint" style="margin-top:12px;">Takes 2 minutes</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 1: NAME -->
+    <div class="slide" id="slide-1">
+      <div class="q-number">01</div>
+      <div class="q-text">What's your first name?</div>
+      <input class="q-input" id="q1-input" type="text" placeholder="Type your answer..." autocomplete="off" />
+      <div class="error-msg" id="q1-error">Please enter your name to continue.</div>
+      <div>
+        <button class="btn-next" onclick="validateAndNext(1)">
+          Continue
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <div class="btn-hint">Press Enter ↵</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: CURRENT SITUATION -->
+    <div class="slide" id="slide-2">
+      <div class="q-number">02</div>
+      <div class="q-text">What's your current situation?</div>
+      <div class="q-sub">Be honest. This helps me understand where you're starting from.</div>
+      <div class="choices" id="q2-choices">
+        <button class="choice" onclick="selectChoice('q2', 0, this)" data-value="9-5">
+          <span class="choice-key">A</span> Stuck in a 9-5, want out
+        </button>
+        <button class="choice" onclick="selectChoice('q2', 1, this)" data-value="freelance">
+          <span class="choice-key">B</span> Freelancing or self-employed, income is inconsistent
+        </button>
+        <button class="choice" onclick="selectChoice('q2', 2, this)" data-value="sales">
+          <span class="choice-key">C</span> Already in sales, want to level up to high-ticket
+        </button>
+        <button class="choice" onclick="selectChoice('q2', 3, this)" data-value="other">
+          <span class="choice-key">D</span> Something else
+        </button>
+      </div>
+      <div class="error-msg" id="q2-error">Please select an option to continue.</div>
+    </div>
+
+    <!-- SLIDE 3: INCOME GOAL -->
+    <div class="slide" id="slide-3">
+      <div class="q-number">03</div>
+      <div class="q-text">What's your monthly income goal for the next 90 days?</div>
+      <div class="choices" id="q3-choices">
+        <button class="choice" onclick="selectChoice('q3', 0, this)" data-value="3k">
+          <span class="choice-key">A</span> $3,000 — $5,000/month
+        </button>
+        <button class="choice" onclick="selectChoice('q3', 1, this)" data-value="5k">
+          <span class="choice-key">B</span> $5,000 — $10,000/month
+        </button>
+        <button class="choice" onclick="selectChoice('q3', 2, this)" data-value="10k">
+          <span class="choice-key">C</span> $10,000+/month
+        </button>
+      </div>
+      <div class="error-msg" id="q3-error">Please select an option to continue.</div>
+    </div>
+
+    <!-- SLIDE 4: BIGGEST OBSTACLE -->
+    <div class="slide" id="slide-4">
+      <div class="q-number">04</div>
+      <div class="q-text">What's your biggest obstacle right now?</div>
+      <div class="choices" id="q4-choices">
+        <button class="choice" onclick="selectChoice('q4', 0, this)" data-value="knowledge">
+          <span class="choice-key">A</span> I don't know how closing actually works
+        </button>
+        <button class="choice" onclick="selectChoice('q4', 1, this)" data-value="offers">
+          <span class="choice-key">B</span> I can't find good offers to close for
+        </button>
+        <button class="choice" onclick="selectChoice('q4', 2, this)" data-value="mindset">
+          <span class="choice-key">C</span> Mindset — I freeze under pressure
+        </button>
+        <button class="choice" onclick="selectChoice('q4', 3, this)" data-value="consistency">
+          <span class="choice-key">D</span> I start things but don't follow through
+        </button>
+      </div>
+      <div class="error-msg" id="q4-error">Please select an option to continue.</div>
+    </div>
+
+    <!-- SLIDE 5: COMMITMENT -->
+    <div class="slide" id="slide-5">
+      <div class="q-number">05</div>
+      <div class="q-text">How serious are you — on a scale of 1 to 10?</div>
+      <div class="q-sub">1 = just browsing. 10 = I will do whatever it takes.</div>
+      <div class="scale-wrapper">
+        <div class="scale-dots" id="q5-scale">
+          <div class="dot" onclick="selectScale(1)" data-val="1">1</div>
+          <div class="dot" onclick="selectScale(2)" data-val="2">2</div>
+          <div class="dot" onclick="selectScale(3)" data-val="3">3</div>
+          <div class="dot" onclick="selectScale(4)" data-val="4">4</div>
+          <div class="dot" onclick="selectScale(5)" data-val="5">5</div>
+          <div class="dot" onclick="selectScale(6)" data-val="6">6</div>
+          <div class="dot" onclick="selectScale(7)" data-val="7">7</div>
+          <div class="dot" onclick="selectScale(8)" data-val="8">8</div>
+          <div class="dot" onclick="selectScale(9)" data-val="9">9</div>
+          <div class="dot" onclick="selectScale(10)" data-val="10">10</div>
+        </div>
+        <div class="scale-labels">
+          <span>Just browsing</span>
+          <span>Whatever it takes</span>
+        </div>
+      </div>
+      <div class="error-msg" id="q5-error">Please select your commitment level.</div>
+      <div>
+        <button class="btn-next" onclick="validateAndNext(5)">
+          Get My Free Training
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <div class="btn-hint">Press Enter ↵</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: COMPLETE -->
+    <div class="slide" id="slide-6">
+      <div class="complete-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <div class="complete-title">You're <em>In,</em><br id="firstName-placeholder"></div>
+      <div class="complete-body">
+        You've done what most people never will — you took the first step.<br><br>
+        Day 1 of your closer training starts right now. 5 videos. Real frameworks. By the end, you'll know exactly how to close high-ticket offers and what your next move is.
+      </div>
+      <div>
+        <button class="btn-next" onclick="startTraining()" style="font-size:16px; padding: 18px 40px;">
+          Start Day 1 Now
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="kb-hint"><kbd>Enter</kbd> to continue</div>
+
+<script>
+  let currentSlide = 0;
+  const totalSlides = 5; // excludes welcome + complete
+  const answers = {};
+
+  function updateProgress() {
+    const pct = currentSlide === 0 ? 0 : (currentSlide / totalSlides) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    const display = Math.max(0, currentSlide - 1);
+    document.getElementById('currentStep').textContent = currentSlide === 0 ? 0 : currentSlide;
+  }
+
+  function nextSlide() {
+    const current = document.getElementById('slide-' + currentSlide);
+    current.classList.add('exit');
+    setTimeout(() => {
+      current.classList.remove('active', 'exit');
+      currentSlide++;
+      const next = document.getElementById('slide-' + currentSlide);
+      next.classList.add('active');
+      updateProgress();
+
+      // Auto-focus input if present
+      const input = next.querySelector('.q-input');
+      if (input) setTimeout(() => input.focus(), 100);
+    }, 350);
+  }
+
+  function validateAndNext(slide) {
+    if (slide === 1) {
+      const val = document.getElementById('q1-input').value.trim();
+      if (!val) {
+        document.getElementById('q1-error').classList.add('show');
+        return;
+      }
+      answers.name = val;
+      document.getElementById('q1-error').classList.remove('show');
+    }
+    if (slide === 5) {
+      if (!answers.scale) {
+        document.getElementById('q5-error').classList.add('show');
+        return;
+      }
+      document.getElementById('q5-error').classList.remove('show');
+      // Set name on complete slide
+      const firstName = answers.name || 'Closer';
+      document.getElementById('firstName-placeholder').textContent = ' ' + firstName + '.';
+      nextSlide();
+      return;
+    }
+    nextSlide();
+  }
+
+  function selectChoice(q, idx, el) {
+    const group = document.getElementById(q + '-choices');
+    group.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    answers[q] = el.dataset.value;
+    document.getElementById(q + '-error').classList.remove('show');
+    // Auto-advance after short delay
+    setTimeout(() => {
+      validateAndNext(currentSlide);
+    }, 350);
+  }
+
+  function selectScale(val) {
+    document.querySelectorAll('#q5-scale .dot').forEach(d => d.classList.remove('selected'));
+    document.querySelector(`#q5-scale [data-val="${val}"]`).classList.add('selected');
+    answers.scale = val;
+    document.getElementById('q5-error').classList.remove('show');
+  }
+
+  function startTraining() {
+    // Redirect to training portal (replace with actual URL)
+    alert('Redirecting to Day 1... (connect your training portal URL here)');
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const slide = currentSlide;
+      if (slide === 0) { nextSlide(); return; }
+      if (slide === 1) { validateAndNext(1); return; }
+      if (slide === 5) { validateAndNext(5); return; }
+    }
+    // Letter keys for choices
+    const keyMap = { 'a': 0, 'b': 1, 'c': 2, 'd': 3 };
+    if (keyMap[e.key.toLowerCase()] !== undefined) {
+      const slide = currentSlide;
+      const qMap = { 2: 'q2', 3: 'q3', 4: 'q4' };
+      if (qMap[slide]) {
+        const choices = document.querySelectorAll(`#${qMap[slide]}-choices .choice`);
+        const idx = keyMap[e.key.toLowerCase()];
+        if (choices[idx]) selectChoice(qMap[slide], idx, choices[idx]);
+      }
+    }
+    // Number keys for scale
+    if (currentSlide === 5 && /^[1-9]$/.test(e.key)) {
+      selectScale(parseInt(e.key));
+    }
+    if (currentSlide === 5 && e.key === '0') {
+      selectScale(10);
+    }
+  });
+
+  updateProgress();
+</script>
+</body>
+</html>
