@@ -1,0 +1,30 @@
+{
+	"name": "htc",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"pages:build": "opennextjs-cloudflare build",
+		"preview": "npm run pages:build && wrangler pages dev .open-next/assets --compatibility-flag=nodejs_compat",
+		"deploy": "npm run pages:build && wrangler pages deploy .open-next/assets"
+	},
+	"dependencies": {
+		"@opennextjs/cloudflare": "^1.17.3",
+		"next": "^15.3.0",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0"
+	},
+	"devDependencies": {
+		"@types/node": "^20",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"autoprefixer": "^10.4.20",
+		"postcss": "^8.5.3",
+		"tailwindcss": "^3.4.17",
+		"typescript": "^5",
+		"wrangler": "^4.77.0"
+	}
+}

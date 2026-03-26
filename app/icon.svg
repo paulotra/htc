@@ -1,0 +1,11 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" fill="#0a0a09"/>
+  <g transform="translate(29.5, 23)">
+    <!-- Left vertical bar -->
+    <path d="M10.3 1.5H0V53.9H10.3V1.5" fill="#F7E280"/>
+    <!-- Right vertical bar -->
+    <path d="M40.6999 1.5H30.3999V53.9H40.6999V1.5" fill="#F7E280"/>
+    <!-- Diagonal crossbar -->
+    <path d="M32.7001 27.0999L6.1001 43.9999V30.7999L32.7001 13.8999V27.0999" fill="#F7E280"/>
+  </g>
+</svg>

@@ -1,0 +1,32 @@
+import { Fragment } from "react";
+
+interface ProofStat {
+	value: string;
+	label: string;
+}
+
+const stats: ProofStat[] = [
+	{ value: "500+", label: "Trained" },
+	{ value: "$25k", label: "Top Month" },
+	{ value: "8wks", label: "To Results" },
+];
+
+export default function ProofBar() {
+	return (
+		<div className="flex items-stretch justify-center max-w-[1000px] mt-[60px] mx-auto px-4 pb-6">
+			{stats.map((stat, i) => (
+				<Fragment key={stat.value}>
+					{i > 0 && <div className="proof-divider" />}
+					<div className="relative flex flex-col gap-1 items-center justify-center px-11 py-8 pb-10 rounded-[20px] flex-1">
+						<div className="font-serif gold-text text-[clamp(36px,4.5vw,60px)] leading-none text-center whitespace-nowrap">
+							{stat.value}
+						</div>
+						<div className="text-xs font-light tracking-[2px] uppercase text-white text-center whitespace-nowrap mt-1">
+							{stat.label}
+						</div>
+					</div>
+				</Fragment>
+			))}
+		</div>
+	);
+}

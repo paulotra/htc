@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html style="background:#0a0a09;color-scheme:dark" lang="en" style="background:#060605;color-scheme:dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0a09">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#060605">
+<title>HTC — High Ticket Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=GFS+Didot&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+html,body,#root{background:#0a0a09!important;background-color:#0a0a09!important;}
+html{-webkit-text-size-adjust:100%;}
+input,select,textarea{font-size:16px!important;}
+*{-webkit-tap-highlight-color:transparent;}
+a,button{touch-action:manipulation;}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #060605; --bg2: #0d0d0b; --gold: #f5c957; --gold-l: #faffb3;
+  --gold-dim: rgba(245,201,87,0.06); --gold-b: rgba(245,201,87,0.18);
+  --white: #ede8de; --white-dim: rgba(237,232,222,0.55);
+  --text: rgba(237,232,222,0.38); --border: rgba(255,255,255,0.07);
+}
+html { overflow: auto; height: 100%; }
+body { background: #000 !important; color: var(--white); font-family: 'Inter', sans-serif; min-height: 100%; overflow-x: hidden; overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+
+
+
+.container {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.nav { max-width: 1400px; position: fixed; top: 0; left: 0; right: 0; padding: 28px; display: flex; align-items: center; justify-content: space-between; z-index: 10; }
+.logo { font-weight: 300; font-size: 16px; letter-spacing: 6.4px; color: #fff; }
+.nav-tag { display: flex; align-items: center; gap: 16px; padding: 14px 28px; position: relative; }
+.nav-dot-wrap { position: relative; width: 18px; height: 18px; flex-shrink: 0; }
+.nav-dot-glow { position: absolute; top: -12px; left: -12px; width: 43px; height: 43px; border-radius: 50%; background: radial-gradient(circle, rgba(245,201,87,0.35) 0%, transparent 70%); pointer-events: none; animation: glow 2.5s ease infinite; }
+.nav-dot { width: 18px; height: 18px; border-radius: 50%; background: var(--gold); position: relative; z-index: 1; }
+.nav-label { font-size: 16px; font-weight: 300; color: #fff; white-space: nowrap; }
+
+.hero-body { position: relative; background-image: url(./images/hero-bg.png); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-bottom: 60px; }
+.hero-content { display: flex; flex-direction: column; gap: 50px; align-items: center; text-align: center; padding: 0 28px; }
+.hero-content-top { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+.hero-eyebrow-pill { border: 1px solid rgba(255,255,255,0.32); border-radius: 30px; padding: 8px 28px; font-size: 12px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: #fff; }
+.hero-headline { font-family: 'GFS Didot', serif; font-size: 80px; line-height: 88px; font-weight: 400; color: #fff; }
+.hero-headline .gold { color: #f0df7a; display: block; }
+.hero-desc { font-size: 24px; font-weight: 300; line-height: 32px; color: #9a9a9a; max-width: 666px; }
+.hero-ctas { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 100%; }
+.btn-cta { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 24px 44px; border-radius: 60px; font-size: 18px; font-weight: 300; color: #fff; text-decoration: none; position: relative; white-space: nowrap; -webkit-tap-highlight-color: transparent; transition: opacity 0.2s; }
+.btn-cta:active { opacity: 0.8; }
+.btn-cta-gold { border: 1px solid #dfcaac; background: radial-gradient(ellipse 100% 180% at 50% 140%, rgba(201,165,114,0.7) 0%, transparent 60%); box-shadow: inset 0px -2px 14px 0px #ffc26c; }
+.btn-cta-silver { border: 1px solid rgba(255,255,255,0.15); background: radial-gradient(ellipse 100% 180% at 50% 140%, rgba(255,255,255,0.65) 0%, rgba(164,164,164,0.2) 50%, transparent 70%); box-shadow: inset 0px -2px 14px 0px rgba(255,255,255,0.5); }
+.hero-bg { position: absolute; inset: -100%; width: 300%; height: 300%; object-fit: cover; transform: rotate(92.23deg); opacity: 0.32; pointer-events: none; z-index: -1; }
+.hero-eyebrow { font-size: 9px; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.hero-h { font-family: 'GFS Didot', serif; font-size: 54px; font-weight: 400; line-height: 1.05; color: var(--white); margin-bottom: 10px; letter-spacing: -0.5px; }
+.hero-h em { font-style: italic; color: var(--gold-l); }
+.hero-sub { font-size: 13px; font-weight: 300; line-height: 1.75; color: var(--white-dim); max-width: 300px; margin-bottom: 30px; }
+
+.btn-primary { display: flex; align-items: center; justify-content: space-between; background: var(--gold); color: var(--bg); font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; padding: 18px 22px; border: none; text-decoration: none; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; touch-action: manipulation; transition: all 0.2s; }
+.btn-primary:active { background: var(--gold-l); transform: scale(0.99); }
+.btn-ghost { display: flex; align-items: center; justify-content: space-between; background: transparent; color: var(--white); font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; padding: 17px 22px; border: 1px solid rgba(255,255,255,0.45); text-decoration: none; -webkit-tap-highlight-color: transparent; touch-action: manipulation; transition: all 0.2s; }
+.btn-ghost:active { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.06); transform: scale(0.99); }
+.scarcity { font-size: 9px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); opacity: 0.6; text-align: center; padding-top: 10px; }
+
+.gold-card { border: 1px solid #dfcaac02; background: radial-gradient(ellipse 100% 180% at 50% 140%, rgba(201,165,114,0.2) 0%, transparent 60%); box-shadow: inset 0px -2px 14px 0px #ffc26c20; border-radius: 32px; background-color: #ffffff2; }
+
+/* feat-card: dark card with radial gold border (Figma 2042-251) */
+.feat-card {
+  border-radius: 32px;
+  border: 2px solid transparent;
+  padding: 10px;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 115%, rgba(220,206,119,0.12) 0%, transparent 65%) padding-box,
+    linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04)) padding-box,
+    linear-gradient(#000, #000) padding-box,
+    radial-gradient(ellipse 160% 140% at 50% 50%, rgba(201,165,114,0.5) 0%, rgba(80,72,40,0.18) 38%, #000 62%) border-box;
+}
+.cta-card { border: 1px solid #423a2e; border-radius: 32px; padding: 40px 40px 48px; display: flex; flex-direction: column; gap: 40px; overflow: hidden; position: relative; background: linear-gradient(180deg, rgba(99,99,99,0.02) 19.4%, transparent 104%), radial-gradient(ellipse 160% 50% at 50% 118%, rgba(201,165,114,0.8) 0%, transparent 60%), #0a0a0a; }
+.cta-card-head { position: relative; display: flex; flex-direction: column; gap: 20px; }
+.cta-card-num { position: absolute; right: -10px; top: 0; width: 178px; pointer-events: none; z-index: 0; }
+.cta-card-title { font-family: 'GFS Didot', serif; font-size: 44px; line-height: 60px; font-weight: 400; color: #fff; }
+.cta-card-title .gold { color: #f0df7a; display: block; }
+.cta-card-desc { font-size: 18px; font-weight: 300; line-height: 32px; color: #9a9a9a; margin-top: 8px; }
+.cta-features { display: flex; flex-direction: column; gap: 12px; }
+.cta-feature { display: flex; align-items: center; gap: 16px; font-size: 18px; font-weight: 300; color: #fff; line-height: 32px; }
+.cta-feature img { width: 27px; height: 27px; flex-shrink: 0; }
+.cta-feature .detail { color: #9a9a9a; }
+.cta-bottom { display: flex; flex-direction: column; gap: 20px; align-items: center; width: 100%; }
+.cta-scarcity { font-size: 12px; font-weight: 400; letter-spacing: 1.2px; text-transform: uppercase; color: #9a9a9a; text-align: center; }
+.cta-scarcity span { color: #fff; }
+.btn-cta-full { width: 100%; justify-content: center; }
+.pill-star-wrap { display: flex; justify-content: center; padding: 52px 28px 0; position: relative; }
+.pill-star-wrap::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); width: 400px; height: 80px; filter: blur(24px); pointer-events: none; z-index: 0; }
+.pill-star { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 10px; border: 1px solid #e5ce78; border-radius: 30px; padding: 10px 28px 12px; background: linear-gradient(to right, #000 0%, rgba(214,184,117,0) 100%); font-size: 12px; font-weight: 400; letter-spacing: 1.2px; text-transform: uppercase; color: #fff; white-space: nowrap; }
+.pill-star::before { content: ''; display: block; width: 19px; height: 19px; background: url('https://www.figma.com/api/mcp/asset/76946099-6d5c-4f70-ad83-4332f3ac5f79') center/contain no-repeat; flex-shrink: 0; }
+.proof { display: flex; gap: 0; align-items: stretch; justify-content: center; max-width: 1000px; margin: 52px auto 0; padding: 0 16px; }
+.pf { position: relative; display: flex; flex-direction: column; gap: 4px; align-items: center; justify-content: center; padding: 32px 44px 40px; border-radius: 20px; flex: 1;}
+.pf-n { font-family: 'GFS Didot', serif; font-size: clamp(36px, 4.5vw, 60px); font-weight: 400; line-height: 1; background: linear-gradient(180deg, #f0df7a 0.8%, #c9a572 97.7%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-align: center; white-space: nowrap; }
+.pf-l { font-size: 12px; font-weight: 300; letter-spacing: 2px; text-transform: uppercase; color: #fff; text-align: center; white-space: nowrap; margin-top: 4px; }
+
+.section { padding: 52px 28px 0; display: flex; flex-direction: column; gap: 20px; }
+.section-label { display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); border-radius: 30px; padding: 8px 28px; align-self: flex-start; }
+.sl-text { font-size: 12px; font-weight: 400; letter-spacing: 1.2px; text-transform: uppercase; color: #fff; white-space: nowrap; }
+.section-h { font-family: 'GFS Didot', serif; font-size: 80px; font-weight: 400; line-height: 88px; color: #fff; }
+.section-h .gold { color: #f0df7a; display: block; }
+.section-p { font-size: 18px; font-weight: 300; line-height: 32px; color: #9a9a9a; }
+
+.quote { display: flex; flex-direction: column; gap: 20px; padding: 52px 28px 0; }
+.quote-mark { width: 50px; height: 40px; }
+.quote-text { font-family: 'GFS Didot', serif; font-size: 36px; font-style: italic; font-weight: 400; line-height: normal; color: #fff; }
+.quote-attr { font-size: 18px; font-weight: 300; color: #9a9a9a; }
+
+.tc-scroll { display: flex; gap: 32px; overflow-x: auto; padding: 52px calc(50% - 632px) 0; scrollbar-width: none; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 120px, black calc(100% - 120px), transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 120px, black calc(100% - 120px), transparent 100%); }
+.tc-scroll::-webkit-scrollbar { display: none; }
+.tc { position: relative; min-width: 400px; width: 400px; aspect-ratio: 9/16; border-radius: 32px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 32px 34px; flex-shrink: 0; transform: translateZ(0); -webkit-mask-image: radial-gradient(white, white); mask-image: radial-gradient(white, white); }
+.tc-video { position: absolute; top: 50%; left: 50%; width: calc(100% + 4px); height: calc(100% + 4px); transform: translate(-50%, -50%); border: none; pointer-events: none; }
+.tc-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 22.5%, #000 100%); }
+.tc-top { position: relative; z-index: 1; display: flex; gap: 12px; align-items: flex-end; }
+.tc-amount { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 44px; line-height: 60px; color: #f0df7a; white-space: nowrap; }
+.tc-period { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 24px; color: #fff; white-space: nowrap; align-self: flex-end; padding-bottom: 8px; position: relative; top: 12px; }
+.tc-bottom { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.tc-info { display: flex; flex-direction: column; gap: 12px; width: 235px; }
+.tc-name { font-family: 'GFS Didot', serif; font-size: 42px; color: #fff; line-height: 1.1; }
+.tc-sub { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 16px; color: #9a9a9a; }
+.tc-play { width: 68px; height: 68px; flex-shrink: 0; display: block; }
+
+.cards { margin: 32px 28px 0; display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.card { background: var(--bg); padding: 28px 22px; display: flex; flex-direction: column; gap: 11px; position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; }
+.card:active { background: rgba(245,201,87,0.03); }
+.card-b { background: var(--bg2); }
+.card-num { position: absolute; right: 18px; top: 14px; font-family: 'GFS Didot', serif; font-size: 72px; font-weight: 400; color: var(--gold); opacity: 0.05; line-height: 1; }
+.card-tag { font-size: 9px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); }
+.card-title { font-family: 'GFS Didot', serif; font-size: 30px; font-weight: 400; line-height: 1.15; color: var(--white); letter-spacing: -0.5px; }
+.card-title em { font-style: italic; color: var(--gold-l); }
+.card-desc { font-size: 13px; font-weight: 300; line-height: 1.7; color: var(--text); }
+.card-sc { font-size: 9px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); opacity: 0.6; }
+.divider { width: 28px; height: 1px; background: var(--border); }
+.card-pts { display: flex; flex-direction: column; gap: 9px; }
+.cpt { display: flex; align-items: flex-start; gap: 12px; font-size: 13px; font-weight: 300; color: var(--text); line-height: 1.5; }
+.cpt::before { content: ''; width: 3px; height: 3px; border-radius: 50%; background: var(--gold); opacity: 0.5; flex-shrink: 0; margin-top: 7px; }
+.cpt b { color: var(--white-dim); font-weight: 500; }
+
+.social { padding: 20px 28px; font-size: 9px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: var(--text); text-align: center; border-bottom: 1px solid var(--border); }
+
+.t-section { padding: 52px 28px 0; }
+.v-grid { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.vc { background: var(--bg2); }
+.vt { position: relative; aspect-ratio: 9/16; background: var(--bg); overflow: hidden; }
+.vi { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'GFS Didot', serif; font-size: 64px; font-weight: 400; color: var(--gold); opacity: 0.06; }
+.vg { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(6,6,5,0.9)); }
+.vb { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 12px; }
+.vr { font-family: 'GFS Didot', serif; font-size: 16px; font-weight: 400; color: var(--gold); }
+.vn { font-size: 8px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase; color: rgba(237,232,222,0.3); margin-top: 2px; }
+.vplay { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--gold-b); background: rgba(6,6,5,0.6); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.vplay svg { color: var(--gold); margin-left: 2px; }
+.vinfo { padding: 11px 12px; border-top: 1px solid var(--border); font-size: 11px; font-weight: 300; font-style: italic; line-height: 1.55; color: var(--text); }
+
+.bottom-cta { margin: 52px 28px 0; padding: 30px 24px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 18px; }
+.bcta-label { font-size: 9px; font-weight: 400; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); }
+.bcta-h { font-family: 'GFS Didot', serif; font-size: 34px; font-weight: 400; line-height: 1.1; color: var(--white); letter-spacing: -0.5px; }
+.bcta-h em { font-style: italic; color: var(--gold-l); }
+.bcta-p { font-size: 13px; font-weight: 300; line-height: 1.7; color: var(--text); }
+
+footer { padding: 28px 28px 52px; border-top: 1px solid var(--border); margin-top: 40px; text-align: center; font-size: 9px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: var(--text); opacity: 0.5; }
+@media(min-width:600px){ .cards{flex-direction:row;} .card{flex:1;} .v-grid{grid-template-columns:repeat(3,1fr);} }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <!-- <div class="hero-overlay"></div> -->
+  <nav class="nav container">
+    <div class="logo">HTC</div>
+    <div class="nav-tag"><div class="nav-dot-wrap"><div class="nav-dot-glow"></div><div class="nav-dot"></div></div><span class="nav-label">3 Spots Open</span></div>
+  </nav>
+  <div class="hero-body">
+    <div class="container" style="position: relative; overflow: visible;display: flex; align-items: center; justify-content: center;">
+      <img src="./images/glow.svg" width="1400" style="position: absolute; top: -380px; right: -400px;" alt="">
+      <img src="./images/name.svg" style="max-width: 1200px; margin: 240px auto 0;" alt="">
+      <img src="./images/bruno.png" style="position: absolute; z-index: 0; top: 0px;" alt="">
+    </div>
+    <div class="hero-content" style="margin-top: 60px; position: relative;">
+      <div class="hero-content-top">
+        <div class="hero-eyebrow-pill">High Ticket Consulting</div>
+        <h1 class="hero-headline">The Skill That<span class="gold">Changes Everything</span></h1>
+        <p class="hero-desc">High ticket closing. The highest-leverage skill available right now. Two ways to start.</p>
+      </div>
+      <div class="hero-ctas">
+        <a style="flex: 1; text-align: center;" class="btn-cta btn-cta-gold" href="htc-booking.html">
+          Book Your HTC Mastery Call
+          <img src="https://www.figma.com/api/mcp/asset/0747f873-f5bd-4177-81ee-282512f77dda" width="24" height="24" alt="">
+        </a>
+        <a style="flex: 1; text-align: center;" class="btn-cta btn-cta-silver" href="htc-portal-v1.html">
+          Start Free Training
+          <img src="https://www.figma.com/api/mcp/asset/ab357bbf-fa5c-4743-af89-87f90cfb66ba" width="24" height="24" alt="">
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="proof" style="margin-top: 200px;">
+  <div class="pf"><div class="pf-n">500+</div><div class="pf-l">Trained</div></div>
+  <div style="height: stretch; width: 1px; background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);"></div>
+  <div class="pf"><div class="pf-n">$25k</div><div class="pf-l">Top Month</div></div>
+  <div style="height: stretch; width: 1px; background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);"></div>
+  <div class="pf"><div class="pf-n">8wks</div><div class="pf-l">To Results</div></div>
+</div>
+
+<div class="container">
+  <div style="display:flex; justify-content:space-between; gap:32px; padding:80px 28px 0; align-items: center; margin-top: 40px; position: relative;">
+    <div class="section" style="flex:0 0 calc(4/12*100%); padding:0;">
+      <div class="section-label"><div class="sl-text">Choose Your Path</div></div>
+      <h2 class="section-h">One Skill.<span class="gold">No Ceiling.</span></h2>
+      <p class="section-p">High ticket closing is the fastest path to financial freedom without a degree, a business, or an audience.</p>
+    </div>
+
+    <img src="./images/bruno-phone.png" style="position: absolute; left: 20px; top: 0; right: 0; margin: auto;">
+
+    <div class="quote" style="flex: 0 0 calc(4/12*100%); padding:0; text-align: right;">
+      <img class="quote-mark" src="https://www.figma.com/api/mcp/asset/8213e8df-28ed-4522-8e94-cdb49ca061a7" alt="" style="margin-left: auto;">
+      <p class="quote-text">Most people spend years waiting for a raise. My students spend 8 weeks learning to close.</p>
+      <p class="quote-attr">- Bruno Bajrami</p>
+    </div>
+  </div>
+
+
+
+  <div class="pill-star-wrap" style="margin-top: -40px;">
+    <div class="pill-star">Join 500+ closers who started exactly here</div>
+  </div>
+
+  <div style="display: flex; gap: 32px; justify-content: center; margin-top: 160px;">
+    <div class="cta-card" style="margin-top:52px;flex: 0 0 calc(4/12*100%);">
+    <div class="cta-card-head">
+      <div class="section-label"><div class="sl-text">I'm Ready Now</div></div>
+      <div>
+        <h3 class="cta-card-title">Book Your<span class="gold">HTC Mastery Call</span></h3>
+        <p class="cta-card-desc">No fluff. No pitch. Your exact path to $5K–$20K a month, built live on the call.</p>
+      </div>
+    </div>
+    <div class="cta-features">
+      <div class="cta-feature"><img src="https://www.figma.com/api/mcp/asset/9aade471-d946-4303-bf2e-268ce39656ce" alt=""><span>45 minutes – <span class="detail">direct with Bruno</span></span></div>
+      <div class="cta-feature"><img src="https://www.figma.com/api/mcp/asset/9aade471-d946-4303-bf2e-268ce39656ce" alt=""><span>90-day plan – <span class="detail">built live on the call</span></span></div>
+      <div class="cta-feature"><img src="https://www.figma.com/api/mcp/asset/9aade471-d946-4303-bf2e-268ce39656ce" alt=""><span>5 spots / day – <span class="detail">limited access</span></span></div>
+    </div>
+    <div class="cta-bottom">
+      <a class="btn-cta btn-cta-gold btn-cta-full" href="htc-booking.html">
+        Book Your HTC Mastery Call
+        <img src="https://www.figma.com/api/mcp/asset/8bfb72c0-fdd2-41ca-83ec-d96dc00bd81d" width="24" height="24" alt="">
+      </a>
+      <p class="cta-scarcity"><span>3 spots</span> remaining this week</p>
+    </div>
+  </div>
+
+  <div class="cta-card" style="margin-top:52px; flex: 0 0 calc(4/12*100%); border-color:#414141; background: linear-gradient(180deg, rgba(99,99,99,0.02) 19.4%, transparent 104%), radial-gradient(ellipse 160% 50% at 50% 118%, rgba(255,255,255,0.4) 0%, transparent 60%), #0a0a0a; height: fit-content;">
+    <div class="cta-card-head">
+      <div class="section-label"><div class="sl-text">Show Me First</div></div>
+      <div>
+        <h3 class="cta-card-title">Free 5-Day<span style="display:block;">Closer Training</span></h3>
+        <p class="cta-card-desc">Not sure yet? 5 days of real training. Understand the skill before you commit.</p>
+      </div>
+    </div>
+    <div class="cta-features">
+      <div class="cta-feature"><img src="https://www.figma.com/api/mcp/asset/90688006-70b1-4791-b37d-d2ba8f113996" alt=""><span>5 videos – <span class="detail">one per day</span></span></div>
+      <div class="cta-feature"><img src="https://www.figma.com/api/mcp/asset/90688006-70b1-4791-b37d-d2ba8f113996" alt=""><span>Real framework – <span class="detail">not theory</span></span></div>
+      <div class="cta-feature"><img src="https://www.figma.com/api/mcp/asset/90688006-70b1-4791-b37d-d2ba8f113996" alt=""><span>Qualify for a call – <span class="detail">on completion</span></span></div>
+    </div>
+    <div class="cta-bottom">
+      <a class="btn-cta btn-cta-silver btn-cta-full" href="htc-portal-v1.html">
+        Start Free Training
+        <img src="https://www.figma.com/api/mcp/asset/ab357bbf-fa5c-4743-af89-87f90cfb66ba" width="24" height="24" alt="">
+      </a>
+    </div>
+  </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 800px; margin: 160px auto 0;">
+    <div class="hero-eyebrow-pill">Real Results</div>
+    <h1 class="hero-headline">What Our<span class="gold">Closer Says</span></h1>
+    <p class="section-p">Over 50 digital experts have already transformed their brands with my proven strategies. Get Ready to join them and create a brand that works for you.</p>
+  </div>
+
+  <div class="tc-scroll">
+    <div class="tc">
+      <iframe class="tc-video" src="https://player.vimeo.com/video/1066435911?autoplay=1&muted=1&loop=1&autopause=0&controls=0&background=1&app_id=122963" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      <div class="tc-overlay"></div>
+      <div class="tc-top">
+        <span class="tc-amount">$10k</span>
+
+        <span style="width: 1px; height: 36px; rotate: 32deg; background-color: #fff; opacity: .4; position: relative; top: 2px;"></span>
+
+        <span class="tc-period">Month</span>
+      </div>
+      <div class="tc-bottom">
+        <div class="tc-info">
+          <p class="tc-name">Bruno Bajrami</p>
+          <p class="tc-sub">Financial stress to $10K/month.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tc">
+      <iframe class="tc-video" src="https://player.vimeo.com/video/1066435911?autoplay=1&muted=1&loop=1&autopause=0&controls=0&background=1&app_id=122963" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      <div class="tc-overlay"></div>
+      <div class="tc-top">
+        <span class="tc-amount">$10k</span>
+
+        <span style="width: 1px; height: 36px; rotate: 32deg; background-color: #fff; opacity: .4; position: relative; top: 2px;"></span>
+
+        <span class="tc-period">Month</span>
+      </div>
+      <div class="tc-bottom">
+        <div class="tc-info">
+          <p class="tc-name">Bruno Bajrami</p>
+          <p class="tc-sub">Financial stress to $10K/month.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tc">
+      <iframe class="tc-video" src="https://player.vimeo.com/video/1066435911?autoplay=1&muted=1&loop=1&autopause=0&controls=0&background=1&app_id=122963" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      <div class="tc-overlay"></div>
+      <div class="tc-top">
+        <span class="tc-amount">$10k</span>
+
+        <span style="width: 1px; height: 36px; rotate: 32deg; background-color: #fff; opacity: .4; position: relative; top: 2px;"></span>
+
+        <span class="tc-period">Month</span>
+      </div>
+      <div class="tc-bottom">
+        <div class="tc-info">
+          <p class="tc-name">Bruno Bajrami</p>
+          <p class="tc-sub">Financial stress to $10K/month.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tc">
+      <iframe class="tc-video" src="https://player.vimeo.com/video/1066435911?autoplay=1&muted=1&loop=1&autopause=0&controls=0&background=1&app_id=122963" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      <div class="tc-overlay"></div>
+      <div class="tc-top">
+        <span class="tc-amount">$10k</span>
+
+        <span style="width: 1px; height: 36px; rotate: 32deg; background-color: #fff; opacity: .4; position: relative; top: 2px;"></span>
+
+        <span class="tc-period">Month</span>
+      </div>
+      <div class="tc-bottom">
+        <div class="tc-info">
+          <p class="tc-name">Bruno Bajrami</p>
+          <p class="tc-sub">Financial stress to $10K/month.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tc">
+      <iframe class="tc-video" src="https://player.vimeo.com/video/1066435911?autoplay=1&muted=1&loop=1&autopause=0&controls=0&background=1&app_id=122963" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      <div class="tc-overlay"></div>
+      <div class="tc-top">
+        <span class="tc-amount">$10k</span>
+
+        <span style="width: 1px; height: 36px; rotate: 32deg; background-color: #fff; opacity: .4; position: relative; top: 2px;"></span>
+        <span class="tc-period">Month</span>
+      </div>
+      <div class="tc-bottom">
+        <div class="tc-info">
+          <p class="tc-name">Bruno Bajrami</p>
+          <p class="tc-sub">Financial stress to $10K/month.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="cards">
+  <div class="card">
+    <div class="card-num">01</div>
+    <div class="card-tag">I'm Ready Now</div>
+    <h3 class="card-title">Book Your<br><em>HTC Mastery Call</em></h3>
+    <p class="card-desc">No fluff. No pitch. Your exact path to $5K–$20K a month, built live on the call.</p>
+    <div class="divider"></div>
+    <div class="card-pts">
+      <div class="cpt"><b>45 minutes</b> — direct with Bruno</div>
+      <div class="cpt"><b>90-day plan</b> built live on the call</div>
+      <div class="cpt"><b>5 spots / day</b> — limited access</div>
+    </div>
+    <div class="card-sc">3 spots remaining this week</div>
+    <a class="btn-primary" href="htc-booking.html">Book Your HTC Mastery Call <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+  <div class="card card-b">
+    <div class="card-num">02</div>
+    <div class="card-tag">Show Me First</div>
+    <h3 class="card-title">Free 5-Day<br><em>Closer Training</em></h3>
+    <p class="card-desc">Not sure yet? 5 days of real training. Understand the skill before you commit.</p>
+    <div class="divider"></div>
+    <div class="card-pts">
+      <div class="cpt"><b>5 videos</b> — one per day</div>
+      <div class="cpt"><b>Real framework</b> — not theory</div>
+      <div class="cpt"><b>Qualify for a call</b> on completion</div>
+    </div>
+    <a class="btn-ghost" href="htc-portal-v1.html">Start Free Training <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+</div> -->
+
+<!-- <div class="social">Join 500+ closers who started exactly here</div> -->
+
+<!-- <div class="t-section">
+  <div class="section-label"><div class="sl-line"></div><div class="sl-text">Real Results</div></div>
+  <h2 class="section-h">What Our<br><em>Closers Say</em></h2>
+  <div class="v-grid">
+    <div class="vc"><div class="vt"><div class="vi">S</div><div class="vg"></div><div class="vplay"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="vb"><div class="vr">$25K/mo</div><div class="vn">Scott</div></div></div><div class="vinfo">"From $6K savings to $25K a month."</div></div>
+    <div class="vc"><div class="vt"><div class="vi">S</div><div class="vg"></div><div class="vplay"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="vb"><div class="vr">$30K/mo</div><div class="vn">Sam</div></div></div><div class="vinfo">"$30K+ in monthly commissions."</div></div>
+    <div class="vc"><div class="vt"><div class="vi">I</div><div class="vg"></div><div class="vplay"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="vb"><div class="vr">$15K/mo</div><div class="vn">Isabel</div></div></div><div class="vinfo">"First close $1,500. Now $15K+."</div></div>
+    <div class="vc"><div class="vt"><div class="vi">K</div><div class="vg"></div><div class="vplay"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="vb"><div class="vr">$10K/mo</div><div class="vn">Kerry</div></div></div><div class="vinfo">"Financial stress to $10K/month."</div></div>
+    <div class="vc"><div class="vt"><div class="vi">E</div><div class="vg"></div><div class="vplay"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="vb"><div class="vr">$15K/mo</div><div class="vn">Eoghan</div></div></div><div class="vinfo">"$15K monthly. The life I wanted."</div></div>
+    <div class="vc"><div class="vt"><div class="vi">A</div><div class="vg"></div><div class="vplay"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div><div class="vb"><div class="vr">$7K/mo</div><div class="vn">Alex</div></div></div><div class="vinfo">"From $2K to $7K+ a month."</div></div>
+  </div>
+</div> -->
+
+<!-- <div class="bottom-cta">
+  <div class="bcta-label">Your Move</div>
+  <h2 class="bcta-h">Ready to Write Your<br><em>Own Story?</em></h2>
+  <p class="bcta-p">Every closer above started exactly where you are. The only difference is they decided.</p>
+  <a class="btn-primary" href="htc-booking.html">Book Your HTC Mastery Call <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div> -->
+
+<!-- <footer>© 2026 High Ticket Consulting</footer> -->
+
+<script>
+  const tcScroll = document.querySelector('.tc-scroll');
+  if (tcScroll) {
+    tcScroll.scrollLeft = (tcScroll.scrollWidth - tcScroll.clientWidth) / 2;
+  }
+</script>
+</body>
+</html>
