@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
 	return (
-		<main className="bg-[url(/images/hero-bg.webp)] [background-size:1000px] bg-top bg-no-repeat bg-[length:1800px]">
+		<main className="bg-[url(/images/hero-bg.webp)] [background-size:1000px] bg-top bg-no-repeat lg:bg-[length:1800px]">
 			<HeroSection />
 			<ProofBar />
 			<div className="relative pb-[10rem]">
