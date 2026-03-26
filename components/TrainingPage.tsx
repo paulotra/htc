@@ -135,9 +135,9 @@ export default function TrainingPage() {
 					backgroundSize: "cover",
 				}}
 			/>
-			<div className="max-w-container mx-auto px-7 flex gap-16 items-start pt-32 pb-10 min-h-screen relative z-10">
+			<div className="max-w-container mx-auto px-7 lg:flex gap-16 items-start pt-32 pb-10 min-h-screen relative z-10">
 				{/* ── Left panel ── */}
-				<div className="relative">
+				<div className="relative md:pt-0 pt-10">
 					<div className="flex-[0_0_380px] sticky top-36 flex flex-col gap-8">
 						<div className="flex flex-col gap-3">
 							<h1 className="font-serif text-[2rem] leading-[2.5rem] font-normal">
@@ -161,7 +161,7 @@ export default function TrainingPage() {
 				</div>
 
 				{/* ── Right card ── */}
-				<div className="flex-1 cta-card cta-card-silver !p-0 !bg-black min-h-[calc(100vh_-_168px)] flex flex-col">
+				<div className="flex-1 cta-card cta-card-silver !p-0 !bg-black min-h-[calc(100vh_-_168px)] flex flex-col  mt-10 lg:mt-0">
 					{/* Progress bar */}
 					{slide > 0 && slide < 6 && (
 						<div className="h-[2px] bg-[#1a1a18] rounded-t-sm overflow-hidden">
@@ -205,7 +205,9 @@ export default function TrainingPage() {
 											<path d="M5 12h14M12 5l7 7-7 7" />
 										</svg>
 									</button>
-									<p className={`text-[0.75rem] mt-3 tracking-[0.0625rem] ${TEXT}`}>
+									<p
+										className={`text-[0.75rem] mt-3 tracking-[0.0625rem] ${TEXT}`}
+									>
 										TAKES 2 MINUTES
 									</p>
 								</div>
@@ -361,7 +363,9 @@ export default function TrainingPage() {
 											<path d="M5 12h14M12 5l7 7-7 7" />
 										</svg>
 									</button>
-									<p className={`text-[0.75rem] mt-3 tracking-[0.0625rem] ${TEXT}`}>
+									<p
+										className={`text-[0.75rem] mt-3 tracking-[0.0625rem] ${TEXT}`}
+									>
 										Press Enter ↵
 									</p>
 								</div>
@@ -418,7 +422,9 @@ export default function TrainingPage() {
 
 					{/* Slide counter */}
 					{slide > 0 && slide < 6 && (
-						<div className={`px-10 pb-6 text-[0.75rem] tracking-[0.125rem] ${TEXT}`}>
+						<div
+							className={`px-10 pb-6 text-[0.75rem] tracking-[0.125rem] ${TEXT}`}
+						>
 							<span className={GOLD}>{slide}</span> / {TOTAL}
 						</div>
 					)}

@@ -247,9 +247,9 @@ export default function BookingPage() {
 					backgroundSize: "cover",
 				}}
 			></div>
-			<div className="max-w-container mx-auto px-7 flex gap-16 items-start pt-32 pb-10 min-h-screen relative z-10">
+			<div className="max-w-container mx-auto px-7 lg:flex gap-16 items-start pt-32 pb-10 min-h-screen relative z-10">
 				{/* ── Left panel ── */}
-				<div className="relative">
+				<div className="relative md:pt-0 pt-10">
 					<div className="flex-[0_0_380px] sticky top-36 flex flex-col gap-8">
 						<div className="flex flex-col gap-3">
 							<h1 className="font-serif text-[2rem] leading-[2.5rem] font-normal">
@@ -291,14 +291,14 @@ export default function BookingPage() {
 
 				{/* ── Right card ── */}
 				<div
-					className={`flex-1 cta-card !p-0 bg-black min-h-[calc(100vh_-_168px)]`}
+					className={`flex-1 cta-card !p-0 bg-black min-h-[calc(100vh_-_168px)] mt-10 lg:mt-0`}
 				>
 					{/* Step indicator */}
-					<div className="relative grid grid-cols-2">
+					<div className="relative grid grid-cols-1 md:grid-cols-2">
 						{/* Step 1 */}
 						<div
 							onClick={() => setStep(1)}
-							className={`cursor-pointer flex flex-col items-center pt-5 pb-4 border-b-[2px] ${step1Done ? "border-[#F7E280]" : "border-[#FFFFFF]"}`}
+							className={`relative cursor-pointer flex flex-col items-center pt-5 pb-4 border-b-[2px] ${step1Done ? "border-[#F7E280]" : "border-[#FFFFFF]"}`}
 						>
 							<span
 								className={`text-[0.75rem] tracking-[0.075rem] uppercase text-[#9a9a9a]`}
@@ -323,10 +323,10 @@ export default function BookingPage() {
 							</span>
 						</div>
 						{/* Check circles */}
-						<div className="bg-black px-2 absolute bottom-0 left-1/4 -translate-x-1/2 translate-y-1/2 z-10">
+						<div className="bg-black px-2 absolute bottom-[50%] md:bottom-0 left-1/2 md:left-1/4 -translate-x-1/2 translate-y-1/2 z-10">
 							<CheckCircle done={step1Done} />
 						</div>
-						<div className="bg-black px-2 absolute bottom-0 left-3/4 -translate-x-1/2 translate-y-1/2 z-10">
+						<div className="bg-black px-2 absolute bottom-0 left-1/2 md:left-3/4 -translate-x-1/2 translate-y-1/2 z-10">
 							<CheckCircle done={step2Done} />
 						</div>
 					</div>
@@ -334,7 +334,7 @@ export default function BookingPage() {
 					{/* ── Step 1: form ── */}
 					{step === 1 && (
 						<div className="p-8 pt-0 flex flex-col gap-6">
-							<div className="grid grid-cols-2 gap-x-8 gap-y-0">
+							<div className="grid gril-cols-1 md:grid-cols-2 gap-x-8 gap-y-0">
 								{FIELDS.map((f, i) => {
 									const visible = i < visibleCount;
 									return (
