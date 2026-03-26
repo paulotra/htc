@@ -23,7 +23,7 @@ export default function HeroSection() {
 					{/* eslint-disable-next-line @next/next/no-img-element */}
 					<img
 						src="/images/bruno.webp"
-						className="absolute z-0 top-[60px] md:top-[12px] lg:top-[-40px] w-[120%] max-w-none md:w-full md:max-w-full"
+						className="absolute z-0 top-[60px] md:top-[12px] lg:top-[-40px] w-[120%] max-w-none md:w-full md:max-w-[1080px]"
 						alt=""
 					/>
 				</div>
