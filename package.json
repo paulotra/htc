@@ -8,8 +8,8 @@
 		"start": "next start",
 		"lint": "next lint",
 		"pages:build": "next build && opennextjs-cloudflare build",
-		"preview": "npm run pages:build && wrangler pages dev .open-next/assets --compatibility-flag=nodejs_compat",
-		"deploy": "npm run pages:build && wrangler pages deploy .open-next/assets"
+		"preview": "npm run pages:build && wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat",
+		"deploy": "npm run pages:build && wrangler pages deploy .vercel/output/static"
 	},
 	"dependencies": {
 		"@opennextjs/cloudflare": "^1.17.3",
