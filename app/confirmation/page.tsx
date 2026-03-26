@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -35,9 +34,7 @@ export default function ConfirmationPage() {
 					<div className="flex-1 flex flex-col items-center justify-center text-center gap-8 pt-20 pb-20">
 						<img
 							src="/images/figma/57a5ad31-52f7-44a9-adb0-b632819f627c.svg"
-							className="mt-12"
-							width={120}
-							height={120}
+							className="md:mt-12 mt-20 w-[80px] md:w-[120px] h-[80px] md:h-[120px]"
 							alt=""
 						/>
 

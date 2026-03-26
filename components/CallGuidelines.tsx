@@ -1,6 +1,5 @@
 import Pill from "./Pill";
 
-
 interface Guideline {
 	num: string;
 	title: string;
@@ -46,7 +45,7 @@ const guidelines: Guideline[] = [
 
 export default function CallGuidelines() {
 	return (
-		<section className="flex flex-col gap-[40px] items-center mt-[160px]">
+		<section className="flex flex-col gap-[40px] items-center mt-20 md:mt-[160px]">
 			<Pill>Before The Call</Pill>
 
 			<div className="flex flex-col gap-[40px] w-full">
@@ -73,14 +72,14 @@ export default function CallGuidelines() {
 
 							{/* Connector line to next circle */}
 							{!isLast && (
-								<div className="absolute top-[80px] left-1/2 -translate-x-1/2 w-px h-[76px] bg-white/10" />
+								<div className="hidden md:block absolute top-[80px] left-1/2 -translate-x-1/2 w-px h-[76px] bg-white/10" />
 							)}
 						</div>
 					);
 
 					const text = (
 						<div
-							className={`flex-1 flex flex-col gap-3 ${item.side === "left" ? "text-right" : ""}`}
+							className={`flex-1 flex flex-col gap-3 ${item.side === "left" ? "md:text-right" : ""}`}
 						>
 							<h3
 								className={`font-serif text-[2rem] leading-[2.5rem] font-normal capitalize ${
@@ -100,7 +99,7 @@ export default function CallGuidelines() {
 					return (
 						<div
 							key={item.num}
-							className={`flex relative gap-[32px] items-start w-[50%] ${item.side === "right" ? "self-end left-[-39px]" : "self-start right-[-39px]"}`}
+							className={`flex relative gap-[32px] items-start w-[calc(100%)] md:w-[50%] ${item.side === "right" ? "self-end md:left-[-39px]" : "flex-row-reverse md:flex-row self-start md:right-[-39px]"}`}
 						>
 							{item.side === "right" ? (
 								<>

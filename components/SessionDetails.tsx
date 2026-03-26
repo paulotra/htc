@@ -9,7 +9,7 @@ const items = [
 
 export default function SessionDetails() {
 	return (
-		<div className="flex items-center w-full mt-[120px]">
+		<div className="md:flex items-center w-full mt-10 md:mt-[120px]">
 			{items.map((item, i) => (
 				<Fragment key={item.label}>
 					{i > 0 && <div className="proof-divider shrink-0" />}

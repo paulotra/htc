@@ -3,12 +3,9 @@
 import { useState } from "react";
 import Pill from "./Pill";
 
-const imgTexture =
-	"/images/figma/ea884fdf-5cb3-4238-bf28-6d06f58dd26b.png";
-const imgPlus =
-	"/images/figma/64b88635-bb35-4613-918b-ce3ef4ffbf74.svg";
-const imgMinus =
-	"/images/figma/09122906-2215-45fe-9913-704149b6d97c.svg";
+const imgTexture = "/images/figma/ea884fdf-5cb3-4238-bf28-6d06f58dd26b.png";
+const imgPlus = "/images/figma/64b88635-bb35-4613-918b-ce3ef4ffbf74.svg";
+const imgMinus = "/images/figma/09122906-2215-45fe-9913-704149b6d97c.svg";
 
 const questions = [
 	"Is this a sales call?",
@@ -23,9 +20,9 @@ export default function FAQ() {
 	const [open, setOpen] = useState<number | null>(null);
 
 	return (
-		<div className="flex items-start justify-between mt-[160px] gap-8">
+		<div className="flex flex-col md:flex-row items-center md:items-start justify-between mt-10 md:mt-[160px] gap-8">
 			{/* Left */}
-			<div className="flex flex-col gap-5 items-start shrink-0 flex-[1]">
+			<div className="flex flex-col gap-5 items-center md:items-start shrink-0 flex-[1]">
 				<Pill>Before The Call</Pill>
 				<h2 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white">
 					Questions You
@@ -38,7 +35,7 @@ export default function FAQ() {
 			</div>
 
 			{/* Right: accordion */}
-			<div className="flex flex-col gap-5 items-start shrink-0 flex-[2]">
+			<div className="flex flex-col gap-5 items-start shrink-0 flex-[2] w-full">
 				{questions.map((q, i) => {
 					const isOpen = open === i;
 					return (
