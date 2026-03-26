@@ -14,11 +14,11 @@ export default function Nav({
 			className={`fixed top-0 left-0 right-0 z-[100] w-full${border ? " border-b border-[#423a2e]" : ""}`}
 		>
 			<div
-				className={`max-w-container px-7 mx-auto flex-1 flex items-center justify-between ${border ? "py-4" : "py-7"}`}
+				className={`max-w-container px-5 py-8 md:px-7 mx-auto flex-1 flex flex-col md:flex-row items-center justify-between ${border ? "md:py-4" : "md:py-7"}`}
 			>
 				<Link
 					href="/"
-					className="font-light text-base tracking-[6.4px] text-white"
+					className="font-light text-base tracking-[0.4rem] text-white"
 				>
 					<img src="/images/logo.svg" width="200" />
 				</Link>

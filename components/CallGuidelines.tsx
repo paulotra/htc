@@ -62,7 +62,7 @@ export default function CallGuidelines() {
 							}}
 						>
 							<span
-								className={`text-[16px] font-normal tracking-[1.6px] leading-[16px] uppercase ${
+								className={`text-[1rem] font-normal tracking-[0.1rem] leading-[1rem] uppercase ${
 									item.isGold
 										? "bg-clip-text text-transparent bg-gradient-to-b from-[#f0df7a] to-[#c9a572]"
 										: "text-white/40"
@@ -83,7 +83,7 @@ export default function CallGuidelines() {
 							className={`flex-1 flex flex-col gap-3 ${item.side === "left" ? "text-right" : ""}`}
 						>
 							<h3
-								className={`font-serif text-[32px] leading-[40px] font-normal capitalize ${
+								className={`font-serif text-[2rem] leading-[2.5rem] font-normal capitalize ${
 									item.isGold
 										? "bg-clip-text text-transparent bg-gradient-to-b from-[#f0df7a] to-[#c9a572]"
 										: "text-white"

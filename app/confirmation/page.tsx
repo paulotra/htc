@@ -42,7 +42,7 @@ export default function ConfirmationPage() {
 						/>
 
 						<div className="flex flex-col gap-5 items-center">
-							<h1 className="font-serif text-[60px] leading-[68px] font-normal text-white">
+							<h1 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white">
 								Your Call Is
 								<span className="block text-[#f0df7a]">Confirmed</span>
 							</h1>

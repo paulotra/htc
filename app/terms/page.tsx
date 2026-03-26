@@ -82,10 +82,10 @@ export default function TermsPage() {
 					}}
 				></div>
 				<main className="flex-1 flex flex-col pt-40 pb-20 max-w-[920px] mx-auto relative">
-					<h1 className="font-serif text-[42px] leading-[1.1] font-normal text-white mb-2">
+					<h1 className="font-serif text-[2.625rem] leading-[1.1] font-normal text-white mb-2">
 						Terms of Service
 					</h1>
-					<p className="text-xs font-normal tracking-[3px] uppercase text-white/35 mb-12">
+					<p className="text-xs font-normal tracking-[0.1875rem] uppercase text-white/35 mb-12">
 						Effective Date: March 24, 2026
 					</p>
 
@@ -100,7 +100,7 @@ export default function TermsPage() {
 					<div className="flex flex-col gap-8">
 						{sections.map((s) => (
 							<section key={s.title} className="flex flex-col gap-3">
-								<h2 className="font-serif text-[20px] leading-normal font-normal text-white">
+								<h2 className="font-serif text-[1.25rem] leading-normal font-normal text-white">
 									{s.title}
 								</h2>
 								{s.contact ? (

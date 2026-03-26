@@ -1,4 +1,3 @@
-
 import HeroSection from "@/components/HeroSection";
 import ProofBar from "@/components/ProofBar";
 import ContentSection from "@/components/ContentSection";
@@ -9,17 +8,10 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
 	return (
-		<main
-			style={{
-				backgroundImage: "url(/images/hero-bg.webp)",
-				backgroundPosition: "center top",
-				backgroundRepeat: "no-repeat",
-				backgroundSize: "1800px",
-			}}
-		>
+		<main className="bg-[url(/images/hero-bg.webp)] [background-size:1000px] bg-top bg-no-repeat bg-[length:1800px]">
 			<HeroSection />
 			<ProofBar />
-			<div className="relative pb-[160px]">
+			<div className="relative pb-[10rem]">
 				<div
 					className="absolute inset-0 opacity-70 z-0"
 					style={{

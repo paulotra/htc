@@ -140,7 +140,7 @@ export default function TrainingPage() {
 				<div className="relative">
 					<div className="flex-[0_0_380px] sticky top-36 flex flex-col gap-8">
 						<div className="flex flex-col gap-3">
-							<h1 className="font-serif text-[32px] leading-[40px] font-normal">
+							<h1 className="font-serif text-[2rem] leading-[2.5rem] font-normal">
 								<span className="text-[#9a9a9a]">HTC</span>
 								<span className="block text-white text-transparent">
 									Training
@@ -150,7 +150,7 @@ export default function TrainingPage() {
 								{["5 Days", "Video + Live", "Free"].map((label) => (
 									<div
 										key={label}
-										className="border border-[#423a2e] rounded-[4px] px-2 py-1 text-[#9a9a9a] text-[12px] tracking-[1.2px] uppercase whitespace-nowrap"
+										className="border border-[#423a2e] rounded-[4px] px-2 py-1 text-[#9a9a9a] text-[0.75rem] tracking-[0.075rem] uppercase whitespace-nowrap"
 									>
 										{label}
 									</div>
@@ -176,7 +176,7 @@ export default function TrainingPage() {
 						{/* ── Slide 0: Welcome ── */}
 						{slide === 0 && (
 							<div className={slideClass}>
-								<h2 className="font-serif text-[52px] leading-[1.0] font-normal text-white">
+								<h2 className="font-serif text-[3.25rem] leading-[1.0] font-normal text-white">
 									The Free <span className={GOLD}>5-Day</span>
 									<br />
 									Closer Training
@@ -205,7 +205,7 @@ export default function TrainingPage() {
 											<path d="M5 12h14M12 5l7 7-7 7" />
 										</svg>
 									</button>
-									<p className={`text-[12px] mt-3 tracking-[1px] ${TEXT}`}>
+									<p className={`text-[0.75rem] mt-3 tracking-[0.0625rem] ${TEXT}`}>
 										TAKES 2 MINUTES
 									</p>
 								</div>
@@ -216,7 +216,7 @@ export default function TrainingPage() {
 						{slide === 1 && (
 							<div className={slideClass}>
 								<QNumber n="01" />
-								<p className="font-serif text-[40px] leading-[1.05] font-normal text-white">
+								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
 									What's your first name?
 								</p>
 								<input
@@ -229,10 +229,10 @@ export default function TrainingPage() {
 										setError("");
 									}}
 									onKeyDown={(e) => e.key === "Enter" && validateAndNext()}
-									className="bg-transparent border-b border-[#2a2a2a] focus:border-[#fff] text-white text-[22px] font-light py-3 outline-none w-full transition-colors caret-[#fff] placeholder:text-[#333]"
+									className="bg-transparent border-b border-[#2a2a2a] focus:border-[#fff] text-white text-[1.375rem] font-light py-3 outline-none w-full transition-colors caret-[#fff] placeholder:text-[#333]"
 								/>
 								{error && (
-									<p className="text-[#e05555] text-[13px] tracking-[1px]">
+									<p className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
 										{error}
 									</p>
 								)}
@@ -244,7 +244,7 @@ export default function TrainingPage() {
 						{slide === 2 && (
 							<div className={slideClass}>
 								<QNumber n="02" />
-								<p className="font-serif text-[40px] leading-[1.05] font-normal text-white">
+								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
 									What's your current situation?
 								</p>
 								<p
@@ -259,7 +259,7 @@ export default function TrainingPage() {
 									onSelect={(k) => selectChoice(k, "situation")}
 								/>
 								{error && (
-									<p className="text-[#e05555] text-[13px] tracking-[1px]">
+									<p className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
 										{error}
 									</p>
 								)}
@@ -270,7 +270,7 @@ export default function TrainingPage() {
 						{slide === 3 && (
 							<div className={slideClass}>
 								<QNumber n="03" />
-								<p className="font-serif text-[40px] leading-[1.05] font-normal text-white">
+								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
 									What's your monthly income goal for the next 90 days?
 								</p>
 								<Choices
@@ -279,7 +279,7 @@ export default function TrainingPage() {
 									onSelect={(k) => selectChoice(k, "goal")}
 								/>
 								{error && (
-									<p className="text-[#e05555] text-[13px] tracking-[1px]">
+									<p className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
 										{error}
 									</p>
 								)}
@@ -290,7 +290,7 @@ export default function TrainingPage() {
 						{slide === 4 && (
 							<div className={slideClass}>
 								<QNumber n="04" />
-								<p className="font-serif text-[40px] leading-[1.05] font-normal text-white">
+								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
 									What's your biggest obstacle right now?
 								</p>
 								<Choices
@@ -299,7 +299,7 @@ export default function TrainingPage() {
 									onSelect={(k) => selectChoice(k, "obstacle")}
 								/>
 								{error && (
-									<p className="text-[#e05555] text-[13px] tracking-[1px]">
+									<p className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
 										{error}
 									</p>
 								)}
@@ -310,7 +310,7 @@ export default function TrainingPage() {
 						{slide === 5 && (
 							<div className={slideClass}>
 								<QNumber n="05" />
-								<p className="font-serif text-[40px] leading-[1.05] font-normal text-white">
+								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
 									How serious are you — on a scale of 1 to 10?
 								</p>
 								<p
@@ -324,7 +324,7 @@ export default function TrainingPage() {
 											<button
 												key={n}
 												onClick={() => selectScale(n)}
-												className={`flex-1 h-10 rounded-[3px] border text-[13px] font-light transition-all ${
+												className={`flex-1 h-10 rounded-[3px] border text-[0.8125rem] font-light transition-all ${
 													answers.scale === n
 														? "bg-[#fff] border-[#fff] text-black font-medium"
 														: "border-[rgba(255,255,255,0.07)] text-[rgba(237,232,222,0.38)] hover:border-[#fff] hover:text-white"
@@ -334,13 +334,13 @@ export default function TrainingPage() {
 											</button>
 										))}
 									</div>
-									<div className="flex justify-between text-[12px] text-[rgba(237,232,222,0.38)]">
+									<div className="flex justify-between text-[0.75rem] text-[rgba(237,232,222,0.38)]">
 										<span>Just browsing</span>
 										<span>Whatever it takes</span>
 									</div>
 								</div>
 								{error && (
-									<p className="text-[#e05555] text-[13px] tracking-[1px]">
+									<p className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
 										{error}
 									</p>
 								)}
@@ -361,7 +361,7 @@ export default function TrainingPage() {
 											<path d="M5 12h14M12 5l7 7-7 7" />
 										</svg>
 									</button>
-									<p className={`text-[12px] mt-3 tracking-[1px] ${TEXT}`}>
+									<p className={`text-[0.75rem] mt-3 tracking-[0.0625rem] ${TEXT}`}>
 										Press Enter ↵
 									</p>
 								</div>
@@ -383,11 +383,11 @@ export default function TrainingPage() {
 										<path d="M20 6L9 17l-5-5" />
 									</svg>
 								</div>
-								<h2 className="font-serif text-[52px] leading-[1.0] font-normal text-white">
+								<h2 className="font-serif text-[3.25rem] leading-[1.0] font-normal text-white">
 									You're In, {answers.name || "Closer"}
 								</h2>
 								<p
-									className={`text-[16px] font-light leading-[1.7] max-w-[480px] ${TEXT}`}
+									className={`text-[1rem] font-light leading-[1.7] max-w-[480px] ${TEXT}`}
 								>
 									You've done what most people never will — you took the first
 									step.
@@ -398,7 +398,7 @@ export default function TrainingPage() {
 									high-ticket offers and what your next move is.
 								</p>
 								<div>
-									<button className="btn-cta-silver w-full max-w-[280px] justify-center inline-flex items-center gap-3 px-10 py-5 rounded-full text-[16px] font-medium text-white transition-opacity active:opacity-80">
+									<button className="btn-cta-silver w-full max-w-[280px] justify-center inline-flex items-center gap-3 px-10 py-5 rounded-full text-[1rem] font-medium text-white transition-opacity active:opacity-80">
 										Start Day 1 Now
 										<svg
 											width="16"
@@ -418,7 +418,7 @@ export default function TrainingPage() {
 
 					{/* Slide counter */}
 					{slide > 0 && slide < 6 && (
-						<div className={`px-10 pb-6 text-[12px] tracking-[2px] ${TEXT}`}>
+						<div className={`px-10 pb-6 text-[0.75rem] tracking-[0.125rem] ${TEXT}`}>
 							<span className={GOLD}>{slide}</span> / {TOTAL}
 						</div>
 					)}
@@ -430,7 +430,7 @@ export default function TrainingPage() {
 
 function QNumber({ n }: { n: string }) {
 	return (
-		<div className="flex items-center gap-3 text-[11px] tracking-[3px] uppercase text-white">
+		<div className="flex items-center gap-3 text-[0.6875rem] tracking-[0.1875rem] uppercase text-white">
 			{n}
 			<span className="block w-6 h-px bg-[#fff] opacity-50" />
 		</div>
@@ -454,14 +454,14 @@ function Choices({
 					<button
 						key={item.key}
 						onClick={() => onSelect(item.key)}
-						className={`flex items-center gap-4 px-5 py-4 rounded-[4px] border text-left text-[16px] font-light transition-all ${
+						className={`flex items-center gap-4 px-5 py-4 rounded-[4px] border text-left text-[1rem] font-light transition-all ${
 							isSelected
 								? "border-[#fff] bg-[rgba(245,201,87,0.06)] text-white"
 								: "border-[rgba(255,255,255,0.07)] text-[rgba(237,232,222,0.55)] hover:border-[#fff] hover:bg-[rgba(245,201,87,0.06)] hover:text-white"
 						}`}
 					>
 						<span
-							className={`text-[11px] px-2 py-0.5 rounded-[3px] min-w-[28px] text-center transition-all ${
+							className={`text-[0.6875rem] px-2 py-0.5 rounded-[3px] min-w-[28px] text-center transition-all ${
 								isSelected
 									? "bg-[#fff] text-black font-medium"
 									: "bg-[rgba(255,255,255,0.07)] text-[rgba(237,232,222,0.38)]"
@@ -496,7 +496,7 @@ function ContinueBtn({ onClick }: { onClick: () => void }) {
 					<path d="M5 12h14M12 5l7 7-7 7" />
 				</svg>
 			</button>
-			<p className="text-[12px] mt-3 tracking-[1px] text-[rgba(237,232,222,0.38)]">
+			<p className="text-[0.75rem] mt-3 tracking-[0.0625rem] text-[rgba(237,232,222,0.38)]">
 				Press Enter ↵
 			</p>
 		</div>

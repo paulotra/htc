@@ -60,9 +60,9 @@ export default function TestimonialsCarousel() {
 
 	return (
 		<section>
-			<div className="flex flex-col items-center text-center max-w-[800px] mx-auto mt-[160px]">
+			<div className="flex flex-col items-center text-center max-w-[800px] mx-auto mt-20 md:mt-[160px]">
 				<Pill>Real Results</Pill>
-				<h2 className="font-serif text-[60px] leading-[68px] font-normal text-white mt-5">
+				<h2 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white mt-5">
 					What Our
 					<span className="block text-[#f0df7a]">Closer Says</span>
 				</h2>
@@ -84,7 +84,7 @@ export default function TestimonialsCarousel() {
 						/>
 						<div className="tc-overlay" />
 						<div className="relative z-[1] flex gap-3 items-end">
-							<span className="font-sans font-bold text-[44px] leading-[60px] text-[#f0df7a] whitespace-nowrap">
+							<span className="font-sans font-bold text-[2.75rem] leading-[3.75rem] text-[#f0df7a] whitespace-nowrap">
 								{t.amount}
 							</span>
 							<span
@@ -104,7 +104,7 @@ export default function TestimonialsCarousel() {
 						</div>
 						<div className="relative z-[1] flex items-center justify-between w-full">
 							<div className="flex flex-col gap-3 w-[235px]">
-								<p className="font-serif text-[42px] text-white leading-[1.1]">
+								<p className="font-serif text-[2.625rem] text-white leading-[1.1]">
 									{t.name}
 								</p>
 								<p className="font-sans font-light text-base text-[#9a9a9a]">

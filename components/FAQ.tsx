@@ -27,7 +27,7 @@ export default function FAQ() {
 			{/* Left */}
 			<div className="flex flex-col gap-5 items-start shrink-0 flex-[1]">
 				<Pill>Before The Call</Pill>
-				<h2 className="font-serif text-[60px] leading-[68px] font-normal text-white">
+				<h2 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white">
 					Questions You
 					<span className="block text-[#f0df7a]">Probably Have</span>
 				</h2>
@@ -62,7 +62,7 @@ export default function FAQ() {
 								{!isOpen && (
 									<div className="absolute inset-0 bg-gradient-to-b from-[rgba(99,99,99,0.2)] to-[rgba(255,255,255,0)] pointer-events-none" />
 								)}
-								<span className="capitalize font-light text-[18px] leading-5 text-white relative">
+								<span className="capitalize font-light text-[1.125rem] leading-5 text-white relative">
 									{q}
 								</span>
 								{/* eslint-disable-next-line @next/next/no-img-element */}

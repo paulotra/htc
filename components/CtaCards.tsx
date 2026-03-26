@@ -46,8 +46,7 @@ const cards: CtaCardData[] = [
 		],
 		ctaText: "Book your HTC mastery call",
 		ctaHref: "/booking",
-		ctaIcon:
-			"/images/figma/ab357bbf-fa5c-4743-af89-87f90cfb66ba.svg",
+		ctaIcon: "/images/figma/ab357bbf-fa5c-4743-af89-87f90cfb66ba.svg",
 		scarcity: "3 spots",
 	},
 	{
@@ -77,28 +76,26 @@ const cards: CtaCardData[] = [
 		],
 		ctaText: "Start free training",
 		ctaHref: "/training",
-		ctaIcon:
-			"/images/figma/8bfb72c0-fdd2-41ca-83ec-d96dc00bd81d.svg",
+		ctaIcon: "/images/figma/8bfb72c0-fdd2-41ca-83ec-d96dc00bd81d.svg",
 	},
 ];
 
 export default function CtaCards() {
 	return (
-		<div className="flex gap-8 justify-center mt-[200px]">
+		<div className="flex flex-wrap gap-8 justify-center mt-20 md:mt-[200px]">
 			{cards.map((card) => (
 				<div
 					key={card.label}
-					className={`cta-card mt-[52px] ${card.variant === "silver" ? "cta-card-silver h-fit" : ""}`}
-					style={{ flex: "0 0 calc(4/12*100%)" }}
+					className={`cta-card mt-[52px] flex-[0_0_100%] lg:flex-[0_0_calc(4/12*100%)] max-w-[480px] ${card.variant === "silver" ? "cta-card-silver h-fit" : ""}`}
 				>
 					<div className="relative flex flex-col">
 						<div className="inline-flex items-center justify-center self-start">
-							<span className="text-xs font-normal tracking-[1.2px] uppercase whitespace-nowrap text-[#9a9a9a]">
+							<span className="text-xs font-normal tracking-[0.075rem] uppercase whitespace-nowrap text-[#9a9a9a]">
 								- {card.label} -
 							</span>
 						</div>
 						<div>
-							<h3 className="font-serif text-[44px] leading-[60px] font-normal text-white">
+							<h3 className="font-serif text-[2.75rem] leading-[3.75rem] font-normal text-white">
 								{card.title}
 								<span
 									className={`block ${card.titleLine2Gold ? "text-[#f0df7a]" : ""}`}
@@ -141,7 +138,7 @@ export default function CtaCards() {
 							<img src={card.ctaIcon} width={24} height={24} alt="" />
 						</a>
 						{card.scarcity && (
-							<p className="text-xs font-normal tracking-[1.2px] uppercase text-[#9a9a9a] text-center">
+							<p className="text-xs font-normal tracking-[0.075rem] uppercase text-[#9a9a9a] text-center">
 								<span className="text-white">{card.scarcity}</span> remaining
 								this week
 							</p>

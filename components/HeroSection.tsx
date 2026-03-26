@@ -5,7 +5,7 @@ export default function HeroSection() {
 	return (
 		<section>
 			<Nav />
-			<div className="relative min-h-screen flex flex-col items-center justify-center pb-[60px]">
+			<div className="relative min-h-screen flex flex-col items-center justify-center pb-[3.75rem]">
 				<div className="max-w-container mx-auto relative overflow-visible flex items-center justify-center">
 					{/* eslint-disable-next-line @next/next/no-img-element */}
 					<img
@@ -17,23 +17,23 @@ export default function HeroSection() {
 					{/* eslint-disable-next-line @next/next/no-img-element */}
 					<img
 						src="/images/name.svg"
-						className="max-w-[1200px] mt-[240px] mx-auto opacity-20"
+						className="max-w-[1200px] mt-[240px] mx-auto opacity-20 w-[88%] lg:w-full"
 						alt=""
 					/>
 					{/* eslint-disable-next-line @next/next/no-img-element */}
 					<img
 						src="/images/bruno.webp"
-						className="absolute z-0 top-[-40px]"
+						className="absolute z-0 top-[60px] md:top-[12px] lg:top-[-40px] w-[120%] max-w-none md:w-full md:max-w-full"
 						alt=""
 					/>
 				</div>
 
 				<div className="flex flex-col gap-[32px] items-center text-center px-7 relative max-w-[760px] w-full">
 					<div className="flex flex-col gap-5 items-center">
-						{/* <div className="border border-white/[0.12] rounded-[30px] px-4 py-2 text-xs font-normal tracking-[2px] uppercase text-white">
+						{/* <div className="border border-white/[0.12] rounded-[30px] px-4 py-2 text-xs font-normal tracking-[0.125rem] uppercase text-white">
 							High Ticket Consulting
 						</div> */}
-						<h1 className="font-serif text-[60px] leading-[64px] font-normal text-white mt-5">
+						<h1 className="font-serif text-[3.75rem] leading-[4rem] font-normal text-white mt-5">
 							The Skill That
 							<span className="block text-[#f0df7a]">Changes Everything</span>
 						</h1>

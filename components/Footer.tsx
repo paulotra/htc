@@ -18,25 +18,9 @@ export default function Footer({ hideCta = false }: FooterProps) {
 				<img
 					src={imgDecorLeft}
 					alt=""
-					className="absolute pointer-events-none"
-					style={{
-						left: -1,
-						top: 80,
-						width: 560,
-						height: 878,
-						objectFit: "fill",
-					}}
+					className="absolute pointer-events-none hidden md:block md:left-[-30%] lg:-left-px top-20 w-[560px] h-[878px] object-fill"
 				/>
-				<div
-					className="absolute pointer-events-none"
-					style={{
-						right: -1,
-						top: 80,
-						width: 560,
-						height: 878,
-						transform: "scaleX(-1)",
-					}}
-				>
+				<div className="absolute pointer-events-none  hidden md:block md:right-[-30%] lg:-right-px top-20 w-[560px] h-[878px] -scale-x-100">
 					{/* eslint-disable-next-line @next/next/no-img-element */}
 					<img
 						src={imgDecorRight}
@@ -50,7 +34,7 @@ export default function Footer({ hideCta = false }: FooterProps) {
 					{!hideCta ? (
 						<div className="flex flex-col gap-5 items-center">
 							<Pill>Your Move</Pill>
-							<h2 className="font-serif text-[60px] leading-[68px] font-normal text-white text-center capitalize">
+							<h2 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white text-center capitalize">
 								Ready to Write Your
 								<br />
 								<span className="gold-text">Own Story?</span>
@@ -62,7 +46,7 @@ export default function Footer({ hideCta = false }: FooterProps) {
 						</div>
 					) : (
 						<div className="flex flex-col gap-5 items-center">
-							<h2 className="font-serif text-[60px] leading-[68px] font-normal text-white text-center capitalize">
+							<h2 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white text-center capitalize">
 								See You
 								<br />
 								<span className="gold-text">On The Call</span>

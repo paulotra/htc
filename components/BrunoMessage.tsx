@@ -13,7 +13,7 @@ export default function BrunoMessage() {
 					<Pill>Watch This Now</Pill>
 
 					{/* Heading */}
-					<h2 className="font-serif text-[60px] leading-[68px] font-normal text-white">
+					<h2 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white">
 						A Message
 						<span className="block text-[#f0df7a]">From Bruno</span>
 					</h2>
@@ -44,7 +44,7 @@ export default function BrunoMessage() {
 							alt=""
 							className="shrink-0"
 						/>
-						<span className="text-xs font-normal tracking-[1.2px] uppercase text-white whitespace-nowrap">
+						<span className="text-xs font-normal tracking-[0.075rem] uppercase text-white whitespace-nowrap">
 							Don&apos;t Miss This Call
 						</span>
 					</div>

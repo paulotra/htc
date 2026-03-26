@@ -252,7 +252,7 @@ export default function BookingPage() {
 				<div className="relative">
 					<div className="flex-[0_0_380px] sticky top-36 flex flex-col gap-8">
 						<div className="flex flex-col gap-3">
-							<h1 className="font-serif text-[32px] leading-[40px] font-normal">
+							<h1 className="font-serif text-[2rem] leading-[2.5rem] font-normal">
 								<span className="text-white">Book Your</span>
 								<span className="block bg-gradient-to-b from-[#f0df7a] from-[0.8%] to-[#c9a572] to-[97.7%] bg-clip-text text-transparent">
 									HTC Mastery Call
@@ -262,7 +262,7 @@ export default function BookingPage() {
 								{["45 min", "Direct with Bruno", "No pitch"].map((label) => (
 									<div
 										key={label}
-										className="border border-[#423a2e] rounded-[4px] px-2 py-1 text-[#9a9a9a] text-[12px] tracking-[1.2px] uppercase whitespace-nowrap"
+										className="border border-[#423a2e] rounded-[4px] px-2 py-1 text-[#9a9a9a] text-[0.75rem] tracking-[0.075rem] uppercase whitespace-nowrap"
 									>
 										{label}
 									</div>
@@ -275,7 +275,7 @@ export default function BookingPage() {
 								<div>
 									<Pill>Almost There</Pill>
 								</div>
-								<h1 className="font-serif text-[32px] leading-[40px] font-normal">
+								<h1 className="font-serif text-[2rem] leading-[2.5rem] font-normal">
 									Pick Your Slot,
 									<span className="block text-[#f0df7a]">
 										{form.fname || "there"}
@@ -301,23 +301,23 @@ export default function BookingPage() {
 							className={`cursor-pointer flex flex-col items-center pt-5 pb-4 border-b-[2px] ${step1Done ? "border-[#F7E280]" : "border-[#FFFFFF]"}`}
 						>
 							<span
-								className={`text-[12px] tracking-[1.2px] uppercase text-[#9a9a9a]`}
+								className={`text-[0.75rem] tracking-[0.075rem] uppercase text-[#9a9a9a]`}
 							>
 								Step 1
 							</span>
 							<span
-								className={`font-serif text-[24px] ${step1Done ? GOLD : "text-white"}`}
+								className={`font-serif text-[1.5rem] ${step1Done ? GOLD : "text-white"}`}
 							>
 								Your Info
 							</span>
 						</div>
 						{/* Step 2 */}
 						<div className="flex flex-col items-center pt-5 pb-4 border-b-[2px] border-[#423a2e]">
-							<span className="text-[12px] tracking-[1.2px] uppercase text-[#9a9a9a]">
+							<span className="text-[0.75rem] tracking-[0.075rem] uppercase text-[#9a9a9a]">
 								Step 2
 							</span>
 							<span
-								className={`font-serif text-[24px] ${step2Done ? GOLD : step1Done ? "text-white" : "text-[#9a9a9a]"}`}
+								className={`font-serif text-[1.5rem] ${step2Done ? GOLD : step1Done ? "text-white" : "text-[#9a9a9a]"}`}
 							>
 								Pick a Time
 							</span>
@@ -354,7 +354,7 @@ export default function BookingPage() {
 										>
 											<div className="flex flex-col gap-1 py-4">
 												<label
-													className={`text-[9px] font-medium tracking-[3px] uppercase ${TEXT}`}
+													className={`text-[0.5625rem] font-medium tracking-[0.1875rem] uppercase ${TEXT}`}
 												>
 													{f.label}
 												</label>
@@ -368,7 +368,7 @@ export default function BookingPage() {
 															onChange={(e) =>
 																handleFieldChange(f.key, e.target.value, i)
 															}
-															className={`w-full bg-transparent text-[15px] font-light outline-none appearance-none border-b border-[#423a2e] py-3 pr-6 focus:border-[#f5c957] transition-colors ${form[f.key] ? "text-white" : "text-[#9a9a9a]"}`}
+															className={`w-full bg-transparent text-[0.9375rem] font-light outline-none appearance-none border-b border-[#423a2e] py-3 pr-6 focus:border-[#f5c957] transition-colors ${form[f.key] ? "text-white" : "text-[#9a9a9a]"}`}
 														>
 															<option value="" disabled>
 																{f.placeholder}
@@ -408,7 +408,7 @@ export default function BookingPage() {
 														onChange={(e) =>
 															handleFieldChange(f.key, e.target.value, i)
 														}
-														className="w-full bg-transparent text-[15px] font-light outline-none placeholder:text-[#9a9a9a] text-white border-b border-[#423a2e] py-3 focus:border-[#f5c957] transition-colors"
+														className="w-full bg-transparent text-[0.9375rem] font-light outline-none placeholder:text-[#9a9a9a] text-white border-b border-[#423a2e] py-3 focus:border-[#f5c957] transition-colors"
 													/>
 												)}
 											</div>
@@ -548,7 +548,7 @@ export default function BookingPage() {
 								</svg>
 							</div>
 							<span
-								className={`text-[9px] font-normal tracking-[4px] uppercase ${GOLD} opacity-70`}
+								className={`text-[0.5625rem] font-normal tracking-[0.25rem] uppercase ${GOLD} opacity-70`}
 							>
 								Booked
 							</span>

@@ -14,10 +14,10 @@ export default function SessionDetails() {
 				<Fragment key={item.label}>
 					{i > 0 && <div className="proof-divider shrink-0" />}
 					<div className="flex flex-col gap-3 items-center text-center flex-1 py-5">
-						<p className="font-serif text-[32px] text-cream leading-normal">
+						<p className="font-serif text-[2rem] text-cream leading-normal">
 							{item.value}
 						</p>
-						<p className="text-[12px] text-muted uppercase tracking-[1.2px]">
+						<p className="text-[0.75rem] text-muted uppercase tracking-[0.075rem]">
 							{item.label}
 						</p>
 					</div>
