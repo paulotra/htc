@@ -7,7 +7,7 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"pages:build": "opennextjs-cloudflare build",
+		"pages:build": "next build && opennextjs-cloudflare build",
 		"preview": "npm run pages:build && wrangler pages dev .open-next/assets --compatibility-flag=nodejs_compat",
 		"deploy": "npm run pages:build && wrangler pages deploy .open-next/assets"
 	},
