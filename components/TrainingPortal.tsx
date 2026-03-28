@@ -371,7 +371,7 @@ function Portal() {
 											</div>
 										</a>
 										<a
-											href="/apply"
+											href="/application"
 											className="htc-path-card border border-[rgba(66,58,46,0.5)] rounded bg-[#0a080480] flex flex-col gap-[16px] cursor-pointer relative overflow-hidden no-underline text-inherit transition-all duration-300"
 											style={{ padding: "32px 28px" }}
 										>
@@ -409,7 +409,7 @@ function Portal() {
 								) : qualifiesForAcademy ? (
 									<>
 										<a
-											href="/apply"
+											href="/application"
 											className="htc-path-card border border-[rgba(201,168,76,0.25)] rounded flex flex-col gap-[16px] cursor-pointer relative overflow-hidden no-underline text-inherit transition-all duration-300"
 											style={{
 												background: "#0a080480",
@@ -874,7 +874,7 @@ function Portal() {
 										</div>
 
 										{!submitted ? (
-											<div className="justify-end items-end flex flex-col gap-[8px]">
+											<div className="justify-end items-end flex flex-col gap-[8px] mt-5">
 												<button
 													className="htc-submit btn-cta-gold inline-flex items-center gap-[12px] text-sm font-semibold min-w-[214px] rounded-[3px] tracking-[0.3px] justify-center transition-all duration-200"
 													style={{

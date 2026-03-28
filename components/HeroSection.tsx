@@ -58,7 +58,7 @@ export default function HeroSection() {
 							/>
 						</Link>
 						<Link
-							href="/apply"
+							href="/application"
 							className="btn-cta-silver flex-1 flex items-center justify-center gap-2.5 px-11 py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"
 						>
 							Start free training

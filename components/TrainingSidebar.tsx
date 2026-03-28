@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { QAnswers, DayData } from "./training-data";
 
 interface TrainingSidebarProps {
@@ -30,8 +31,10 @@ export default function TrainingSidebar({
 		<aside className="htc-sidebar fixed left-0 top-0 bottom-0 w-[300px] bg-[#070707] border-r border-[rgba(66,58,46,0.5)] flex flex-col z-10">
 			{/* Logo */}
 			<div className="px-6 h-[81px] flex items-center shrink-0">
-				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img src="/images/logo.svg" width={180} alt="High Ticket Consulting" />
+				<Link href="/">
+					{/* eslint-disable-next-line @next/next/no-img-element */}
+					<img src="/images/logo.svg" width={180} alt="High Ticket Consulting" />
+				</Link>
 			</div>
 
 			{/* Progress */}

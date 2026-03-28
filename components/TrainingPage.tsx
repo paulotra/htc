@@ -33,6 +33,8 @@ const KEYS = ["A", "B", "C", "D"];
 
 interface Answers {
 	name?: string;
+	email?: string;
+	phone?: string;
 	situation?: string;
 	goal?: string;
 	obstacle?: string;
@@ -44,9 +46,11 @@ export default function TrainingPage() {
 	const [animating, setAnimating] = useState(false);
 	const [answers, setAnswers] = useState<Answers>({});
 	const [error, setError] = useState("");
+	const [submitting, setSubmitting] = useState(false);
 	const nameRef = useRef<HTMLInputElement>(null);
+	const emailRef = useRef<HTMLInputElement>(null);
 
-	const TOTAL = 5;
+	const TOTAL = 6;
 
 	const progress = slide === 0 ? 0 : Math.min((slide / TOTAL) * 100, 100);
 
@@ -67,7 +71,14 @@ export default function TrainingPage() {
 				return;
 			}
 		}
-		if (slide === 5) {
+		if (slide === 2) {
+			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!answers.email?.trim() || !emailPattern.test(answers.email)) {
+				setError("Please enter a valid email address.");
+				return;
+			}
+		}
+		if (slide === 6) {
 			if (!answers.scale) {
 				setError("Please select your commitment level.");
 				return;
@@ -87,14 +98,40 @@ export default function TrainingPage() {
 		setError("");
 	}
 
-	// Focus name input when slide 1 appears
-	useEffect(() => {
-		if (slide === 1) {
-			setTimeout(() => nameRef.current?.focus(), 100);
+	async function startTraining() {
+		setSubmitting(true);
+		try {
+			const response = await fetch("/.netlify/functions/optin", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					name: answers.name || "",
+					email: answers.email || "",
+					phone: answers.phone || "",
+					situation: answers.situation || "",
+					income_goal: answers.goal || "",
+					obstacle: answers.obstacle || "",
+					commitment: answers.scale || "",
+				}),
+			});
+			const data = await response.json();
+			window.location.href = data.redirect;
+		} catch {
+			window.location.href =
+				"/training?token=" +
+				encodeURIComponent(answers.email || "") +
+				"&name=" +
+				encodeURIComponent(answers.name || "") +
+				"&email=" +
+				encodeURIComponent(answers.email || "");
 		}
+	}
+
+	useEffect(() => {
+		if (slide === 1) setTimeout(() => nameRef.current?.focus(), 100);
+		if (slide === 2) setTimeout(() => emailRef.current?.focus(), 100);
 	}, [slide]);
 
-	// Keyboard navigation
 	useEffect(() => {
 		function onKey(e: KeyboardEvent) {
 			if (e.key === "Enter") {
@@ -102,19 +139,19 @@ export default function TrainingPage() {
 					goNext();
 					return;
 				}
-				if (slide === 1 || slide === 5 || slide === 6) {
+				if (slide === 1 || slide === 2 || slide === 6 || slide === 7) {
 					validateAndNext();
 					return;
 				}
 			}
-			const idx = ["a", "b", "c", "d"].indexOf(e.key.toLowerCase());
+			const idx = ["a", "b", "c", "d"].indexOf(e.key?.toLowerCase() ?? "");
 			if (idx !== -1) {
-				if (slide === 2) selectChoice(SITUATIONS[idx]?.key, "situation");
-				if (slide === 3) selectChoice(GOALS[idx]?.key, "goal");
-				if (slide === 4) selectChoice(OBSTACLES[idx]?.key, "obstacle");
+				if (slide === 3) selectChoice(SITUATIONS[idx]?.key, "situation");
+				if (slide === 4) selectChoice(GOALS[idx]?.key, "goal");
+				if (slide === 5) selectChoice(OBSTACLES[idx]?.key, "obstacle");
 			}
-			if (slide === 5 && /^[1-9]$/.test(e.key)) selectScale(parseInt(e.key));
-			if (slide === 5 && e.key === "0") selectScale(10);
+			if (slide === 6 && /^[1-9]$/.test(e.key)) selectScale(parseInt(e.key));
+			if (slide === 6 && e.key === "0") selectScale(10);
 		}
 		window.addEventListener("keydown", onKey);
 		return () => window.removeEventListener("keydown", onKey);
@@ -163,7 +200,7 @@ export default function TrainingPage() {
 				{/* ── Right card ── */}
 				<div className="flex-1 cta-card cta-card-silver !p-0 !bg-black min-h-[calc(100vh_-_168px)] flex flex-col  mt-10 lg:mt-0">
 					{/* Progress bar */}
-					{slide > 0 && slide < 6 && (
+					{slide > 0 && slide < 7 && (
 						<div className="h-[2px] bg-[#1a1a18] rounded-t-sm overflow-hidden">
 							<div
 								className="h-full bg-[#fff] transition-all duration-500"
@@ -242,10 +279,56 @@ export default function TrainingPage() {
 							</div>
 						)}
 
-						{/* ── Slide 2: Situation ── */}
+						{/* ── Slide 2: Email + Phone ── */}
 						{slide === 2 && (
 							<div className={slideClass}>
 								<QNumber n="02" />
+								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
+									What's your email and phone?
+								</p>
+								<p
+									className={`text-base font-light leading-[1.6] -mt-4 ${TEXT}`}
+								>
+									We'll send your training link here.
+								</p>
+								<div className="flex flex-col gap-4 w-full">
+									<input
+										ref={emailRef}
+										type="email"
+										placeholder="your@email.com"
+										autoComplete="email"
+										value={answers.email ?? ""}
+										onChange={(e) => {
+											setAnswers((a) => ({ ...a, email: e.target.value }));
+											setError("");
+										}}
+										onKeyDown={(e) => e.key === "Enter" && validateAndNext()}
+										className="bg-transparent border-b border-[#2a2a2a] focus:border-[#fff] text-white text-[1.375rem] font-light py-3 outline-none w-full transition-colors caret-[#fff] placeholder:text-[#333]"
+									/>
+									<input
+										type="tel"
+										placeholder="Phone number (optional)"
+										autoComplete="tel"
+										value={answers.phone ?? ""}
+										onChange={(e) =>
+											setAnswers((a) => ({ ...a, phone: e.target.value }))
+										}
+										className="bg-transparent border-b border-[#2a2a2a] focus:border-[#fff] text-white text-[1.375rem] font-light py-3 outline-none w-full transition-colors caret-[#fff] placeholder:text-[#333]"
+									/>
+								</div>
+								{error && (
+									<p className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
+										{error}
+									</p>
+								)}
+								<ContinueBtn onClick={validateAndNext} />
+							</div>
+						)}
+
+						{/* ── Slide 3: Situation ── */}
+						{slide === 3 && (
+							<div className={slideClass}>
+								<QNumber n="03" />
 								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
 									What's your current situation?
 								</p>
@@ -268,10 +351,10 @@ export default function TrainingPage() {
 							</div>
 						)}
 
-						{/* ── Slide 3: Income goal ── */}
-						{slide === 3 && (
+						{/* ── Slide 4: Income goal ── */}
+						{slide === 4 && (
 							<div className={slideClass}>
-								<QNumber n="03" />
+								<QNumber n="04" />
 								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
 									What's your monthly income goal for the next 90 days?
 								</p>
@@ -288,10 +371,10 @@ export default function TrainingPage() {
 							</div>
 						)}
 
-						{/* ── Slide 4: Obstacle ── */}
-						{slide === 4 && (
+						{/* ── Slide 5: Obstacle ── */}
+						{slide === 5 && (
 							<div className={slideClass}>
-								<QNumber n="04" />
+								<QNumber n="05" />
 								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
 									What's your biggest obstacle right now?
 								</p>
@@ -308,10 +391,10 @@ export default function TrainingPage() {
 							</div>
 						)}
 
-						{/* ── Slide 5: Commitment scale ── */}
-						{slide === 5 && (
+						{/* ── Slide 6: Commitment scale ── */}
+						{slide === 6 && (
 							<div className={slideClass}>
-								<QNumber n="05" />
+								<QNumber n="06" />
 								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
 									How serious are you — on a scale of 1 to 10?
 								</p>
@@ -372,8 +455,8 @@ export default function TrainingPage() {
 							</div>
 						)}
 
-						{/* ── Slide 6: Complete ── */}
-						{slide === 6 && (
+						{/* ── Slide 7: Complete ── */}
+						{slide === 7 && (
 							<div className={slideClass}>
 								<div className="w-16 h-16 rounded-full border border-[#fff] flex items-center justify-center text-[#fff] mx-auto">
 									<svg
@@ -402,18 +485,24 @@ export default function TrainingPage() {
 									high-ticket offers and what your next move is.
 								</p>
 								<div>
-									<button className="btn-cta-silver w-full max-w-[280px] justify-center inline-flex items-center gap-3 px-10 py-5 rounded-full text-[1rem] font-medium text-white transition-opacity active:opacity-80">
-										Start Day 1 Now
-										<svg
-											width="16"
-											height="16"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeWidth="2"
-										>
-											<path d="M5 12h14M12 5l7 7-7 7" />
-										</svg>
+									<button
+										onClick={startTraining}
+										disabled={submitting}
+										className="btn-cta-silver w-full max-w-[280px] justify-center inline-flex items-center gap-3 px-10 py-5 rounded-full text-[1rem] font-medium text-white transition-opacity active:opacity-80 disabled:opacity-60"
+									>
+										{submitting ? "Sending..." : "Start Day 1 Now"}
+										{!submitting && (
+											<svg
+												width="16"
+												height="16"
+												viewBox="0 0 24 24"
+												fill="none"
+												stroke="currentColor"
+												strokeWidth="2"
+											>
+												<path d="M5 12h14M12 5l7 7-7 7" />
+											</svg>
+										)}
 									</button>
 								</div>
 							</div>
@@ -421,7 +510,7 @@ export default function TrainingPage() {
 					</div>
 
 					{/* Slide counter */}
-					{slide > 0 && slide < 6 && (
+					{slide > 0 && slide < 7 && (
 						<div
 							className={`px-10 pb-6 text-[0.75rem] tracking-[0.125rem] ${TEXT}`}
 						>
