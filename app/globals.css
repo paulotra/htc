@@ -59,6 +59,12 @@
 	button {
 		touch-action: manipulation;
 	}
+
+	a {
+		&:hover {
+			color: #f5c957;
+		}
+	}
 }
 
 @layer components {
@@ -71,6 +77,17 @@
 			transparent 60%
 		);
 		box-shadow: inset 0px -2px 14px 0px #ffc26c;
+		transition: all 0.24s !important;
+
+		&:hover {
+			background: radial-gradient(
+				ellipse 100% 180% at 50% 140%,
+				rgba(201, 165, 114, 0.7) 0%,
+				transparent 80%
+			);
+			color: #fff;
+			box-shadow: inset 0px 0px 20px 0px #ffc26c;
+		}
 	}
 
 	.btn-cta-silver {
@@ -82,6 +99,18 @@
 			transparent 70%
 		);
 		box-shadow: inset 0px -2px 14px 0px rgba(255, 255, 255, 0.5);
+		transition: all 0.24s !important;
+
+		&:hover {
+			background: radial-gradient(
+				ellipse 100% 180% at 50% 140%,
+				rgba(255, 255, 255, 0.65) 0%,
+				rgba(164, 164, 164, 0.2) 50%,
+				transparent 84%
+			);
+			color: #fff;
+			box-shadow: inset 0px 0px 20px 0px rgba(255, 255, 255, 0.5);
+		}
 	}
 
 	/* ── Proof bar ── */
