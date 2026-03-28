@@ -1,20 +1,71 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+
 interface NavProps {
 	badge?: string;
 	border?: boolean;
 }
 
-import Link from "next/link";
-
 export default function Nav({
 	badge = "3 Spots Open",
 	border = false,
 }: NavProps) {
+	const innerRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		const el = innerRef.current;
+		if (!el) return;
+
+		const nav = el.closest("nav") as HTMLElement;
+
+		const onScroll = () => {
+			if (window.scrollY > 40) {
+				gsap.to(el, {
+					paddingTop: 12,
+					paddingBottom: 12,
+					duration: 0.3,
+					ease: "power2.out",
+				});
+				gsap.to(nav, {
+					backgroundColor: "rgba(255,255,255,0.064)",
+					backdropFilter: "blur(16px) saturate(1.4)",
+					duration: 0.3,
+					ease: "power2.out",
+				});
+			} else {
+				gsap.to(el, {
+					paddingTop: border ? 16 : 32,
+					paddingBottom: border ? 16 : 32,
+					duration: 0.3,
+					ease: "power2.out",
+				});
+				gsap.to(nav, {
+					backgroundColor: "rgba(255,10,9,0)",
+					backdropFilter: "blur(0px) saturate(1)",
+					duration: 0.3,
+					ease: "power2.out",
+				});
+			}
+		};
+
+		window.addEventListener("scroll", onScroll, { passive: true });
+		return () => window.removeEventListener("scroll", onScroll);
+	}, [border]);
+
 	return (
 		<nav
 			className={`fixed top-0 left-0 right-0 z-[100] w-full${border ? " border-b border-[#423a2e]" : ""}`}
 		>
 			<div
-				className={`max-w-container px-5 py-8 md:px-7 mx-auto flex-1 flex flex-col md:flex-row items-center justify-between ${border ? "pb-4 md:py-4" : "md:py-7"}`}
+				ref={innerRef}
+				className="max-w-container px-5 md:px-7 mx-auto flex-1 flex flex-col md:flex-row items-center justify-between"
+				style={{
+					paddingTop: border ? 16 : 32,
+					paddingBottom: border ? 16 : 32,
+				}}
 			>
 				<Link
 					href="/"
