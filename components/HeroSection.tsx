@@ -33,17 +33,26 @@ export default function HeroSection() {
 						{/* <div className="border border-white/[0.12] rounded-[30px] px-4 py-2 text-xs font-normal tracking-[0.125rem] uppercase text-white">
 							High Ticket Consulting
 						</div> */}
-						<h1 className="font-serif text-[3.75rem] leading-[4rem] font-normal text-white mt-5">
+						<h1
+							data-gsap="hero-title"
+							className="font-serif text-[3.75rem] leading-[4rem] font-normal text-white mt-5"
+						>
 							The Skill That
 							<span className="block text-[#f0df7a]">Changes Everything</span>
 						</h1>
-						<p className="text-lg font-light leading-8 text-[#9a9a9a] max-w-[500px]">
+						<p
+							data-gsap="hero-sub"
+							className="text-lg font-light leading-8 text-[#9a9a9a] max-w-[500px]"
+						>
 							High ticket closing. The highest-leverage skill available right
 							now. Two ways to start.
 						</p>
 					</div>
 
-					<div className="flex gap-5 flex-wrap justify-center w-full">
+					<div
+						data-gsap="hero-ctas"
+						className="flex gap-5 flex-wrap justify-center w-full"
+					>
 						<Link
 							href="/booking"
 							className="btn-cta-gold flex-1 flex items-center justify-center gap-2.5 px-11 py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"

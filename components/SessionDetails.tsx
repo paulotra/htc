@@ -9,11 +9,11 @@ const items = [
 
 export default function SessionDetails() {
 	return (
-		<div className="md:flex items-center w-full mt-10 md:mt-[120px]">
+		<div data-gsap="stagger-parent" className="md:flex items-center w-full mt-10 md:mt-[120px]">
 			{items.map((item, i) => (
 				<Fragment key={item.label}>
 					{i > 0 && <div className="proof-divider shrink-0" />}
-					<div className="flex flex-col gap-3 items-center text-center flex-1 py-5">
+					<div data-gsap="stagger-child" className="flex flex-col gap-3 items-center text-center flex-1 py-5">
 						<p className="font-serif text-[2rem] text-cream leading-normal">
 							{item.value}
 						</p>

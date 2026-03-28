@@ -1,6 +1,7 @@
 export default function PillStar() {
 	return (
 		<div
+			data-gsap="fade-up"
 			className="pill-star-wrap md:mt-[-40px]"
 			style={{ paddingTop: "52px" }}
 		>

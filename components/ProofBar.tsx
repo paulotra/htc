@@ -13,11 +13,11 @@ const stats: ProofStat[] = [
 
 export default function ProofBar() {
 	return (
-		<div className="md:flex items-stretch justify-center max-w-[1000px] mt-[3.75rem] mx-auto px-4 pb-6">
+		<div data-gsap="stagger-parent" className="md:flex items-stretch justify-center max-w-[1000px] mt-[3.75rem] mx-auto px-4 pb-6">
 			{stats.map((stat, i) => (
 				<Fragment key={stat.value}>
 					{i > 0 && <div className="proof-divider" />}
-					<div className="relative flex flex-col gap-1 items-center justify-center px-11 py-6 md:py-8 md:pb-10 rounded-[20px] flex-1">
+					<div data-gsap="stagger-child" className="relative flex flex-col gap-1 items-center justify-center px-11 py-6 md:py-8 md:pb-10 rounded-[20px] flex-1">
 						<div className="font-serif gold-text text-[clamp(36px,4.5vw,60px)] leading-none text-center whitespace-nowrap">
 							{stat.value}
 						</div>

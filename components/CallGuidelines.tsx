@@ -45,10 +45,10 @@ const guidelines: Guideline[] = [
 
 export default function CallGuidelines() {
 	return (
-		<section className="flex flex-col gap-[40px] items-center mt-20 md:mt-[160px]">
-			<Pill>Before The Call</Pill>
+		<section data-gsap="stagger-parent" className="flex flex-col gap-[40px] items-center mt-20 md:mt-[160px]">
+			<div data-gsap="stagger-child"><Pill>Before The Call</Pill></div>
 
-			<div className="flex flex-col gap-[40px] w-full">
+			<div data-gsap="stagger-child" className="flex flex-col gap-[40px] w-full">
 				{guidelines.map((item, i) => {
 					const isLast = i === guidelines.length - 1;
 

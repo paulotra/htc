@@ -5,10 +5,12 @@ import PillStar from "@/components/PillStar";
 import CtaCards from "@/components/CtaCards";
 import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import Footer from "@/components/Footer";
+import HomeAnimations from "@/components/HomeAnimations";
 
 export default function Home() {
 	return (
 		<main className="bg-[url(/images/hero-bg.webp)] [background-size:1000px] bg-top bg-no-repeat lg:bg-[length:1800px]">
+			<HomeAnimations />
 			<HeroSection />
 			<ProofBar />
 			<div className="relative pb-[10rem]">

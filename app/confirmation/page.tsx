@@ -6,6 +6,7 @@ import SessionDetails from "@/components/SessionDetails";
 import CallGuidelines from "@/components/CallGuidelines";
 import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import FAQ from "@/components/FAQ";
+import ConfirmationAnimations from "@/components/ConfirmationAnimations";
 
 export const metadata: Metadata = {
 	title: "HTC — Booking Confirmed",
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default function ConfirmationPage() {
 	return (
 		<div>
+			<ConfirmationAnimations />
 			<div className="relative z-10 max-w-container mx-auto px-7 flex flex-col">
 				<Nav badge="Call Confirmed" />
 				<main
@@ -31,7 +33,7 @@ export default function ConfirmationPage() {
 						alt=""
 					/>
 					{/* eslint-disable-next-line @next/next/no-img-element */}
-					<div className="flex-1 flex flex-col items-center justify-center text-center gap-8 pt-20 pb-20">
+					<div data-gsap="confirm-header" className="flex-1 flex flex-col items-center justify-center text-center gap-8 pt-20 pb-20">
 						<img
 							src="/images/figma/57a5ad31-52f7-44a9-adb0-b632819f627c.svg"
 							className="md:mt-12 mt-20 w-[80px] md:w-[120px] h-[80px] md:h-[120px]"

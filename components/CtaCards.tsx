@@ -82,9 +82,10 @@ const cards: CtaCardData[] = [
 
 export default function CtaCards() {
 	return (
-		<div className="flex flex-wrap gap-8 justify-center mt-20 md:mt-[200px]">
+		<div data-gsap="stagger-parent" className="flex flex-wrap gap-8 justify-center mt-20 md:mt-[200px]">
 			{cards.map((card) => (
 				<div
+					data-gsap="stagger-child"
 					key={card.label}
 					className={`cta-card mt-[52px] flex-[0_0_100%] lg:flex-[0_0_calc(4/12*100%)] max-w-[480px] ${card.variant === "silver" ? "cta-card-silver h-fit" : ""}`}
 				>

@@ -1,7 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 import Pill from "./Pill";
 
 interface Testimonial {
@@ -130,7 +133,39 @@ function TestimonialCard({ t }: { t: Testimonial }) {
 
 export default function TestimonialsCarousel() {
 	const trackRef = useRef<HTMLDivElement>(null);
+	const sectionRef = useRef<HTMLElement>(null);
 	const [index, setIndex] = useState(0);
+
+	useEffect(() => {
+		const section = sectionRef.current;
+		if (!section) return;
+
+		const ctx = gsap.context(() => {
+			const headingEls = section.querySelectorAll("[data-gsap-tc]");
+			gsap.from(headingEls, {
+				scrollTrigger: { trigger: section, start: "top 88%", once: true },
+				y: 24,
+				opacity: 0,
+				duration: 0.55,
+				ease: "power3.out",
+				stagger: 0.1,
+			});
+
+			const cards = section.querySelectorAll(".tc-card");
+			gsap.from(cards, {
+				scrollTrigger: { trigger: trackRef.current, start: "top 90%", once: true },
+				y: 36,
+				opacity: 0,
+				duration: 0.5,
+				ease: "power3.out",
+				stagger: 0.08,
+			});
+		}, section);
+
+		requestAnimationFrame(() => ScrollTrigger.refresh());
+
+		return () => ctx.revert();
+	}, []);
 
 	function goTo(next: number) {
 		const clamped = Math.max(0, Math.min(next, MAX_INDEX));
@@ -143,14 +178,22 @@ export default function TestimonialsCarousel() {
 	}
 
 	return (
-		<section>
+		<section ref={sectionRef}>
 			<div className="flex flex-col items-center text-center max-w-[800px] mx-auto mt-20 md:mt-[160px]">
-				<Pill>Real Results</Pill>
-				<h2 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white mt-5">
+				<div data-gsap-tc>
+					<Pill>Real Results</Pill>
+				</div>
+				<h2
+					data-gsap-tc
+					className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white mt-5"
+				>
 					What Our
 					<span className="block text-[#f0df7a]">Closer Says</span>
 				</h2>
-				<p className="text-lg font-light leading-8 text-[#9a9a9a] mt-5">
+				<p
+					data-gsap-tc
+					className="text-lg font-light leading-8 text-[#9a9a9a] mt-5"
+				>
 					Over 50 digital experts have already transformed their brands with my
 					proven strategies. Get Ready to join them and create a brand that
 					works for you.
@@ -213,7 +256,7 @@ export default function TestimonialsCarousel() {
 				</button>
 
 				{/* Dots */}
-				<div className="flex justify-center gap-2 mt-8transition-opacity">
+				<div className="flex justify-center gap-2 mt-8 transition-opacity">
 					{Array.from({ length: MAX_INDEX + 1 }).map((_, i) => (
 						<button
 							key={i}

@@ -32,30 +32,53 @@ export default function Footer({ hideCta = false }: FooterProps) {
 				{/* Content */}
 				<div className="relative flex flex-col gap-[32px] items-center max-w-container w-full z-[1] px-7">
 					{!hideCta ? (
-						<div className="flex flex-col gap-5 items-center">
-							<Pill>Your Move</Pill>
-							<h2 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white text-center capitalize">
+						<div
+							data-gsap="stagger-parent"
+							className="flex flex-col gap-5 items-center"
+						>
+							<div data-gsap="stagger-child">
+								<Pill>Your Move</Pill>
+							</div>
+							<h2
+								data-gsap="stagger-child"
+								className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white text-center capitalize"
+							>
 								Ready to Write Your
 								<br />
 								<span className="gold-text">Own Story?</span>
 							</h2>
-							<p className="font-light text-lg text-[#9a9a9a] text-center max-w-[520px]">
+							<p
+								data-gsap="stagger-child"
+								className="font-light text-lg text-[#9a9a9a] text-center max-w-[520px]"
+							>
 								Every closer above started exactly where you are. The only
 								difference is they decided.
 							</p>
 						</div>
 					) : (
-						<div className="flex flex-col gap-5 items-center">
-							<h2 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white text-center capitalize">
+						<div
+							data-gsap="stagger-parent"
+							className="flex flex-col gap-5 items-center"
+						>
+							<h2
+								data-gsap="stagger-child"
+								className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white text-center capitalize"
+							>
 								See You
 								<br />
 								<span className="gold-text">On The Call</span>
 							</h2>
-							<p className="font-light text-lg text-[#9a9a9a] text-center">
+							<p
+								data-gsap="stagger-child"
+								className="font-light text-lg text-[#9a9a9a] text-center"
+							>
 								Every closer above started with one decision. You just made
 								yours. See you on the call.
 							</p>
-							<p className="font-light text-lg text-[#9a9a9a] text-center">
+							<p
+								data-gsap="stagger-child"
+								className="font-light text-lg text-[#9a9a9a] text-center"
+							>
 								- Bruno Bajrami
 							</p>
 						</div>
@@ -63,6 +86,7 @@ export default function Footer({ hideCta = false }: FooterProps) {
 
 					{!hideCta && (
 						<Link
+							data-gsap="fade-up"
 							href="/booking"
 							className="btn-cta-gold flex items-center justify-center gap-2.5 px-11 py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"
 						>
