@@ -45,7 +45,7 @@ export default function TrainingSidebar({
 						style={{ width: progressPct + "%" }}
 					/>
 				</div>
-				<p className="text-[12px] text-white">
+				<p className="text-xs text-white">
 					<span className="font-bold text-gold">{completedDays}</span>
 					{" of 5 days completed"}
 				</p>
@@ -67,7 +67,7 @@ export default function TrainingSidebar({
 						<div
 							key={i}
 							onClick={() => (isUnlocked ? onGoToDay(i) : undefined)}
-							className={`flex gap-[10px] items-start px-6 py-4 border-b border-[rgba(66,58,46,0.5)] transition-all ${isUnlocked ? "cursor-pointer" : "cursor-default opacity-20"}`}
+							className={`flex gap-[10px] items-start pl-4 pr-6 py-4 border-b border-[rgba(66,58,46,0.5)] transition-all ${isUnlocked ? "cursor-pointer" : "cursor-default opacity-20"}`}
 							style={
 								isActive
 									? {
@@ -180,7 +180,7 @@ export default function TrainingSidebar({
 					<span className="font-bold text-gold text-[26px] leading-none">
 						{totalScore}
 					</span>
-					<span className="text-white text-[14px] leading-[1.6] relative top-[2px] left-[2px]">
+					<span className="text-white text-sm leading-[1.6] relative top-[2px] left-[2px]">
 						/ 15
 					</span>
 				</div>
@@ -214,7 +214,7 @@ export default function TrainingSidebar({
 				</div>
 				<button
 					onClick={onOpenRecovery}
-					className="text-[#9a9a9a] text-[12px] font-light hover:text-white transition-colors text-center w-full"
+					className="text-[#9a9a9a] text-xs font-light hover:text-white transition-colors text-center w-full"
 				>
 					Lost your link?
 				</button>

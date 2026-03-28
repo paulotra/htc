@@ -41,7 +41,6 @@ function Portal() {
 	const [quizPassed, setQuizPassed] = useState<QFlags>({});
 	const [totalScore, setTotalScore] = useState(0);
 	const [showCompletion, setShowCompletion] = useState(false);
-	const [certActive, setCertActive] = useState(false);
 	const [playedVideo, setPlayedVideo] = useState(false);
 	const [toastMsg, setToastMsg] = useState("");
 	const [toastVisible, setToastVisible] = useState(false);
@@ -170,7 +169,6 @@ function Portal() {
 	};
 
 	const triggerCompletion = () => {
-		setCertActive(true);
 		setShowCompletion(true);
 		window.scrollTo({ top: 0, behavior: "smooth" });
 		const tier = totalScore >= 12 ? "qualified" : "unqualified";
@@ -188,16 +186,17 @@ function Portal() {
 			day: "numeric",
 		});
 		const certHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>HTC Certificate</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400&family=DM+Mono:wght@400&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{background:#070707;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:40px;font-family:'DM Sans',sans-serif}.cert{background:#0d0a00;border:1px solid rgba(201,168,76,0.4);max-width:760px;width:100%;padding:72px 80px;position:relative;text-align:center}.cert::before,.cert::after{content:'';position:absolute;width:60px;height:60px;border-color:rgba(201,168,76,0.3);border-style:solid}.cert::before{top:16px;left:16px;border-width:1px 0 0 1px}.cert::after{bottom:16px;right:16px;border-width:0 1px 1px 0}.logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:#c9a84c;letter-spacing:4px;margin-bottom:40px}.presents{font-family:'DM Mono',monospace;font-size:10px;color:#555;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}.name{font-family:'Playfair Display',serif;font-size:40px;font-style:italic;color:#c9a84c;margin-bottom:16px}.title{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:#f4efe5;line-height:1.05;margin-bottom:8px}.title em{font-style:italic;color:#c9a84c}.divider{width:60px;height:1px;background:rgba(201,168,76,0.4);margin:32px auto}.score{font-family:'DM Mono',monospace;font-size:12px;color:#555;letter-spacing:3px;margin-bottom:24px}.score span{color:#c9a84c}.body{font-size:15px;color:#9a9080;line-height:1.7;max-width:480px;margin:0 auto 48px;font-weight:300}.footer{display:flex;justify-content:space-between;align-items:flex-end;padding-top:40px;border-top:1px solid #1c1c1c}.sig-name{font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:#f4efe5}.sig-role{font-family:'DM Mono',monospace;font-size:10px;color:#555;letter-spacing:3px;text-transform:uppercase;margin-top:4px}.date{font-family:'DM Mono',monospace;font-size:10px;color:#555;letter-spacing:2px}</style></head><body><div class="cert"><div class="logo">HTC</div><div class="presents">High Ticket Consulting — Certifies That</div><div class="name">${name}</div><div class="title">HTC <em>Foundation</em><br>Certificate</div><div class="divider"></div><div class="score">Quiz Score: <span>${totalScore} / 15</span></div><div class="body">Has successfully completed the HTC 5-Day Closer Training — demonstrating commitment, discipline, and the foundational knowledge required to operate as a high-ticket remote closer.</div><div class="footer"><div><div class="sig-name">Bruno Bajrami</div><div class="sig-role">Founder, High Ticket Consulting</div></div><div class="date">${today}</div></div></div></body></html>`;
-		const win = window.open("", "_blank");
-		if (win) {
-			win.document.write(certHTML);
-			win.document.close();
-		}
+		const blob = new Blob([certHTML], { type: "text/html" });
+		const url = URL.createObjectURL(blob);
+		const win = window.open(url, "_blank");
+		if (win) win.focus();
+		setTimeout(() => URL.revokeObjectURL(url), 60000);
 	};
 
 	const d = DAYS[currentDay];
 	const isLocked = currentDay >= unlockedDays;
 	const isDone = currentDay < completedDays;
+	const certActive = completedDays >= 5;
 	const submitted = quizSubmitted[currentDay];
 	const passed = quizPassed[currentDay];
 	const answers = quizAnswers[currentDay] || {};
@@ -215,13 +214,7 @@ function Portal() {
 				: "Retake Recommended";
 
 	return (
-		<div
-			style={{
-				background: C.black,
-				minHeight: "100vh",
-				display: "flex",
-			}}
-		>
+		<div className="bg-[#070707] min-h-screen flex">
 			{/* SIDEBAR */}
 			<TrainingSidebar
 				days={DAYS}
@@ -237,14 +230,8 @@ function Portal() {
 
 			{/* MAIN */}
 			<main
-				className="htc-main relative"
-				style={{
-					marginLeft: 300,
-					minHeight: "100vh",
-					display: "flex",
-					flexDirection: "column",
-					flex: 1,
-				}}
+				className="htc-main relative flex flex-col flex-1 min-h-screen"
+				style={{ marginLeft: 300 }}
 			>
 				{/* TOPBAR */}
 				<TrainingNav
@@ -254,12 +241,9 @@ function Portal() {
 				/>
 
 				{/* CONTENT */}
-				<div
-					className="htc-content"
-					style={{ flex: 1, padding: "56px 48px", maxWidth: 900 }}
-				>
+				<div className="htc-content flex-1 max-w-[900px] px-7 py-8">
 					<div
-						className="absolute inset-0 opacity-50 z-0"
+						className="absolute inset-0 opacity-50 z-0 pointer-events-none"
 						style={{
 							backgroundImage: "url(/images/middle.webp)",
 							backgroundPosition: "center center",
@@ -271,275 +255,108 @@ function Portal() {
 					{showCompletion ? (
 						<div style={{ animation: "fadeUp 0.7s ease forwards" }}>
 							<div
+								className="rounded border border-[rgba(201,168,76,0.25)] relative overflow-hidden mb-[40px]"
 								style={{
-									background:
-										"linear-gradient(135deg,#0d0a00 0%,#111008 50%,#0a0a0a 100%)",
-									border: `1px solid ${C.borderGold}`,
-									borderRadius: 4,
+									background: "#0a080480",
 									padding: "56px 48px",
-									position: "relative",
-									overflow: "hidden",
-									marginBottom: 40,
 								}}
 							>
-								<div
-									style={{
-										fontSize: 10,
-										color: C.gold,
-										letterSpacing: 5,
-										textTransform: "uppercase",
-										marginBottom: 24,
-										display: "flex",
-										alignItems: "center",
-										gap: 12,
-									}}
-								>
+								<div className="text-[10px] text-[#c9a84c] tracking-[5px] uppercase mb-[24px] flex items-center gap-[12px]">
 									<span
-										style={{
-											display: "inline-block",
-											width: 20,
-											height: 1,
-											background: C.gold,
-										}}
+										className="inline-block h-px bg-[#c9a84c]"
+										style={{ width: 20 }}
 									/>
 									Training Complete
 								</div>
-								<div
-									style={{
-										fontFamily: "'Playfair Display',serif",
-										fontSize: "clamp(40px,6vw,64px)",
-										fontWeight: 900,
-										lineHeight: 1,
-										color: C.white,
-										marginBottom: 20,
-									}}
-								>
+								<div className="font-serif leading-none text-[#f4efe5] mb-[20px] text-5xl">
 									You&apos;ve done what
 									<br />
-									<em style={{ fontStyle: "italic", color: C.gold }}>
+									<span className="text-[#c9a84c]">
 										99% of people won&apos;t.
-									</em>
+									</span>
 								</div>
-								<div
-									style={{
-										fontSize: 16,
-										color: C.text,
-										lineHeight: 1.75,
-										maxWidth: 520,
-										fontWeight: 300,
-									}}
-								>
+								<div className="text-base text-[#9a9080] leading-[1.75] max-w-[520px] font-light">
 									Most people who found this training never finished Day 1. You
 									just finished all 5 — and proved you actually paid attention.
 									That tells me everything I need to know about you, {name}.
 								</div>
-								<div
-									style={{
-										display: "flex",
-										gap: 40,
-										marginTop: 36,
-										paddingTop: 36,
-										borderTop: `1px solid ${C.border}`,
-										flexWrap: "wrap",
-									}}
-								>
+								<div className="flex gap-[40px] mt-[36px] pt-[36px] border-t border-[rgba(66,58,46,0.5)] flex-wrap">
 									<div>
-										<div
-											style={{
-												fontFamily: "'Playfair Display',serif",
-												fontSize: 32,
-												fontWeight: 700,
-												color: C.gold,
-												lineHeight: 1,
-											}}
-										>
+										<div className="font-serif text-2xl font-bold text-[#c9a84c] leading-none">
 											5
 										</div>
-										<div
-											style={{
-												fontSize: 10,
-												color: C.muted,
-												letterSpacing: 3,
-												textTransform: "uppercase",
-												marginTop: 6,
-											}}
-										>
+										<div className="text-[10px] text-[#555] tracking-[3px] uppercase mt-[6px]">
 											Days Completed
 										</div>
 									</div>
 									<div>
 										<div
-											style={{
-												fontFamily: "'Playfair Display',serif",
-												fontSize: 32,
-												fontWeight: 700,
-												color: scoreColor,
-												lineHeight: 1,
-											}}
+											className="font-serif text-2xl font-bold leading-none"
+											style={{ color: scoreColor }}
 										>
 											{score}/15
 										</div>
-										<div
-											style={{
-												fontSize: 10,
-												color: C.muted,
-												letterSpacing: 3,
-												textTransform: "uppercase",
-												marginTop: 6,
-											}}
-										>
+										<div className="text-[10px] text-[#555] tracking-[3px] uppercase mt-[6px]">
 											Quiz Score
 										</div>
 									</div>
 									<div>
 										<div
-											style={{
-												fontFamily: "'Playfair Display',serif",
-												fontSize: 18,
-												fontWeight: 700,
-												color: scoreColor,
-												lineHeight: 1,
-												paddingTop: 6,
-											}}
+											className="font-serif text-2xl font-bold leading-none"
+											style={{ color: scoreColor }}
 										>
 											{scoreLabel}
 										</div>
-										<div
-											style={{
-												fontSize: 10,
-												color: C.muted,
-												letterSpacing: 3,
-												textTransform: "uppercase",
-												marginTop: 6,
-											}}
-										>
+										<div className="text-[10px] text-[#555] tracking-[3px] uppercase mt-[6px]">
 											Your Status
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div
-								style={{
-									fontSize: 10,
-									color: C.muted,
-									letterSpacing: 4,
-									textTransform: "uppercase",
-									marginBottom: 20,
-									display: "flex",
-									alignItems: "center",
-									gap: 16,
-								}}
-							>
+							<div className="text-[10px] text-[#555] tracking-[4px] uppercase mb-[20px] flex items-center gap-[16px]">
 								Your Next Move — Based on Your Score
-								<span
-									style={{
-										flex: 1,
-										height: 1,
-										background: C.border,
-										display: "block",
-									}}
-								/>
+								<span className="flex-1 h-px bg-[rgba(66,58,46,0.5)] block" />
 							</div>
 
 							<div
-								className="htc-paths-grid"
+								className="htc-paths-grid mb-[48px]"
 								style={{
 									display: "grid",
 									gridTemplateColumns:
 										qualifiesForCall || qualifiesForAcademy ? "1fr 1fr" : "1fr",
 									gap: 16,
-									marginBottom: 48,
 								}}
 							>
 								{qualifiesForCall ? (
 									<>
 										<a
 											href="/booking"
-											className="htc-path-card"
+											className="htc-path-card border border-[rgba(201,168,76,0.25)] rounded flex flex-col gap-[16px] cursor-pointer relative overflow-hidden no-underline text-inherit transition-all duration-300"
 											style={{
-												border: `1px solid ${C.borderGold}`,
-												borderRadius: 4,
+												background: "#0a080480",
 												padding: "32px 28px",
-												display: "flex",
-												flexDirection: "column",
-												gap: 16,
-												cursor: "pointer",
-												background:
-													"linear-gradient(135deg,#131108 0%,#111111 100%)",
-												textDecoration: "none",
-												color: "inherit",
-												transition: "all 0.3s",
-												position: "relative",
-												overflow: "hidden",
 											}}
 										>
-											<div
-												style={{
-													fontSize: 9,
-													letterSpacing: 3,
-													textTransform: "uppercase",
-													padding: "4px 10px",
-													borderRadius: 2,
-													alignSelf: "flex-start",
-													background: C.gold,
-													color: C.black,
-												}}
-											>
+											<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] self-start bg-[#c9a84c] text-[#070707]">
 												You Qualified — {score}/15
 											</div>
-											<div
-												style={{
-													fontFamily: "'Playfair Display',serif",
-													fontSize: 24,
-													fontWeight: 700,
-													color: C.white,
-													lineHeight: 1.2,
-												}}
-											>
+											<div className="font-serif text-[24px] font-bold text-[#f4efe5] leading-[1.2]">
 												Book a Free Strategy Call
 											</div>
-											<div
-												style={{
-													fontSize: 14,
-													color: C.text,
-													lineHeight: 1.65,
-													fontWeight: 300,
-													flex: 1,
-												}}
-											>
+											<div className="text-sm text-[#9a9080] leading-[1.65] font-light flex-1">
 												You scored {score}/15. That puts you in the top tier. I
 												take 5 strategy calls a week — I&apos;ll personally map
 												out your next 90 days, your offer, your income targets.
 												This is reserved for people who prove they&apos;re
 												serious. You did.
 											</div>
-											<div
-												style={{
-													fontSize: 12,
-													color: C.gold,
-													letterSpacing: 2,
-												}}
-											>
+											<div className="text-xs text-[#c9a84c] tracking-[2px]">
 												Free · 45 minutes · Limited to 5 spots/week
 											</div>
-											<div
-												style={{
-													display: "flex",
-													alignItems: "center",
-													justifyContent: "space-between",
-													paddingTop: 16,
-													borderTop: `1px solid ${C.border}`,
-												}}
-											>
-												<div
-													style={{
-														fontSize: 13,
-														fontWeight: 500,
-														color: C.white,
-													}}
-												>
-													Book my call →
+											<div className="flex items-center justify-between pt-[16px] border-t border-[rgba(66,58,46,0.5)]">
+												<div className="text-[13px] font-medium text-[#f4efe5]">
+													Book my call
 												</div>
 												<svg
 													width="18"
@@ -555,88 +372,26 @@ function Portal() {
 										</a>
 										<a
 											href="/apply"
-											className="htc-path-card"
-											style={{
-												border: `1px solid ${C.border}`,
-												borderRadius: 4,
-												padding: "32px 28px",
-												display: "flex",
-												flexDirection: "column",
-												gap: 16,
-												cursor: "pointer",
-												background: C.card,
-												textDecoration: "none",
-												color: "inherit",
-												transition: "all 0.3s",
-												position: "relative",
-												overflow: "hidden",
-											}}
+											className="htc-path-card border border-[rgba(66,58,46,0.5)] rounded bg-[#0a080480] flex flex-col gap-[16px] cursor-pointer relative overflow-hidden no-underline text-inherit transition-all duration-300"
+											style={{ padding: "32px 28px" }}
 										>
-											<div
-												style={{
-													fontSize: 9,
-													letterSpacing: 3,
-													textTransform: "uppercase",
-													padding: "4px 10px",
-													borderRadius: 2,
-													alignSelf: "flex-start",
-													background: "transparent",
-													border: `1px solid ${C.borderGold}`,
-													color: C.gold,
-												}}
-											>
+											<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] self-start bg-transparent border border-[rgba(201,168,76,0.25)] text-[#c9a84c]">
 												Alternative
 											</div>
-											<div
-												style={{
-													fontFamily: "'Playfair Display',serif",
-													fontSize: 24,
-													fontWeight: 700,
-													color: C.white,
-													lineHeight: 1.2,
-												}}
-											>
+											<div className="font-serif text-[24px] font-bold text-[#f4efe5] leading-[1.2]">
 												Join HTC Academy
 											</div>
-											<div
-												style={{
-													fontSize: 14,
-													color: C.text,
-													lineHeight: 1.65,
-													fontWeight: 300,
-													flex: 1,
-												}}
-											>
+											<div className="text-sm text-[#9a9080] leading-[1.65] font-light flex-1">
 												Can&apos;t wait for a call slot? HTC Academy gets you
 												started immediately. Full curriculum, live Zoom sessions
 												every 2 weeks, direct path to HTC Mastery.
 											</div>
-											<div
-												style={{
-													fontSize: 12,
-													color: C.muted,
-													letterSpacing: 2,
-												}}
-											>
+											<div className="text-xs text-[#555] tracking-[2px]">
 												$297 one-time · Instant access
 											</div>
-											<div
-												style={{
-													display: "flex",
-													alignItems: "center",
-													justifyContent: "space-between",
-													paddingTop: 16,
-													borderTop: `1px solid ${C.border}`,
-												}}
-											>
-												<div
-													style={{
-														fontSize: 13,
-														fontWeight: 500,
-														color: C.white,
-													}}
-												>
-													Join Academy →
+											<div className="flex items-center justify-between pt-[16px] border-t border-[rgba(66,58,46,0.5)]">
+												<div className="text-[13px] font-medium text-[#f4efe5]">
+													Join Academy
 												</div>
 												<svg
 													width="18"
@@ -655,88 +410,29 @@ function Portal() {
 									<>
 										<a
 											href="/apply"
-											className="htc-path-card"
+											className="htc-path-card border border-[rgba(201,168,76,0.25)] rounded flex flex-col gap-[16px] cursor-pointer relative overflow-hidden no-underline text-inherit transition-all duration-300"
 											style={{
-												border: `1px solid ${C.borderGold}`,
-												borderRadius: 4,
+												background: "#0a080480",
 												padding: "32px 28px",
-												display: "flex",
-												flexDirection: "column",
-												gap: 16,
-												cursor: "pointer",
-												background:
-													"linear-gradient(135deg,#131108 0%,#111111 100%)",
-												textDecoration: "none",
-												color: "inherit",
-												transition: "all 0.3s",
-												position: "relative",
-												overflow: "hidden",
 											}}
 										>
-											<div
-												style={{
-													fontSize: 9,
-													letterSpacing: 3,
-													textTransform: "uppercase",
-													padding: "4px 10px",
-													borderRadius: 2,
-													alignSelf: "flex-start",
-													background: C.gold,
-													color: C.black,
-												}}
-											>
+											<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] self-start bg-[#c9a84c] text-[#070707]">
 												Recommended — {score}/15
 											</div>
-											<div
-												style={{
-													fontFamily: "'Playfair Display',serif",
-													fontSize: 24,
-													fontWeight: 700,
-													color: C.white,
-													lineHeight: 1.2,
-												}}
-											>
+											<div className="font-serif text-[24px] font-bold text-[#f4efe5] leading-[1.2]">
 												Join HTC Academy
 											</div>
-											<div
-												style={{
-													fontSize: 14,
-													color: C.text,
-													lineHeight: 1.65,
-													fontWeight: 300,
-													flex: 1,
-												}}
-											>
+											<div className="text-sm text-[#9a9080] leading-[1.65] font-light flex-1">
 												You scored {score}/15 — solid foundations. HTC Academy
 												is the right next step. Full curriculum, live Zoom
 												sessions every 2 weeks where I personally coach you.
 											</div>
-											<div
-												style={{
-													fontSize: 12,
-													color: C.gold,
-													letterSpacing: 2,
-												}}
-											>
+											<div className="text-xs text-[#c9a84c] tracking-[2px]">
 												$297 one-time · Instant access
 											</div>
-											<div
-												style={{
-													display: "flex",
-													alignItems: "center",
-													justifyContent: "space-between",
-													paddingTop: 16,
-													borderTop: `1px solid ${C.border}`,
-												}}
-											>
-												<div
-													style={{
-														fontSize: 13,
-														fontWeight: 500,
-														color: C.white,
-													}}
-												>
-													Join Academy →
+											<div className="flex items-center justify-between pt-[16px] border-t border-[rgba(66,58,46,0.5)]">
+												<div className="text-[13px] font-medium text-[#f4efe5]">
+													Join Academy
 												</div>
 												<svg
 													width="18"
@@ -751,78 +447,24 @@ function Portal() {
 											</div>
 										</a>
 										<div
-											style={{
-												border: `1px solid ${C.border}`,
-												borderRadius: 4,
-												padding: "32px 28px",
-												display: "flex",
-												flexDirection: "column",
-												gap: 16,
-												background: C.card,
-												opacity: 0.45,
-												pointerEvents: "none",
-											}}
+											className="border border-[rgba(66,58,46,0.5)] rounded bg-black flex flex-col gap-[16px] opacity-[0.45] pointer-events-none"
+											style={{ padding: "32px 28px" }}
 										>
-											<div
-												style={{
-													fontSize: 9,
-													letterSpacing: 3,
-													textTransform: "uppercase",
-													padding: "4px 10px",
-													borderRadius: 2,
-													alignSelf: "flex-start",
-													background: "transparent",
-													border: `1px solid ${C.border}`,
-													color: C.muted,
-												}}
-											>
+											<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] self-start bg-transparent border border-[rgba(66,58,46,0.5)] text-[#555]">
 												Locked
 											</div>
-											<div
-												style={{
-													fontFamily: "'Playfair Display',serif",
-													fontSize: 24,
-													fontWeight: 700,
-													color: C.muted,
-													lineHeight: 1.2,
-												}}
-											>
+											<div className="font-serif text-[24px] font-bold text-[#555] leading-[1.2]">
 												Strategy Call
 											</div>
-											<div
-												style={{
-													fontSize: 14,
-													color: C.text,
-													lineHeight: 1.65,
-													fontWeight: 300,
-													flex: 1,
-												}}
-											>
+											<div className="text-sm text-[#9a9080] leading-[1.65] font-light flex-1">
 												Strategy calls are reserved for closers who score 12+.
 												Get there through Academy and you&apos;ll qualify.
 											</div>
-											<div
-												style={{
-													fontSize: 12,
-													color: C.muted,
-													letterSpacing: 2,
-												}}
-											>
+											<div className="text-xs text-[#555] tracking-[2px]">
 												Score 12/15 to unlock
 											</div>
-											<div
-												style={{
-													paddingTop: 16,
-													borderTop: `1px solid ${C.border}`,
-												}}
-											>
-												<div
-													style={{
-														fontSize: 13,
-														fontWeight: 500,
-														color: C.muted,
-													}}
-												>
+											<div className="pt-[16px] border-t border-[rgba(66,58,46,0.5)]">
+												<div className="text-[13px] font-medium text-[#555]">
 													Not yet unlocked
 												</div>
 											</div>
@@ -830,67 +472,22 @@ function Portal() {
 									</>
 								) : (
 									<div
-										style={{
-											border: "1px solid rgba(224,85,85,0.3)",
-											borderRadius: 4,
-											padding: "32px 28px",
-											display: "flex",
-											flexDirection: "column",
-											gap: 16,
-											background: C.card,
-										}}
+										className="border border-[rgba(224,85,85,0.3)] rounded bg-black flex flex-col gap-[16px]"
+										style={{ padding: "32px 28px" }}
 									>
-										<div
-											style={{
-												fontSize: 9,
-												letterSpacing: 3,
-												textTransform: "uppercase",
-												padding: "4px 10px",
-												borderRadius: 2,
-												alignSelf: "flex-start",
-												background: "rgba(224,85,85,0.1)",
-												border: "1px solid rgba(224,85,85,0.3)",
-												color: "#e08888",
-											}}
-										>
+										<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] self-start bg-[rgba(224,85,85,0.1)] border border-[rgba(224,85,85,0.3)] text-[#e08888]">
 											Score: {score}/15
 										</div>
-										<div
-											style={{
-												fontFamily: "'Playfair Display',serif",
-												fontSize: 24,
-												fontWeight: 700,
-												color: C.white,
-												lineHeight: 1.2,
-											}}
-										>
+										<div className="font-serif text-[24px] font-bold text-[#f4efe5] leading-[1.2]">
 											You&apos;re Not Ready Yet — And That&apos;s Okay.
 										</div>
-										<div
-											style={{
-												fontSize: 14,
-												color: C.text,
-												lineHeight: 1.65,
-												fontWeight: 300,
-											}}
-										>
+										<div className="text-sm text-[#9a9080] leading-[1.65] font-light">
 											You scored {score}/15. The material is in the videos — go
 											back, rewatch, and retake. The closers who succeed are the
 											ones who take this seriously enough to go again.
 										</div>
-										<div
-											style={{
-												paddingTop: 16,
-												borderTop: `1px solid ${C.border}`,
-											}}
-										>
-											<div
-												style={{
-													fontSize: 13,
-													fontWeight: 500,
-													color: "#e08888",
-												}}
-											>
+										<div className="pt-[16px] border-t border-[rgba(66,58,46,0.5)]">
+											<div className="text-[13px] font-medium text-[#e08888]">
 												Rewatch the training and retake the quizzes →
 											</div>
 										</div>
@@ -899,31 +496,10 @@ function Portal() {
 							</div>
 
 							<div
-								className="htc-cert-row"
-								style={{
-									border: `1px solid ${C.border}`,
-									borderRadius: 4,
-									padding: 32,
-									background: C.card,
-									display: "flex",
-									alignItems: "center",
-									gap: 28,
-								}}
+								className="htc-cert-row border border-[rgba(66,58,46,0.5)] rounded bg-[#0a080480] flex items-center gap-[28px]"
+								style={{ padding: 32 }}
 							>
-								<div
-									style={{
-										width: 64,
-										height: 64,
-										borderRadius: "50%",
-										border: `1px solid ${C.borderGold}`,
-										background: C.goldDim,
-										display: "flex",
-										alignItems: "center",
-										justifyContent: "center",
-										color: C.gold,
-										flexShrink: 0,
-									}}
-								>
+								<div className="w-[64px] h-[64px] rounded-full border border-[rgba(201,168,76,0.25)] bg-[rgba(201,168,76,0.08)] flex items-center justify-center text-[#c9a84c] shrink-0">
 									<svg
 										width="28"
 										height="28"
@@ -936,51 +512,24 @@ function Portal() {
 										<circle cx="12" cy="8" r="6" />
 									</svg>
 								</div>
-								<div style={{ flex: 1 }}>
-									<div
-										style={{
-											fontFamily: "'Playfair Display',serif",
-											fontSize: 20,
-											fontWeight: 700,
-											color: C.white,
-											marginBottom: 4,
-										}}
-									>
+								<div className="flex-1">
+									<div className="font-serif text-[20px] font-bold text-[#f4efe5] mb-[4px]">
 										HTC Foundation Certificate
 									</div>
-									<div
-										style={{
-											fontSize: 12,
-											color: C.gold,
-											letterSpacing: 2,
-											textTransform: "uppercase",
-											marginBottom: 8,
-										}}
-									>
+									<div className="text-xs text-[#c9a84c] tracking-[2px] uppercase mb-[8px]">
 										Awarded to: {name} — Score: {score}/15
 									</div>
-									<div
-										style={{ fontSize: 13, color: C.muted, lineHeight: 1.5 }}
-									>
+									<div className="text-[13px] text-[#555] leading-[1.5]">
 										Certified completion of the HTC 5-Day Closer Training. Share
 										it. You&apos;ve earned it.
 									</div>
 								</div>
 								<button
-									className="htc-cert-dl btn-cta-gold"
+									className="htc-cert-dl btn-cta-gold flex items-center gap-[8px] text-[13px] font-semibold rounded-[3px] cursor-pointer whitespace-nowrap tracking-[0.3px] transition-all duration-200"
+									onClick={showCertificate}
 									style={{
-										display: "flex",
-										alignItems: "center",
-										gap: 8,
 										fontFamily: "'DM Sans',sans-serif",
-										fontSize: 13,
-										fontWeight: 600,
 										padding: "12px 24px",
-										borderRadius: 3,
-										cursor: "pointer",
-										whiteSpace: "nowrap",
-										letterSpacing: "0.3px",
-										transition: "all 0.2s",
 									}}
 								>
 									<svg
@@ -1000,29 +549,13 @@ function Portal() {
 					) : isLocked ? (
 						/* ── LOCKED DAY ── */
 						<div
+							className="flex flex-col items-center justify-center text-center gap-[24px]"
 							style={{
-								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
-								justifyContent: "center",
-								textAlign: "center",
 								minHeight: "60vh",
-								gap: 24,
 								animation: "fadeUp 0.5s ease forwards",
 							}}
 						>
-							<div
-								style={{
-									width: 80,
-									height: 80,
-									borderRadius: "50%",
-									border: `1px solid ${C.border}`,
-									display: "flex",
-									alignItems: "center",
-									justifyContent: "center",
-									color: C.muted,
-								}}
-							>
+							<div className="w-[80px] h-[80px] rounded-full border border-[rgba(66,58,46,0.5)] flex items-center justify-center text-[#555]">
 								<svg
 									width="32"
 									height="32"
@@ -1035,24 +568,10 @@ function Portal() {
 									<path d="M7 11V7a5 5 0 0110 0v4" />
 								</svg>
 							</div>
-							<div
-								style={{
-									fontFamily: "'Playfair Display',serif",
-									fontSize: 40,
-									fontWeight: 700,
-									color: C.white,
-								}}
-							>
+							<div className="font-serif text-[40px] font-bold text-[#f4efe5]">
 								Day {currentDay + 1} is Locked
 							</div>
-							<div
-								style={{
-									fontSize: 16,
-									color: C.text,
-									maxWidth: 400,
-									lineHeight: 1.6,
-								}}
-							>
+							<div className="text-base text-[#9a9080] max-w-[400px] leading-[1.6]">
 								Pass the Day {currentDay} quiz to unlock this lesson.
 							</div>
 						</div>
@@ -1064,7 +583,7 @@ function Portal() {
 								style={{ animation: "fadeUp 0.6s ease forwards" }}
 							>
 								<div className="inline-flex items-center justify-center px-3 py-2 border border-[rgba(255,255,255,0.2)] rounded-[4px] self-start">
-									<span className="text-[12px] tracking-[1.2px] uppercase text-white whitespace-nowrap">
+									<span className="text-xs tracking-[1.2px] uppercase text-white whitespace-nowrap">
 										{d.eyebrow}
 									</span>
 								</div>
@@ -1084,14 +603,9 @@ function Portal() {
 							{/* VIDEO */}
 							<div
 								onClick={() => !playedVideo && setPlayedVideo(true)}
+								className="relative bg-black border border-[rgba(66,58,46,0.5)] rounded overflow-hidden mb-[40px]"
 								style={{
-									position: "relative",
-									background: C.card,
-									border: `1px solid ${C.border}`,
-									borderRadius: 4,
-									overflow: "hidden",
 									aspectRatio: "16/9",
-									marginBottom: 40,
 									animation: "fadeUp 0.6s 0.1s ease both",
 									cursor: playedVideo ? "default" : "pointer",
 								}}
@@ -1104,76 +618,36 @@ function Portal() {
 										frameBorder="0"
 										allow="autoplay; fullscreen; picture-in-picture"
 										allowFullScreen
-										style={{ display: "block" }}
+										className="block"
 									/>
 								) : (
 									<>
 										<div
+											className="absolute inset-0"
 											style={{
-												position: "absolute",
-												inset: 0,
 												background:
 													"linear-gradient(135deg,rgba(201,168,76,0.05) 0%,transparent 60%)",
 											}}
 										/>
-										<div
-											style={{
-												position: "absolute",
-												inset: 0,
-												display: "flex",
-												flexDirection: "column",
-												alignItems: "center",
-												justifyContent: "center",
-												gap: 16,
-											}}
-										>
+										<div className="absolute inset-0 flex flex-col items-center justify-center gap-[16px]">
 											<div
-												className="htc-play-btn"
-												style={{
-													width: 72,
-													height: 72,
-													borderRadius: "50%",
-													background: C.gold,
-													display: "flex",
-													alignItems: "center",
-													justifyContent: "center",
-													boxShadow: "0 0 40px rgba(201,168,76,0.3)",
-													transition: "all 0.2s",
-												}}
+												className="htc-play-btn w-[72px] h-[72px] rounded-full bg-[#c9a84c] flex items-center justify-center transition-all duration-200"
+												style={{ boxShadow: "0 0 40px rgba(201,168,76,0.3)" }}
 											>
 												<svg
 													width="24"
 													height="24"
 													viewBox="0 0 24 24"
 													fill="#070707"
-													style={{ marginLeft: 4 }}
 												>
 													<path d="M8 5v14l11-7z" />
 												</svg>
 											</div>
-											<div
-												style={{
-													fontSize: 12,
-													color: C.text,
-													letterSpacing: 2,
-													textTransform: "uppercase",
-												}}
-											>
+											<div className="text-xs text-[#9a9080] tracking-[2px] uppercase">
 												{isDone ? "Watch Again" : `Play Day ${currentDay + 1}`}
 											</div>
 										</div>
-										<div
-											style={{
-												position: "absolute",
-												bottom: 16,
-												right: 16,
-												fontSize: 12,
-												color: C.white,
-												background: "rgba(0,0,0,0.7)",
-												padding: "4px 10px",
-												borderRadius: 3,
-											}}
-										>
+										<div className="absolute bottom-[16px] right-[16px] text-xs text-[#f4efe5] bg-[rgba(0,0,0,0.7)] py-[4px] px-[10px] rounded-[3px]">
 											{d.duration}
 										</div>
 									</>
@@ -1185,28 +659,28 @@ function Portal() {
 								className="flex flex-col gap-7 mb-12"
 								style={{ animation: "fadeUp 0.6s 0.2s ease both" }}
 							>
-								<p className="text-[12px] tracking-[1.2px] uppercase text-[#9a9a9a]">
+								<p className="text-xs tracking-[1.2px] uppercase text-[#9a9a9a]">
 									What You&apos;ll Learn
 								</p>
 								<div className="flex flex-col gap-5">
 									{d.lessons.map((l, i) => (
 										<div key={i} className="flex gap-5 items-start">
 											<div
-												className="shrink-0 size-[80px] rounded-[32px] border border-[rgba(255,255,255,0.2)] flex items-center justify-center"
+												className="shrink-0 size-[60px] rounded-sm border border-[rgba(255,255,255,0.2)] flex items-center justify-center"
 												style={{
 													background:
 														"linear-gradient(180deg, rgba(99,99,99,0.2) 20%, transparent 100%), radial-gradient(ellipse 100% 80% at 50% 120%, rgba(201,165,114,0.5) 0%, transparent 70%)",
 												}}
 											>
-												<span className="font-bold text-[16px] text-white tracking-[1.6px]">
+												<span className="font-bold text-base text-white tracking-[1.6px]">
 													0{i + 1}
 												</span>
 											</div>
-											<div className="flex flex-col gap-3 pt-4">
-												<p className="text-[16px] text-white capitalize">
+											<div className="flex flex-col gap-1 pt-1">
+												<p className="text-base text-white capitalize">
 													{l.title}
 												</p>
-												<p className="text-[14px] font-light text-[#9a9a9a]">
+												<p className="text-sm font-light text-[#9a9a9a]">
 													{l.desc}
 												</p>
 											</div>
@@ -1217,57 +691,24 @@ function Portal() {
 
 							{/* QUIZ */}
 							<div
-								className="rounded-sm border border-[rgba(66,58,46,0.5)] py-8 px-8"
+								className="rounded-sm border border-[rgba(66,58,46,0.5)] py-8 px-8 mt-[48px]"
 								style={{
-									marginTop: 48,
 									animation: "fadeUp 0.5s ease forwards",
 									background: "rgba(10,8,4,0.5)",
 									backdropFilter: "blur(12px) saturate(1.4)",
 									WebkitBackdropFilter: "blur(12px) saturate(1.4)",
 								}}
 							>
-								<div
-									style={{
-										display: "flex",
-										alignItems: "center",
-										justifyContent: "space-between",
-										marginBottom: 28,
-										flexWrap: "wrap",
-										gap: 12,
-									}}
-								>
-									<div
-										style={{
-											fontSize: 10,
-											color: C.gold,
-											letterSpacing: 4,
-											textTransform: "uppercase",
-											display: "flex",
-											alignItems: "center",
-											gap: 10,
-										}}
-									>
+								<div className="flex items-center justify-between mb-[28px] flex-wrap gap-[12px]">
+									<div className="text-[10px] text-[#c9a84c] tracking-[4px] uppercase flex items-center gap-[10px]">
 										<span
-											style={{
-												display: "inline-block",
-												width: 16,
-												height: 1,
-												background: C.gold,
-											}}
+											className="inline-block h-px bg-[#c9a84c]"
+											style={{ width: 16 }}
 										/>
 										Day {currentDay + 1} Quiz
 									</div>
 									{isDone ? (
-										<div
-											style={{
-												fontSize: 12,
-												color: C.gold,
-												letterSpacing: 2,
-												display: "flex",
-												alignItems: "center",
-												gap: 6,
-											}}
-										>
+										<div className="text-xs text-[#c9a84c] tracking-[2px] flex items-center gap-[6px]">
 											<svg
 												width="14"
 												height="14"
@@ -1281,15 +722,9 @@ function Portal() {
 											Passed
 										</div>
 									) : (
-										<div
-											style={{
-												fontSize: 12,
-												color: C.muted,
-												letterSpacing: 2,
-											}}
-										>
+										<div className="text-xs text-[#555] tracking-[2px]">
 											2/3 correct to unlock{" "}
-											<span style={{ color: C.gold }}>
+											<span className="text-[#c9a84c]">
 												Day {currentDay < 4 ? currentDay + 2 : "results"}
 											</span>
 										</div>
@@ -1297,35 +732,18 @@ function Portal() {
 								</div>
 
 								{isDone ? (
-									<div>
-										<div
-											style={{
-												fontSize: 12,
-												color: C.muted,
-												letterSpacing: 2,
-												padding: "20px",
-												textAlign: "center",
-											}}
-										>
+									<div className="flex flex-col items-center justify-center">
+										<div className="text-xs text-[#555] tracking-[2px] p-[20px] text-center">
 											Quiz complete — day unlocked.
 										</div>
 										{currentDay === 4 && (
 											<button
-												className="htc-unlock btn-cta-gold"
+												className="htc-unlock btn-cta-gold inline-flex items-center gap-[10px] text-sm font-semibold rounded-[3px] cursor-pointer tracking-[0.3px] mt-[8px] transition-all duration-200"
 												style={{
-													display: "inline-flex",
-													alignItems: "center",
-													gap: 10,
 													fontFamily: "'DM Sans',sans-serif",
-													fontSize: 14,
-													fontWeight: 600,
 													padding: "12px 24px",
-													borderRadius: 3,
-													cursor: "pointer",
-													letterSpacing: "0.3px",
-													marginTop: 8,
-													transition: "all 0.2s",
 												}}
+												onClick={triggerCompletion}
 											>
 												See Your Results{" "}
 												<svg
@@ -1343,55 +761,17 @@ function Portal() {
 									</div>
 								) : (
 									<>
-										<div
-											style={{
-												display: "flex",
-												flexDirection: "column",
-												gap: 28,
-												marginBottom: 32,
-											}}
-										>
+										<div className="flex flex-col gap-[28px]">
 											{d.quiz.map((q, qi) => {
 												return (
-													<div
-														key={qi}
-														style={{
-															display: "flex",
-															flexDirection: "column",
-															gap: 14,
-														}}
-													>
-														<div
-															style={{
-																fontSize: 16,
-																fontWeight: 500,
-																color: C.white,
-																lineHeight: 1.5,
-																display: "flex",
-																gap: 12,
-															}}
-														>
-															<span
-																style={{
-																	fontSize: 12,
-																	color: C.gold,
-																	letterSpacing: 2,
-																	minWidth: 20,
-																	paddingTop: 2,
-																}}
-															>
+													<div key={qi} className="flex flex-col gap-[14px]">
+														<div className="text-base font-medium text-[#f4efe5] leading-[1.5] flex gap-[12px]">
+															<span className="text-sm text-[#c9a84c] tracking-[2px] min-w-[20px] pt-[1px]">
 																Q{qi + 1}
 															</span>
 															<span>{q.q}</span>
 														</div>
-														<div
-															style={{
-																display: "flex",
-																flexDirection: "column",
-																gap: 8,
-																paddingLeft: 32,
-															}}
-														>
+														<div className="flex flex-col gap-[8px] pl-[32px]">
 															{q.opts.map((opt, oi) => {
 																const isSelected = answers[qi] === oi;
 																let bg = "transparent",
@@ -1433,34 +813,29 @@ function Portal() {
 																		onClick={() =>
 																			selectAnswer(currentDay, qi, oi)
 																		}
+																		className="rounded-[3px] text-left w-full"
 																		style={{
 																			display: "flex",
 																			alignItems: "center",
 																			gap: 12,
 																			padding: "13px 16px",
 																			border: `1px solid ${border}`,
-																			borderRadius: 3,
 																			cursor: submitted ? "default" : "pointer",
 																			background: bg,
 																			color,
 																			fontFamily: "'DM Sans',sans-serif",
 																			fontSize: 14,
-																			textAlign: "left",
 																			transition: "all 0.18s",
-																			width: "100%",
 																		}}
 																	>
 																		<span
+																			className="rounded-[2px] min-w-[24px] text-center shrink-0"
 																			style={{
 																				fontSize: 10,
 																				background: keyBg,
 																				color: keyColor,
 																				padding: "2px 7px",
-																				borderRadius: 2,
-																				minWidth: 24,
-																				textAlign: "center",
 																				transition: "all 0.18s",
-																				flexShrink: 0,
 																			}}
 																		>
 																			{KEYS[oi]}
@@ -1472,13 +847,9 @@ function Portal() {
 														</div>
 														{submitted && (
 															<div
+																className="rounded-sm text-sm leading-normal mt-[4px] tracking-[0.5px]"
 																style={{
 																	padding: "14px 18px",
-																	borderRadius: 3,
-																	fontSize: 13,
-																	lineHeight: 1.5,
-																	marginTop: 4,
-																	letterSpacing: "0.5px",
 																	...(answers[qi] === q.correct
 																		? {
 																				background: "rgba(76,175,125,0.08)",
@@ -1503,32 +874,16 @@ function Portal() {
 										</div>
 
 										{!submitted ? (
-											<div
-												className="justify-end items-end"
-												style={{
-													display: "flex",
-													flexDirection: "column",
-													gap: 8,
-												}}
-											>
+											<div className="justify-end items-end flex flex-col gap-[8px]">
 												<button
-													className="htc-submit btn-cta-gold"
+													className="htc-submit btn-cta-gold inline-flex items-center gap-[12px] text-sm font-semibold min-w-[214px] rounded-[3px] tracking-[0.3px] justify-center transition-all duration-200"
 													style={{
-														display: "inline-flex",
-														alignItems: "center",
-														gap: 12,
 														fontFamily: "'DM Sans',sans-serif",
-														fontSize: 14,
-														fontWeight: 600,
 														padding: "15px 32px",
-														minWidth: 214,
-														borderRadius: 3,
 														cursor: allAnswered ? "pointer" : "not-allowed",
-														letterSpacing: "0.3px",
 														opacity: allAnswered ? 1 : 0.4,
-														transition: "all 0.2s",
-														justifyContent: "center",
 													}}
+													onClick={submitQuiz}
 												>
 													Submit Quiz{" "}
 													<svg
@@ -1542,25 +897,15 @@ function Portal() {
 														<path d="M5 12h14M12 5l7 7-7 7" />
 													</svg>
 												</button>
-												<div
-													style={{
-														fontSize: 12,
-														color: C.muted,
-														letterSpacing: 1,
-													}}
-												>
+												<div className="text-xs text-[#555] tracking-[1px]">
 													Answer all 3 questions to submit
 												</div>
 											</div>
 										) : (
 											<div
+												className="flex rounded-[3px] mt-[8px] items-center gap-[16px]"
 												style={{
-													display: "flex",
 													padding: "20px 24px",
-													borderRadius: 3,
-													marginTop: 8,
-													alignItems: "center",
-													gap: 16,
 													...(passed
 														? {
 																background: "rgba(76,175,125,0.08)",
@@ -1572,28 +917,17 @@ function Portal() {
 															}),
 												}}
 											>
-												<div style={{ fontSize: 24, flexShrink: 0 }}>
+												<div className="text-[24px] shrink-0">
 													{passed ? "✓" : "✗"}
 												</div>
-												<div style={{ flex: 1 }}>
+												<div className="flex-1">
 													<div
-														style={{
-															fontSize: 16,
-															fontWeight: 600,
-															marginBottom: 4,
-															color: passed ? "#7ed4a8" : "#e08888",
-														}}
+														className="text-base font-semibold mb-[4px]"
+														style={{ color: passed ? "#7ed4a8" : "#e08888" }}
 													>
 														{passed ? "Quiz Passed" : "Not quite"}
 													</div>
-													<div
-														style={{
-															fontSize: 13,
-															color: C.muted,
-															lineHeight: 1.5,
-															letterSpacing: "0.5px",
-														}}
-													>
+													<div className="text-[13px] text-[#555] leading-[1.5] tracking-[0.5px]">
 														{passed
 															? currentDay < 4
 																? `Day ${currentDay + 2} is now unlocked.`
@@ -1601,22 +935,13 @@ function Portal() {
 															: "You need 2/3 to pass. Rewatch the video and try again."}
 													</div>
 												</div>
-												<div style={{ marginLeft: "auto", flexShrink: 0 }}>
+												<div className="ml-auto shrink-0">
 													{passed ? (
 														<button
-															className="htc-unlock btn-cta-gold"
+															className="htc-unlock btn-cta-gold inline-flex items-center gap-[10px] text-sm font-semibold rounded-[3px] cursor-pointer tracking-[0.3px] transition-all duration-200"
 															style={{
-																display: "inline-flex",
-																alignItems: "center",
-																gap: 10,
 																fontFamily: "'DM Sans',sans-serif",
-																fontSize: 14,
-																fontWeight: 600,
 																padding: "12px 24px",
-																borderRadius: 3,
-																cursor: "pointer",
-																letterSpacing: "0.3px",
-																transition: "all 0.2s",
 															}}
 														>
 															{currentDay < 4
@@ -1635,22 +960,11 @@ function Portal() {
 														</button>
 													) : (
 														<button
-															className="htc-retry"
+															className="htc-retry inline-flex items-center gap-[8px] bg-transparent border border-[rgba(224,85,85,0.4)] text-[#e08888] text-[13px] font-medium rounded-[3px] cursor-pointer transition-all duration-200"
 															onClick={retakeQuiz}
 															style={{
-																display: "inline-flex",
-																alignItems: "center",
-																gap: 8,
-																background: "transparent",
-																border: "1px solid rgba(224,85,85,0.4)",
-																color: "#e08888",
 																fontFamily: "'DM Sans',sans-serif",
-																fontSize: 13,
-																fontWeight: 500,
 																padding: "10px 20px",
-																borderRadius: 3,
-																cursor: "pointer",
-																transition: "all 0.2s",
 															}}
 														>
 															<svg
@@ -1680,26 +994,15 @@ function Portal() {
 
 			{/* TOAST */}
 			<div
+				className="fixed bottom-[32px] right-[32px] bg-black border border-[rgba(201,168,76,0.25)] rounded max-w-[360px] flex items-center gap-[14px] pointer-events-none z-[999]"
 				style={{
-					position: "fixed",
-					bottom: 32,
-					right: 32,
-					background: C.card,
-					border: `1px solid ${C.borderGold}`,
-					borderRadius: 4,
 					padding: "16px 24px",
-					display: "flex",
-					alignItems: "center",
-					gap: 14,
 					transform: toastVisible ? "translateY(0)" : "translateY(100px)",
 					opacity: toastVisible ? 1 : 0,
 					transition: "all 0.4s cubic-bezier(0.4,0,0.2,1)",
-					zIndex: 999,
-					maxWidth: 360,
-					pointerEvents: "none",
 				}}
 			>
-				<div style={{ color: C.gold, flexShrink: 0 }}>
+				<div className="text-[#c9a84c] shrink-0">
 					<svg
 						width="20"
 						height="20"
@@ -1712,73 +1015,35 @@ function Portal() {
 					</svg>
 				</div>
 				<div
-					style={{ fontSize: 14, color: C.white, lineHeight: 1.4 }}
+					className="text-sm text-[#f4efe5] leading-[1.4]"
 					dangerouslySetInnerHTML={{ __html: toastMsg }}
 				/>
 			</div>
 
 			{/* RECOVERY MODAL */}
 			{recoveryOpen && (
-				<div
-					style={{
-						position: "fixed",
-						inset: 0,
-						background: "rgba(0,0,0,0.8)",
-						zIndex: 2000,
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "center",
-					}}
-				>
+				<div className="fixed inset-0 bg-[rgba(0,0,0,0.8)] z-[2000] flex items-center justify-center">
 					<div
-						style={{
-							background: C.card,
-							border: `1px solid ${C.borderGold}`,
-							borderRadius: 8,
-							padding: 32,
-							width: "100%",
-							maxWidth: 420,
-							position: "relative",
-						}}
+						className="bg-black border border-[rgba(201,168,76,0.25)] rounded-lg w-full max-w-[620px] relative"
+						style={{ padding: 32 }}
 					>
 						<button
 							onClick={() => setRecoveryOpen(false)}
-							style={{
-								position: "absolute",
-								top: 16,
-								right: 16,
-								background: "none",
-								border: "none",
-								color: C.muted,
-								cursor: "pointer",
-								fontSize: 20,
-								lineHeight: 1,
-							}}
+							className="absolute top-[16px] right-[16px] bg-transparent border-none text-[#555] cursor-pointer text-[20px] leading-none"
 						>
 							×
 						</button>
-						<div
-							style={{
-								fontFamily: "'Playfair Display',serif",
-								fontSize: 20,
-								color: C.white,
-								marginBottom: 8,
-							}}
-						>
-							Lost your link?
+						<div className="text-lg text-white mb-2 text-center">
+							Lost Your Link?
 						</div>
-						<div style={{ fontSize: 13, color: C.text, marginBottom: 24 }}>
+						<div className="text-base text-[#9a9080] text-center mb-4">
 							Enter the email you signed up with and we&apos;ll send it right
 							back to you.
 						</div>
 						<iframe
 							src="https://api.leadconnectorhq.com/widget/form/zyjRC6a660piFavW9EwB"
-							style={{
-								width: "100%",
-								height: 249,
-								border: "none",
-								borderRadius: 4,
-							}}
+							className="w-full rounded border-none"
+							style={{ height: 249, borderRadius: 4 }}
 							title="HTC Link Recovery"
 						/>
 					</div>
@@ -1790,9 +1055,7 @@ function Portal() {
 
 export default function TrainingPortal() {
 	return (
-		<Suspense
-			fallback={<div style={{ background: "#070707", minHeight: "100vh" }} />}
-		>
+		<Suspense fallback={<div className="bg-[#070707] min-h-screen" />}>
 			<Portal />
 		</Suspense>
 	);

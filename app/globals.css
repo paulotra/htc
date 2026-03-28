@@ -744,11 +744,6 @@
 		box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5) !important;
 	}
 
-	.htc-cert-dl:hover {
-		background: #e8c96a !important;
-		box-shadow: 0 8px 24px rgba(201, 168, 76, 0.3) !important;
-	}
-
 	.htc-unlock:hover {
 		background: #e8c96a !important;
 		box-shadow: 0 8px 24px rgba(201, 168, 76, 0.3) !important;
