@@ -1,1477 +1,2210 @@
-<!DOCTYPE html>
-<html lang="en" style="background:#0a0a09;color-scheme:dark">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0a0a09">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>HTC — Closer Training</title>
-<style>
-html,body,#root{background:#0a0a09!important;background-color:#0a0a09!important;}
-html{-webkit-text-size-adjust:100%;background:#0a0a09!important;color-scheme:dark;}
-input,select,textarea{font-size:16px!important;}
-*{-webkit-tap-highlight-color:transparent;}
-a,button{touch-action:manipulation;}
-
-:root{
-  --bg:#060605;--bg2:#0d0d0b;
-  --gold:#f5c957;--gold-l:#faffb3;
-  --gold-dim:rgba(245,201,87,0.06);--gold-b:rgba(245,201,87,0.18);
-  --white:#ede8de;--white-dim:rgba(237,232,222,0.55);--white-faint:rgba(237,232,222,0.25);
-  --text:rgba(237,232,222,0.38);--border:rgba(255,255,255,0.07);--border-gold:rgba(245,201,87,0.2);
-  --surface:#0a0a0a;
-}
-
-html, body, #root, #app {
-  background: #0a0a09 !important;
-  background-color: #0a0a09 !important;
-}
-html { -webkit-text-size-adjust: 100%; }
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root{
-  --bg:#060605;--bg2:#0d0d0b;
-  --gold:#f5c957;--gold-l:#faffb3;
-  --gold-dim:rgba(245,201,87,0.06);--gold-b:rgba(245,201,87,0.18);
-  --white:#ede8de;--white-dim:rgba(237,232,222,0.55);--white-faint:rgba(237,232,222,0.25);
-  --text:rgba(237,232,222,0.38);--border:rgba(255,255,255,0.07);--border-gold:rgba(245,201,87,0.2);
-  --surface:#0a0a0a;
-}
-
-html { scroll-behavior: smooth; }
-body {
-  background: #0a0a09 !important;
-  background-color: #0a0a09 !important;
-  min-height: 100dvh;
-
-  background: var(--black);
-  color: var(--white);
-  font-family: 'Inter', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* GRAIN OVERLAY */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1000;
-}
-
-/* SIDEBAR */
-.sidebar {
-  position: fixed;
-  left: 0; top: 0; bottom: 0;
-  width: 280px;
-  background: var(--surface);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  padding: 40px 0;
-  z-index: 10;
-}
-
-.sidebar-logo {
-  padding: 0 32px 40px;
-  border-bottom: 1px solid var(--border);
-}
-.logo-mark {
-  font-family: 'GFS Didot', serif;
-  font-size: 28px;
-  font-weight: 900;
-  color: var(--gold);
-  letter-spacing: 2px;
-}
-.logo-sub {
-  font-family: 'Inter', sans-serif;
-  font-size: 9px;
-  color: var(--muted);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  margin-top: 4px;
-}
-
-.sidebar-progress {
-  padding: 28px 32px;
-  border-bottom: 1px solid var(--border);
-}
-.prog-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-.prog-track {
-  height: 2px;
-  background: var(--border);
-  border-radius: 2px;
-  overflow: hidden;
-}
-.prog-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--gold), var(--gold-light));
-  border-radius: 2px;
-  transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
-  width: 20%;
-}
-.prog-text {
-  font-size: 12px;
-  color: var(--text);
-  margin-top: 10px;
-}
-.prog-text span { color: var(--gold); font-weight: 500; }
-
-.sidebar-days {
-  flex: 1;
-  padding: 20px 0;
-  overflow-y: auto;
-}
-
-.day-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 32px;
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-  border-left: 2px solid transparent;
-}
-.day-item.active {
-  border-left-color: var(--gold);
-  background: var(--gold-dim);
-}
-.day-item.unlocked:hover {
-  background: rgba(255,255,255,0.03);
-}
-.day-item.locked { cursor: default; opacity: 0.4; }
-
-.day-num {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 2px;
-  min-width: 24px;
-}
-.day-item.active .day-num { color: var(--gold); }
-
-.day-info { flex: 1; }
-.day-title {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--white);
-  line-height: 1.3;
-}
-.day-item.locked .day-title { color: var(--muted); }
-.day-duration {
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 2px;
-  font-family: 'Inter', sans-serif;
-}
-
-.day-status {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.day-status.done {
-  background: var(--gold);
-  border-color: var(--gold);
-}
-.day-status.active-dot {
-  border-color: var(--gold);
-}
-.day-status .dot-inner {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--gold);
-}
-
-.sidebar-footer {
-  padding: 24px 32px 0;
-  border-top: 1px solid var(--border);
-}
-.streak-badge {
-  background: var(--gold-dim);
-  border: 1px solid var(--border-gold);
-  border-radius: 4px;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.streak-fire { font-size: 20px; }
-.streak-info {}
-.streak-val {
-  font-family: 'GFS Didot', serif;
-  font-size: 18px;
-  color: var(--gold);
-  line-height: 1;
-}
-.streak-label {
-  font-size: 11px;
-  color: var(--muted);
-  font-family: 'Inter', sans-serif;
-  letter-spacing: 1px;
-  margin-top: 2px;
-}
-
-/* MAIN CONTENT */
-.main {
-  margin-left: 280px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* TOP BAR */
-.topbar {
-  padding: 24px 48px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.topbar-greeting {
-  font-size: 13px;
-  color: var(--muted);
-}
-.topbar-greeting strong { color: var(--white); font-weight: 500; }
-
-.cert-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  padding: 8px 16px;
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  cursor: default;
-  opacity: 0.5;
-}
-
-/* CONTENT AREA */
-.content {
-  flex: 1;
-  padding: 56px 48px;
-  max-width: 900px;
-}
-
-/* DAY HEADER */
-.day-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 32px;
-  margin-bottom: 48px;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.day-badge {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  padding: 6px 14px;
-  border: 1px solid var(--border-gold);
-  border-radius: 2px;
-  white-space: nowrap;
-  margin-top: 8px;
-}
-
-.day-title-block {}
-.day-eyebrow {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-.day-heading {
-  font-family: 'GFS Didot', serif;
-  font-size: clamp(36px, 5vw, 56px);
-  font-weight: 900;
-  line-height: 1.05;
-  color: var(--white);
-}
-.day-heading em {
-  font-style: italic;
-  color: var(--gold);
-}
-.day-desc {
-  font-size: 16px;
-  color: var(--text);
-  line-height: 1.7;
-  margin-top: 16px;
-  font-weight: 300;
-  max-width: 580px;
-}
-
-/* VIDEO PLAYER */
-.video-wrap {
-  position: relative;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-  aspect-ratio: 16/9;
-  max-width: 720px;
-  margin-bottom: 40px;
-  animation: fadeUp 0.6s 0.1s ease both;
-  cursor: pointer;
-}
-.video-wrap::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(245,201,87,0.05) 0%, transparent 60%);
-}
-.video-thumb {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.3;
-}
-.video-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-}
-.play-btn {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: var(--gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  box-shadow: 0 0 40px rgba(245,201,87,0.3);
-}
-.video-wrap:hover .play-btn {
-  transform: scale(1.08);
-  box-shadow: 0 0 60px rgba(245,201,87,0.5);
-}
-.play-btn svg { margin-left: 4px; }
-.video-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: var(--text);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-.video-duration {
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  color: var(--white);
-  background: rgba(0,0,0,0.7);
-  padding: 4px 10px;
-  border-radius: 3px;
-}
-
-/* KEY LESSONS */
-.section-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  animation: fadeUp 0.6s 0.2s ease both;
-}
-
-.lessons {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  margin-bottom: 48px;
-  animation: fadeUp 0.6s 0.25s ease both;
-}
-.lesson {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  padding: 20px 24px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  margin-bottom: 8px;
-}
-.lesson-num {
-  font-family: 'GFS Didot', serif;
-  font-size: 32px;
-  color: var(--border);
-  line-height: 1;
-  min-width: 40px;
-  font-weight: 700;
-}
-.lesson-text {}
-.lesson-title {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--white);
-  margin-bottom: 4px;
-}
-.lesson-desc {
-  font-size: 13px;
-  color: var(--text);
-  line-height: 1.5;
-}
-
-/* COMPLETE BUTTON */
-.complete-section {
-  animation: fadeUp 0.6s 0.35s ease both;
-}
-.complete-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  background: var(--gold);
-  color: var(--black);
-  font-family: 'Inter', sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  padding: 18px 40px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  letter-spacing: 0.3px;
-  transition: all 0.25s;
-}
-.complete-cta:hover {
-  background: var(--gold-light);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(245,201,87,0.35);
-}
-.complete-hint {
-  font-size: 13px;
-  color: var(--muted);
-  margin-top: 12px;
-  font-family: 'Inter', sans-serif;
-  letter-spacing: 1px;
-}
-
-/* LOCKED STATE */
-.locked-overlay {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  min-height: 60vh;
-  gap: 24px;
-  animation: fadeUp 0.5s ease forwards;
-}
-.locked-overlay.show { display: flex; }
-.lock-icon {
-  width: 80px; height: 80px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--muted);
-}
-.locked-title {
-  font-family: 'GFS Didot', serif;
-  font-size: 40px;
-  font-weight: 700;
-  color: var(--white);
-}
-.locked-sub {
-  font-size: 15px;
-  color: var(--text);
-  max-width: 400px;
-  line-height: 1.6;
-}
-
-/* NOTIFICATION TOAST */
-.toast {
-  position: fixed;
-  bottom: 32px;
-  right: 32px;
-  background: var(--card);
-  border: 1px solid var(--border-gold);
-  border-radius: 4px;
-  padding: 16px 24px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  transform: translateY(100px);
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
-  z-index: 999;
-  max-width: 360px;
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast-icon { color: var(--gold); flex-shrink: 0; }
-.toast-text { font-size: 14px; color: var(--white); line-height: 1.4; }
-.toast-text strong { color: var(--gold); }
-
-/* ── DAY 5 COMPLETION SCREEN ── */
-.completion-screen {
-  display: none;
-  flex-direction: column;
-  gap: 0;
-  animation: fadeUp 0.7s ease forwards;
-}
-.completion-screen.show { display: flex; }
-
-/* HERO BANNER */
-.comp-hero {
-  background: linear-gradient(135deg, #0d0a00 0%, #111008 50%, #0a0a0a 100%);
-  border: 1px solid var(--border-gold);
-  border-radius: 4px;
-  padding: 56px 48px;
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 40px;
-}
-.comp-hero::before {
-  content: '';
-  position: absolute;
-  top: -60px; right: -60px;
-  width: 300px; height: 300px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(245,201,87,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-.comp-hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.4;
-}
-
-.comp-eyebrow {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.comp-eyebrow::before {
-  content: '';
-  width: 20px;
-  height: 1px;
-  background: var(--gold);
-}
-
-.comp-headline {
-  font-family: 'GFS Didot', serif;
-  font-size: clamp(40px, 6vw, 64px);
-  font-weight: 900;
-  line-height: 1.0;
-  color: var(--white);
-  margin-bottom: 20px;
-}
-.comp-headline em {
-  font-style: italic;
-  color: var(--gold);
-}
-
-.comp-sub {
-  font-size: 16px;
-  color: var(--text);
-  line-height: 1.75;
-  max-width: 520px;
-  font-weight: 300;
-}
-
-.comp-stats {
-  display: flex;
-  gap: 40px;
-  margin-top: 36px;
-  padding-top: 36px;
-  border-top: 1px solid var(--border);
-  flex-wrap: wrap;
-}
-.comp-stat {}
-.comp-stat-val {
-  font-family: 'GFS Didot', serif;
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-}
-.comp-stat-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-top: 6px;
-}
-
-/* PATHS */
-.paths-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.paths-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-.paths-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 48px;
-}
-
-.path-card {
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 32px 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-  position: relative;
-  overflow: hidden;
-  background: var(--card);
-  text-decoration: none;
-}
-.path-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-.path-card:hover::before { transform: scaleX(1); }
-.path-card:hover {
-  border-color: var(--border-gold);
-  background: #131108;
-  transform: translateY(-3px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.5);
-}
-
-.path-card.primary {
-  border-color: var(--border-gold);
-  background: linear-gradient(135deg, #131108 0%, var(--card) 100%);
-}
-.path-card.primary::before { transform: scaleX(1); }
-
-.path-tag {
-  font-family: 'Inter', sans-serif;
-  font-size: 9px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 2px;
-  align-self: flex-start;
-}
-.path-card.primary .path-tag {
-  background: var(--gold);
-  color: var(--black);
-}
-.path-card.secondary .path-tag {
-  background: transparent;
-  border: 1px solid var(--border-gold);
-  color: var(--gold);
-}
-
-.path-title {
-  font-family: 'GFS Didot', serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--white);
-  line-height: 1.2;
-}
-
-.path-desc {
-  font-size: 14px;
-  color: var(--text);
-  line-height: 1.65;
-  font-weight: 300;
-  flex: 1;
-}
-
-.path-price {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 2px;
-}
-.path-card.primary .path-price { color: var(--gold); }
-
-.path-cta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-}
-.path-cta-text {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--white);
-}
-.path-cta-arrow {
-  color: var(--gold);
-  transition: transform 0.2s;
-}
-.path-card:hover .path-cta-arrow { transform: translateX(6px); }
-
-/* CERTIFICATE PREVIEW */
-.cert-preview {
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 32px;
-  background: var(--card);
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  margin-bottom: 0;
-}
-.cert-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  border: 1px solid var(--border-gold);
-  background: var(--gold-dim);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--gold);
-  flex-shrink: 0;
-}
-.cert-info { flex: 1; }
-.cert-title {
-  font-family: 'GFS Didot', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--white);
-  margin-bottom: 4px;
-}
-.cert-name-line {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: var(--gold);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.cert-desc {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.5;
-}
-.cert-download {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--gold);
-  color: var(--black);
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s;
-  letter-spacing: 0.3px;
-}
-.cert-download:hover {
-  background: var(--gold-light);
-  box-shadow: 0 8px 24px rgba(245,201,87,0.3);
-}
-
-/* CERT BUTTON ACTIVE */
-.cert-btn.active {
-  opacity: 1;
-  cursor: pointer;
-  border-color: var(--border-gold);
-  color: var(--gold);
-  transition: all 0.3s;
-}
-.cert-btn.active:hover {
-  background: var(--gold-dim);
-}
-
-/* ── QUIZ STYLES ── */
-.quiz-wrap {
-  margin-top: 48px;
-  border-top: 1px solid var(--border);
-  padding-top: 40px;
-  animation: fadeUp 0.5s ease forwards;
-}
-
-.quiz-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 28px;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.quiz-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.quiz-label::before {
-  content: '';
-  width: 16px; height: 1px;
-  background: var(--gold);
-}
-
-.quiz-score-running {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  color: var(--muted);
-  letter-spacing: 2px;
-}
-.quiz-score-running span { color: var(--gold); }
-
-.quiz-questions {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  margin-bottom: 32px;
-}
-
-.quiz-q {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.quiz-q-text {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--white);
-  line-height: 1.5;
-  display: flex;
-  gap: 12px;
-}
-.quiz-q-num {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: var(--gold);
-  letter-spacing: 2px;
-  min-width: 20px;
-  padding-top: 2px;
-}
-
-.quiz-options {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-left: 32px;
-}
-
-.quiz-opt {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 13px 16px;
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 0.18s;
-  background: transparent;
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  text-align: left;
-}
-.quiz-opt:hover {
-  border-color: var(--gold);
-  background: var(--gold-dim);
-  color: var(--white);
-}
-.quiz-opt.selected {
-  border-color: var(--gold);
-  background: var(--gold-dim);
-  color: var(--white);
-}
-.quiz-opt.correct {
-  border-color: #4caf7d;
-  background: rgba(76,175,125,0.1);
-  color: #7ed4a8;
-}
-.quiz-opt.wrong {
-  border-color: #e05555;
-  background: rgba(224,85,85,0.08);
-  color: #e08888;
-}
-.quiz-opt.reveal-correct {
-  border-color: #4caf7d;
-  background: rgba(76,175,125,0.06);
-  color: #7ed4a8;
-}
-.quiz-opt.disabled { cursor: default; pointer-events: none; }
-
-.quiz-opt-key {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  background: var(--border);
-  color: var(--muted);
-  padding: 2px 7px;
-  border-radius: 2px;
-  min-width: 24px;
-  text-align: center;
-  transition: all 0.18s;
-  flex-shrink: 0;
-}
-.quiz-opt.selected .quiz-opt-key,
-.quiz-opt:hover .quiz-opt-key { background: var(--gold); color: var(--black); }
-.quiz-opt.correct .quiz-opt-key { background: #4caf7d; color: var(--black); }
-.quiz-opt.wrong .quiz-opt-key { background: #e05555; color: var(--white); }
-.quiz-opt.reveal-correct .quiz-opt-key { background: #4caf7d; color: var(--black); }
-
-/* FEEDBACK */
-.quiz-feedback {
-  display: none;
-  padding: 14px 18px;
-  border-radius: 3px;
-  font-size: 13px;
-  line-height: 1.5;
-  margin-top: 4px;
-  font-family: 'Inter', sans-serif;
-  letter-spacing: 0.5px;
-}
-.quiz-feedback.show { display: block; }
-.quiz-feedback.pass {
-  background: rgba(76,175,125,0.08);
-  border: 1px solid rgba(76,175,125,0.2);
-  color: #7ed4a8;
-}
-.quiz-feedback.fail {
-  background: rgba(224,85,85,0.06);
-  border: 1px solid rgba(224,85,85,0.15);
-  color: #e08888;
-}
-
-/* QUIZ SUBMIT */
-.quiz-submit-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.quiz-submit {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--gold);
-  color: var(--black);
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 15px 32px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  letter-spacing: 0.3px;
-  transition: all 0.2s;
-  align-self: flex-start;
-}
-.quiz-submit:hover {
-  background: var(--gold-light);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 28px rgba(245,201,87,0.3);
-}
-.quiz-submit:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-.quiz-hint {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 1px;
-}
-
-/* QUIZ RESULT BANNER */
-.quiz-result-banner {
-  display: none;
-  padding: 20px 24px;
-  border-radius: 3px;
-  margin-top: 8px;
-  align-items: center;
-  gap: 16px;
-}
-.quiz-result-banner.show { display: flex; }
-.quiz-result-banner.pass-banner {
-  background: rgba(76,175,125,0.08);
-  border: 1px solid rgba(76,175,125,0.2);
-}
-.quiz-result-banner.fail-banner {
-  background: rgba(224,85,85,0.06);
-  border: 1px solid rgba(224,85,85,0.15);
-}
-.result-icon { font-size: 24px; flex-shrink: 0; }
-.result-text {}
-.result-title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-.pass-banner .result-title { color: #7ed4a8; }
-.fail-banner .result-title { color: #e08888; }
-.result-sub {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.5;
-  font-family: 'Inter', sans-serif;
-  letter-spacing: 0.5px;
-}
-.result-action {
-  margin-left: auto;
-  flex-shrink: 0;
-}
-.btn-retry {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: transparent;
-  border: 1px solid rgba(224,85,85,0.4);
-  color: #e08888;
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 10px 20px;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.btn-retry:hover { background: rgba(224,85,85,0.08); }
-
-.btn-unlock {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--gold);
-  color: var(--black);
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 0.2s;
-  letter-spacing: 0.3px;
-}
-.btn-unlock:hover {
-  background: var(--gold-light);
-  box-shadow: 0 8px 24px rgba(245,201,87,0.3);
-}
-
-/* TOTAL SCORE in sidebar */
-.score-tracker {
-  padding: 16px 32px;
-  border-top: 1px solid var(--border);
-  margin-top: auto;
-}
-.score-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 9px;
-  color: var(--muted);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.score-display {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-}
-.score-num {
-  font-family: 'GFS Didot', serif;
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-}
-.score-denom {
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  color: var(--muted);
-}
-.score-bar {
-  height: 2px;
-  background: var(--border);
-  border-radius: 2px;
-  margin-top: 10px;
-  overflow: hidden;
-}
-.score-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--gold), var(--gold-light));
-  border-radius: 2px;
-  transition: width 0.6s ease;
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-  .sidebar { display: none; }
-  .main { margin-left: 0; }
-  .topbar, .content { padding-left: 24px; padding-right: 24px; }
-  .content { padding-top: 32px; }
-  .paths-grid { grid-template-columns: 1fr; }
-  .cert-preview { flex-direction: column; text-align: center; }
-  .quiz-options { padding-left: 0; }
-}
-
-* { -webkit-tap-highlight-color: transparent; }
-body {
-  background: #0a0a09 !important;
-  background-color: #0a0a09 !important;
-  min-height: 100dvh;
- overflow-x: hidden; }
-a, button { touch-action: manipulation; }
-input, select, textarea { font-size: 16px !important; } /* prevent iOS zoom */
-</style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=GFS+Didot&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-</head>
-<body>
-
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <div class="logo-mark">HTC</div>
-    <div class="logo-sub">Closer Training</div>
-  </div>
-
-  <div class="sidebar-progress">
-    <div class="prog-label">Your Progress</div>
-    <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
-    <div class="prog-text"><span id="progDone">1</span> of 5 days complete</div>
-  </div>
-
-  <nav class="sidebar-days" id="sidebarDays"></nav>
-
-  <div class="score-tracker">
-    <div class="score-label">Quiz Score</div>
-    <div class="score-display">
-      <div class="score-num" id="totalScoreDisplay">0</div>
-      <div class="score-denom">/ 15</div>
-    </div>
-    <div class="score-bar"><div class="score-bar-fill" id="scoreBarFill" style="width:0%"></div></div>
-  </div>
-
-  <div class="sidebar-footer">
-    <div class="streak-badge">
-      <div class="streak-fire">💰</div>
-      <div class="streak-info">
-        <div class="streak-val" id="streakVal">1</div>
-        <div class="streak-label">Day Streak</div>
-      </div>
-    </div>
-  </div>
-</aside>
-
-<!-- MAIN -->
-<main class="main">
-  <div class="topbar">
-    <div class="topbar-greeting">Welcome back, <strong id="greetName">Closer</strong></div>
-    <div class="cert-btn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-3 6 3-1.5 3 1.5-3-6z"/><circle cx="12" cy="8" r="6"/></svg>
-      Certificate — Locked
-    </div>
-  </div>
-
-  <div class="content" id="mainContent"></div>
-</main>
-
-<!-- TOAST -->
-<div class="toast" id="toast">
-  <div class="toast-icon">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-  </div>
-  <div class="toast-text" id="toastText"></div>
-</div>
-
-<script>
-const days = [
-  {
-    title: "Why Closing Is the\nHighest-Leverage Skill",
-    shortTitle: "The Closer Advantage",
-    eyebrow: "Day 01 — Belief Install",
-    desc: "Most people in sales are order-takers. Closers are a different species. Today you'll understand why this skill creates more leverage than almost anything else you can learn in 2025.",
-    duration: "18 min",
-    lessons: [
-      { title: "The difference between selling and closing", desc: "Why most salespeople are leaving 80% of money on the table every single call." },
-      { title: "How closers create $10k months", desc: "The exact math behind a remote closing income and why the barrier to entry is lower than you think." },
-      { title: "The identity shift that changes everything", desc: "You don't learn to close. You become a closer. Here's what that actually means." }
-    ],
-    quiz: [
-      {
-        q: "What's the core difference between a salesperson and a closer?",
-        opts: ["A closer uses more aggressive tactics", "A closer diagnoses the prospect's problem before presenting a solution", "A closer always follows up more than a salesperson", "A closer focuses only on price"],
-        correct: 1,
-        feedback: "Exactly. Closers diagnose first. Order-takers pitch. That's the entire difference."
-      },
-      {
-        q: "According to Day 1, what percentage of potential income do most salespeople leave on the table?",
-        opts: ["50%", "60%", "80%", "90%"],
-        correct: 2,
-        feedback: "80%. Most salespeople never even get to the real objection — they fold too early."
-      },
-      {
-        q: "The identity shift in closing means:",
-        opts: ["Pretending to be confident even when you're not", "Memorizing more scripts", "Becoming a closer internally before the results show externally", "Closing as many deals as possible to build experience"],
-        correct: 2,
-        feedback: "Identity before results. You don't wait to feel like a closer — you decide to be one first."
-      }
-    ]
-  },
-  {
-    title: "What Closers\nActually Do",
-    shortTitle: "The Real Job",
-    eyebrow: "Day 02 — Foundations",
-    desc: "Strip away the myths. Today you'll see exactly what a day in the life of a top closer looks like — and why it's nothing like what most people imagine.",
-    duration: "22 min",
-    lessons: [
-      { title: "The remote closer's daily workflow", desc: "Calls, offers, commissions, and how the whole ecosystem fits together." },
-      { title: "How to find legitimate high-ticket offers", desc: "Not all programs are equal. Here's the filter I use to only work with premium offers." },
-      { title: "What top closers earn — with real numbers", desc: "Real commission structures, realistic targets, and what 90 days looks like." }
-    ],
-    quiz: [
-      {
-        q: "What is the primary way remote closers get paid?",
-        opts: ["Hourly rate", "Monthly retainer", "Commission on closed deals", "Equity in the company"],
-        correct: 2,
-        feedback: "Commission only. No close, no pay — which is why the skill itself is so valuable."
-      },
-      {
-        q: "When evaluating a high-ticket offer to close for, what's the most important filter?",
-        opts: ["How high the commission percentage is", "Whether the offer actually delivers results for clients", "How well-known the founder is", "How many closers are already on the team"],
-        correct: 1,
-        feedback: "If the offer doesn't deliver real results, you'll be fighting objections that are justified. Only close for offers you believe in."
-      },
-      {
-        q: "What's a realistic income target for a closer in their first 90 days?",
-        opts: ["$500–$1,000/month", "$1,000–$3,000/month", "$3,000–$10,000/month", "$20,000+/month immediately"],
-        correct: 2,
-        feedback: "$3k–$10k is the realistic range. Not overnight millions — but real, significant income if you do the work."
-      }
-    ]
-  },
-  {
-    title: "The Mindset That\nSeparates Elite Closers",
-    shortTitle: "Elite Mindset",
-    eyebrow: "Day 03 — Psychology",
-    desc: "Skill gets you on the call. Mindset determines if you close. Today is the hardest day — and the most important.",
-    duration: "25 min",
-    lessons: [
-      { title: "Why pressure reveals character", desc: "Most people fold the moment a prospect pushes back. You won't — after today." },
-      { title: "Detachment from outcome", desc: "The counterintuitive mindset that makes you close more by caring less." },
-      { title: "Identity before results", desc: "How to show up as a closer before you have the results to prove it." }
-    ],
-    quiz: [
-      {
-        q: "What happens to most closers the moment a prospect pushes back?",
-        opts: ["They get more aggressive", "They lower the price immediately", "They fold and lose the sale", "They ask more questions"],
-        correct: 2,
-        feedback: "They fold. Pressure reveals character. The closers who stay calm and curious are the ones who win."
-      },
-      {
-        q: "What does 'detachment from outcome' mean in closing?",
-        opts: ["Not caring whether you close or not", "Being so focused on process that the result takes care of itself", "Avoiding high-pressure situations", "Letting the prospect make all the decisions"],
-        correct: 1,
-        feedback: "It means trusting the process so completely that your energy isn't desperate. Desperation kills deals. Calm confidence closes them."
-      },
-      {
-        q: "Why is mindset more important than skill on a sales call?",
-        opts: ["Because scripts don't matter", "Because skill can be faked but mindset cannot", "Because prospects can sense your internal state and react to it", "Because mindset determines how many calls you book"],
-        correct: 2,
-        feedback: "Prospects feel your energy before they process your words. A calm, certain closer wins over a skilled but nervous one every time."
-      }
-    ]
-  },
-  {
-    title: "Your First Live\nClosing Framework",
-    shortTitle: "The Framework",
-    eyebrow: "Day 04 — The Skill",
-    desc: "This is where you go from understanding closing to actually doing it. Today I hand you the exact framework I use on every call.",
-    duration: "31 min",
-    lessons: [
-      { title: "The diagnostic call structure", desc: "Forget 'Always Be Closing.' Great closers diagnose first. Here's the 5-phase framework." },
-      { title: "Handling 'I need to think about it'", desc: "The exact words I use. Word for word. And why they work every time." },
-      { title: "Pattern interrupt for price objections", desc: "When they say the price is too high, most closers panic. You'll know exactly what to say." }
-    ],
-    quiz: [
-      {
-        q: "In the diagnostic call framework, what comes before presenting the solution?",
-        opts: ["Building rapport with small talk", "Deeply understanding the prospect's problem and pain", "Explaining your credentials", "Sharing testimonials from past clients"],
-        correct: 1,
-        feedback: "You diagnose before you prescribe. A doctor doesn't recommend surgery before examining the patient. Neither does a great closer."
-      },
-      {
-        q: "When a prospect says 'I need to think about it', the best response is:",
-        opts: ["Give them space and follow up in a week", "Immediately offer a discount to speed up the decision", "Ask what specifically they need to think about", "Tell them the price goes up tomorrow"],
-        correct: 2,
-        feedback: "'I need to think about it' is never the real objection. It's a smoke screen. Your job is to find what's underneath it."
-      },
-      {
-        q: "When a prospect says the price is too high, a closer should:",
-        opts: ["Immediately lower the price", "Defend the price by listing features", "Reframe value by reconnecting them to the cost of NOT solving their problem", "Agree and offer a payment plan first"],
-        correct: 2,
-        feedback: "Price is never the real issue — perceived value is. Reconnect them to what staying stuck costs them, and the price becomes irrelevant."
-      }
-    ]
-  },
-  {
-    title: "What's Holding You\nBack — And What's Next",
-    shortTitle: "Your Next Move",
-    eyebrow: "Day 05 — The Close",
-    desc: "You've done what 99% of people won't. Five days in. Today we diagnose exactly what's standing between you and your first $5k month — and I show you the path forward.",
-    duration: "20 min",
-    lessons: [
-      { title: "The 3 reasons most closers never make real money", desc: "Brutal honesty about the gaps that separate people who try and people who succeed." },
-      { title: "Building your 90-day closer roadmap", desc: "Exactly what the next 90 days should look like if you're serious about this." },
-      { title: "Your next move with HTC", desc: "Two paths forward — and how to know which one is right for you." }
-    ],
-    quiz: [
-      {
-        q: "What is the #1 reason most closers fail to make real income?",
-        opts: ["They don't know enough objection handling scripts", "They treat closing as a skill to learn rather than an identity to embody", "They can't find good offers to close for", "They don't make enough calls per day"],
-        correct: 1,
-        feedback: "Skill without identity is just information. The closers who win have internalized this as who they are — not just what they do."
-      },
-      {
-        q: "In your 90-day roadmap, what should the first 30 days focus on?",
-        opts: ["Closing as many deals as possible immediately", "Building the foundation — mindset, framework, and landing your first offer", "Building a personal brand on social media", "Studying advanced negotiation tactics"],
-        correct: 1,
-        feedback: "Foundation first. Speed without direction is just chaos. Get the fundamentals locked before scaling volume."
-      },
-      {
-        q: "After completing this training, what separates people who succeed from those who don't?",
-        opts: ["Having a better script", "Taking immediate action on what they've learned", "Waiting until conditions are perfect", "Finding the cheapest program to join"],
-        correct: 1,
-        feedback: "Information without action is worthless. You now know more than 95% of people who call themselves closers. The only question is — what are you going to do with it?"
-      }
-    ]
-  }
-];
-
-let currentDay = 0;
-let unlockedDays = 1;
-let completedDays = 0;
-let quizAnswers = {}; // { dayIndex: [answerIndex, answerIndex, answerIndex] }
-let quizSubmitted = {}; // { dayIndex: bool }
-let quizPassed = {}; // { dayIndex: bool }
-let totalScore = 0;
-
-function updateScoreUI() {
-  const el = document.getElementById('totalScoreDisplay');
-  const bar = document.getElementById('scoreBarFill');
-  if (el) el.textContent = totalScore;
-  if (bar) bar.style.width = (totalScore / 15 * 100) + '%';
-}
-
-function buildSidebar() {
-  const nav = document.getElementById('sidebarDays');
-  nav.innerHTML = '';
-  days.forEach((d, i) => {
-    const isUnlocked = i < unlockedDays;
-    const isDone = i < completedDays;
-    const isActive = i === currentDay;
-    const div = document.createElement('div');
-    div.className = `day-item ${isUnlocked ? 'unlocked' : 'locked'} ${isActive ? 'active' : ''}`;
-    div.innerHTML = `
-      <div class="day-num">0${i+1}</div>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>HTC — Closer Training</title>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&amp;family=DM+Sans:wght@300;400;500&amp;family=DM+Mono:wght@400;500&amp;display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			:root {
+				--black: #070707;
+				--surface: #0f0f0f;
+				--card: #111111;
+				--border: #1c1c1c;
+				--border-gold: rgba(201, 168, 76, 0.25);
+				--gold: #c9a84c;
+				--gold-light: #e8c96a;
+				--gold-dim: rgba(201, 168, 76, 0.08);
+				--white: #f4efe5;
+				--muted: #555;
+				--text: #9a9080;
+			}
+
+			html {
+				scroll-behavior: smooth;
+			}
+			body {
+				background: var(--black);
+				color: var(--white);
+				font-family: "DM Sans", sans-serif;
+				min-height: 100vh;
+				overflow-x: hidden;
+			}
+
+			/* GRAIN OVERLAY */
+			body::before {
+				content: "";
+				position: fixed;
+				inset: 0;
+				background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+				pointer-events: none;
+				z-index: 1000;
+			}
+
+			/* SIDEBAR */
+			.sidebar {
+				position: fixed;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				width: 280px;
+				background: var(--surface);
+				border-right: 1px solid var(--border);
+				display: flex;
+				flex-direction: column;
+				padding: 40px 0;
+				z-index: 10;
+			}
+
+			.sidebar-logo {
+				padding: 0 32px 40px;
+				border-bottom: 1px solid var(--border);
+			}
+			.logo-mark {
+				font-family: "Playfair Display", serif;
+				font-size: 28px;
+				font-weight: 900;
+				color: var(--gold);
+				letter-spacing: 2px;
+			}
+			.logo-sub {
+				font-family: "DM Mono", monospace;
+				font-size: 9px;
+				color: var(--muted);
+				letter-spacing: 4px;
+				text-transform: uppercase;
+				margin-top: 4px;
+			}
+
+			.sidebar-progress {
+				padding: 28px 32px;
+				border-bottom: 1px solid var(--border);
+			}
+			.prog-label {
+				font-family: "DM Mono", monospace;
+				font-size: 10px;
+				color: var(--muted);
+				letter-spacing: 3px;
+				text-transform: uppercase;
+				margin-bottom: 12px;
+			}
+			.prog-track {
+				height: 2px;
+				background: var(--border);
+				border-radius: 2px;
+				overflow: hidden;
+			}
+			.prog-fill {
+				height: 100%;
+				background: linear-gradient(90deg, var(--gold), var(--gold-light));
+				border-radius: 2px;
+				transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+				width: 20%;
+			}
+			.prog-text {
+				font-size: 12px;
+				color: var(--text);
+				margin-top: 10px;
+			}
+			.prog-text span {
+				color: var(--gold);
+				font-weight: 500;
+			}
+
+			.sidebar-days {
+				flex: 1;
+				padding: 20px 0;
+				overflow-y: auto;
+			}
+
+			.day-item {
+				display: flex;
+				align-items: center;
+				gap: 16px;
+				padding: 14px 32px;
+				cursor: pointer;
+				transition: all 0.2s;
+				position: relative;
+				border-left: 2px solid transparent;
+			}
+			.day-item.active {
+				border-left-color: var(--gold);
+				background: var(--gold-dim);
+			}
+			.day-item.unlocked:hover {
+				background: rgba(255, 255, 255, 0.03);
+			}
+			.day-item.locked {
+				cursor: default;
+				opacity: 0.4;
+			}
+
+			.day-num {
+				font-family: "DM Mono", monospace;
+				font-size: 10px;
+				color: var(--muted);
+				letter-spacing: 2px;
+				min-width: 24px;
+			}
+			.day-item.active .day-num {
+				color: var(--gold);
+			}
+
+			.day-info {
+				flex: 1;
+			}
+			.day-title {
+				font-size: 13px;
+				font-weight: 500;
+				color: var(--white);
+				line-height: 1.3;
+			}
+			.day-item.locked .day-title {
+				color: var(--muted);
+			}
+			.day-duration {
+				font-size: 11px;
+				color: var(--muted);
+				margin-top: 2px;
+				font-family: "DM Mono", monospace;
+			}
+
+			.day-status {
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				border: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+			}
+			.day-status.done {
+				background: var(--gold);
+				border-color: var(--gold);
+			}
+			.day-status.active-dot {
+				border-color: var(--gold);
+			}
+			.day-status .dot-inner {
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background: var(--gold);
+			}
+
+			.sidebar-footer {
+				padding: 24px 32px 0;
+				border-top: 1px solid var(--border);
+			}
+			.recovery-link {
+				display: block;
+				text-align: center;
+				font-size: 11px;
+				color: var(--muted);
+				margin-top: 16px;
+				cursor: pointer;
+				text-decoration: underline;
+				padding-bottom: 16px;
+			}
+			.recovery-link:hover {
+				color: var(--text);
+			}
+			.recovery-modal {
+				display: none;
+				position: fixed;
+				inset: 0;
+				background: rgba(0, 0, 0, 0.8);
+				z-index: 2000;
+				align-items: center;
+				justify-content: center;
+			}
+			.recovery-modal.open {
+				display: flex;
+			}
+			.recovery-modal-inner {
+				background: var(--card);
+				border: 1px solid var(--border-gold);
+				border-radius: 8px;
+				padding: 32px;
+				width: 100%;
+				max-width: 420px;
+				position: relative;
+			}
+			.recovery-modal-title {
+				font-family: "Playfair Display", serif;
+				font-size: 20px;
+				color: var(--white);
+				margin-bottom: 8px;
+			}
+			.recovery-modal-sub {
+				font-size: 13px;
+				color: var(--text);
+				margin-bottom: 24px;
+			}
+			.recovery-modal-close {
+				position: absolute;
+				top: 16px;
+				right: 16px;
+				background: none;
+				border: none;
+				color: var(--muted);
+				cursor: pointer;
+				font-size: 20px;
+				line-height: 1;
+			}
+			.streak-badge {
+				background: var(--gold-dim);
+				border: 1px solid var(--border-gold);
+				border-radius: 4px;
+				padding: 12px 16px;
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+			.streak-fire {
+				font-size: 20px;
+			}
+			.streak-info {
+			}
+			.streak-val {
+				font-family: "Playfair Display", serif;
+				font-size: 18px;
+				color: var(--gold);
+				line-height: 1;
+			}
+			.streak-label {
+				font-size: 11px;
+				color: var(--muted);
+				font-family: "DM Mono", monospace;
+				letter-spacing: 1px;
+				margin-top: 2px;
+			}
+
+			/* MAIN CONTENT */
+			.main {
+				margin-left: 280px;
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+			}
+
+			/* TOP BAR */
+			.topbar {
+				padding: 24px 48px;
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+			.topbar-greeting {
+				font-size: 13px;
+				color: var(--muted);
+			}
+			.topbar-greeting strong {
+				color: var(--white);
+				font-weight: 500;
+			}
+
+			.cert-btn {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-family: "DM Mono", monospace;
+				font-size: 11px;
+				color: var(--muted);
+				letter-spacing: 2px;
+				text-transform: uppercase;
+				padding: 8px 16px;
+				border: 1px solid var(--border);
+				border-radius: 3px;
+				cursor: default;
+				opacity: 0.5;
+			}
+
+			/* CONTENT AREA */
+			.content {
+				flex: 1;
+				padding: 56px 48px;
+				max-width: 900px;
+			}
+
+			/* DAY HEADER */
+			.day-header {
+				display: flex;
+				align-items: flex-start;
+				gap: 32px;
+				margin-bottom: 48px;
+				animation: fadeUp 0.6s ease forwards;
+			}
+
+			@keyframes fadeUp {
+				from {
+					opacity: 0;
+					transform: translateY(24px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			.day-badge {
+				font-family: "DM Mono", monospace;
+				font-size: 10px;
+				color: var(--gold);
+				letter-spacing: 4px;
+				text-transform: uppercase;
+				padding: 6px 14px;
+				border: 1px solid var(--border-gold);
+				border-radius: 2px;
+				white-space: nowrap;
+				margin-top: 8px;
+			}
+
+			.day-title-block {
+			}
+			.day-eyebrow {
+				font-family: "DM Mono", monospace;
+				font-size: 11px;
+				color: var(--muted);
+				letter-spacing: 3px;
+				text-transform: uppercase;
+				margin-bottom: 12px;
+			}
+			.day-heading {
+				font-family: "Playfair Display", serif;
+				font-size: clamp(36px, 5vw, 56px);
+				font-weight: 900;
+				line-height: 1.05;
+				color: var(--white);
+			}
+			.day-heading em {
+				font-style: italic;
+				color: var(--gold);
+			}
+			.day-desc {
+				font-size: 16px;
+				color: var(--text);
+				line-height: 1.7;
+				margin-top: 16px;
+				font-weight: 300;
+				max-width: 580px;
+			}
+
+			/* VIDEO PLAYER */
+			.video-wrap {
+				position: relative;
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 4px;
+				overflow: hidden;
+				aspect-ratio: 16/9;
+				max-width: 720px;
+				margin-bottom: 40px;
+				animation: fadeUp 0.6s 0.1s ease both;
+				cursor: pointer;
+			}
+			.video-wrap::before {
+				content: "";
+				position: absolute;
+				inset: 0;
+				background: linear-gradient(
+					135deg,
+					rgba(201, 168, 76, 0.05) 0%,
+					transparent 60%
+				);
+			}
+			.video-thumb {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				opacity: 0.3;
+			}
+			.video-overlay {
+				position: absolute;
+				inset: 0;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 16px;
+			}
+			.play-btn {
+				width: 72px;
+				height: 72px;
+				border-radius: 50%;
+				background: var(--gold);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transition: all 0.2s;
+				box-shadow: 0 0 40px rgba(201, 168, 76, 0.3);
+			}
+			.video-wrap:hover .play-btn {
+				transform: scale(1.08);
+				box-shadow: 0 0 60px rgba(201, 168, 76, 0.5);
+			}
+			.play-btn svg {
+				margin-left: 4px;
+			}
+			.video-label {
+				font-family: "DM Mono", monospace;
+				font-size: 11px;
+				color: var(--text);
+				letter-spacing: 2px;
+				text-transform: uppercase;
+			}
+			.video-duration {
+				position: absolute;
+				bottom: 16px;
+				right: 16px;
+				font-family: "DM Mono", monospace;
+				font-size: 12px;
+				color: var(--white);
+				background: rgba(0, 0, 0, 0.7);
+				padding: 4px 10px;
+				border-radius: 3px;
+			}
+
+			/* KEY LESSONS */
+			.section-label {
+				font-family: "DM Mono", monospace;
+				font-size: 10px;
+				color: var(--muted);
+				letter-spacing: 4px;
+				text-transform: uppercase;
+				margin-bottom: 20px;
+				animation: fadeUp 0.6s 0.2s ease both;
+			}
+
+			.lessons {
+				display: flex;
+				flex-direction: column;
+				gap: 1px;
+				margin-bottom: 48px;
+				animation: fadeUp 0.6s 0.25s ease both;
+			}
+			.lesson {
+				display: flex;
+				align-items: flex-start;
+				gap: 20px;
+				padding: 20px 24px;
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 2px;
+				margin-bottom: 8px;
+			}
+			.lesson-num {
+				font-family: "Playfair Display", serif;
+				font-size: 32px;
+				color: var(--border);
+				line-height: 1;
+				min-width: 40px;
+				font-weight: 700;
+			}
+			.lesson-text {
+			}
+			.lesson-title {
+				font-size: 15px;
+				font-weight: 500;
+				color: var(--white);
+				margin-bottom: 4px;
+			}
+			.lesson-desc {
+				font-size: 13px;
+				color: var(--text);
+				line-height: 1.5;
+			}
+
+			/* COMPLETE BUTTON */
+			.complete-section {
+				animation: fadeUp 0.6s 0.35s ease both;
+			}
+			.complete-cta {
+				display: inline-flex;
+				align-items: center;
+				gap: 14px;
+				background: var(--gold);
+				color: var(--black);
+				font-family: "DM Sans", sans-serif;
+				font-size: 15px;
+				font-weight: 600;
+				padding: 18px 40px;
+				border: none;
+				border-radius: 3px;
+				cursor: pointer;
+				letter-spacing: 0.3px;
+				transition: all 0.25s;
+			}
+			.complete-cta:hover {
+				background: var(--gold-light);
+				transform: translateY(-2px);
+				box-shadow: 0 12px 40px rgba(201, 168, 76, 0.35);
+			}
+			.complete-hint {
+				font-size: 13px;
+				color: var(--muted);
+				margin-top: 12px;
+				font-family: "DM Mono", monospace;
+				letter-spacing: 1px;
+			}
+
+			/* LOCKED STATE */
+			.locked-overlay {
+				display: none;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+				min-height: 60vh;
+				gap: 24px;
+				animation: fadeUp 0.5s ease forwards;
+			}
+			.locked-overlay.show {
+				display: flex;
+			}
+			.lock-icon {
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+				border: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: var(--muted);
+			}
+			.locked-title {
+				font-family: "Playfair Display", serif;
+				font-size: 40px;
+				font-weight: 700;
+				color: var(--white);
+			}
+			.locked-sub {
+				font-size: 15px;
+				color: var(--text);
+				max-width: 400px;
+				line-height: 1.6;
+			}
+
+			/* NOTIFICATION TOAST */
+			.toast {
+				position: fixed;
+				bottom: 32px;
+				right: 32px;
+				background: var(--card);
+				border: 1px solid var(--border-gold);
+				border-radius: 4px;
+				padding: 16px 24px;
+				display: flex;
+				align-items: center;
+				gap: 14px;
+				transform: translateY(100px);
+				opacity: 0;
+				transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+				z-index: 999;
+				max-width: 360px;
+			}
+			.toast.show {
+				transform: translateY(0);
+				opacity: 1;
+			}
+			.toast-icon {
+				color: var(--gold);
+				flex-shrink: 0;
+			}
+			.toast-text {
+				font-size: 14px;
+				color: var(--white);
+				line-height: 1.4;
+			}
+			.toast-text strong {
+				color: var(--gold);
+			}
+
+			/* ── DAY 5 COMPLETION SCREEN ── */
+			.completion-screen {
+				display: none;
+				flex-direction: column;
+				gap: 0;
+				animation: fadeUp 0.7s ease forwards;
+			}
+			.completion-screen.show {
+				display: flex;
+			}
+
+			/* HERO BANNER */
+			.comp-hero {
+				background: linear-gradient(
+					135deg,
+					#0d0a00 0%,
+					#111008 50%,
+					#0a0a0a 100%
+				);
+				border: 1px solid var(--border-gold);
+				border-radius: 4px;
+				padding: 56px 48px;
+				position: relative;
+				overflow: hidden;
+				margin-bottom: 40px;
+			}
+			.comp-hero::before {
+				content: "";
+				position: absolute;
+				top: -60px;
+				right: -60px;
+				width: 300px;
+				height: 300px;
+				border-radius: 50%;
+				background: radial-gradient(
+					circle,
+					rgba(201, 168, 76, 0.12) 0%,
+					transparent 70%
+				);
+				pointer-events: none;
+			}
+			.comp-hero::after {
+				content: "";
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				height: 1px;
+				background: linear-gradient(
+					90deg,
+					transparent,
+					var(--gold),
+					transparent
+				);
+				opacity: 0.4;
+			}
+
+			.comp-eyebrow {
+				font-family: "DM Mono", monospace;
+				font-size: 10px;
+				color: var(--gold);
+				letter-spacing: 5px;
+				text-transform: uppercase;
+				margin-bottom: 24px;
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+			.comp-eyebrow::before {
+				content: "";
+				width: 20px;
+				height: 1px;
+				background: var(--gold);
+			}
+
+			.comp-headline {
+				font-family: "Playfair Display", serif;
+				font-size: clamp(40px, 6vw, 64px);
+				font-weight: 900;
+				line-height: 1;
+				color: var(--white);
+				margin-bottom: 20px;
+			}
+			.comp-headline em {
+				font-style: italic;
+				color: var(--gold);
+			}
+
+			.comp-sub {
+				font-size: 16px;
+				color: var(--text);
+				line-height: 1.75;
+				max-width: 520px;
+				font-weight: 300;
+			}
+
+			.comp-stats {
+				display: flex;
+				gap: 40px;
+				margin-top: 36px;
+				padding-top: 36px;
+				border-top: 1px solid var(--border);
+				flex-wrap: wrap;
+			}
+			.comp-stat {
+			}
+			.comp-stat-val {
+				font-family: "Playfair Display", serif;
+				font-size: 32px;
+				font-weight: 700;
+				color: var(--gold);
+				line-height: 1;
+			}
+			.comp-stat-label {
+				font-family: "DM Mono", monospace;
+				font-size: 10px;
+				color: var(--muted);
+				letter-spacing: 3px;
+				text-transform: uppercase;
+				margin-top: 6px;
+			}
+
+			/* PATHS */
+			.paths-label {
+				font-family: "DM Mono", monospace;
+				font-size: 10px;
+				color: var(--muted);
+				letter-spacing: 4px;
+				text-transform: uppercase;
+				margin-bottom: 20px;
+				display: flex;
+				align-items: center;
+				gap: 16px;
+			}
+			.paths-label::after {
+				content: "";
+				flex: 1;
+				height: 1px;
+				background: var(--border);
+			}
+
+			.paths-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 16px;
+				margin-bottom: 48px;
+			}
+
+			.path-card {
+				border: 1px solid var(--border);
+				border-radius: 4px;
+				padding: 32px 28px;
+				display: flex;
+				flex-direction: column;
+				gap: 16px;
+				cursor: pointer;
+				transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+				position: relative;
+				overflow: hidden;
+				background: var(--card);
+				text-decoration: none;
+			}
+			.path-card::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 2px;
+				background: var(--gold);
+				transform: scaleX(0);
+				transition: transform 0.3s ease;
+			}
+			.path-card:hover::before {
+				transform: scaleX(1);
+			}
+			.path-card:hover {
+				border-color: var(--border-gold);
+				background: #131108;
+				transform: translateY(-3px);
+				box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+			}
+
+			.path-card.primary {
+				border-color: var(--border-gold);
+				background: linear-gradient(135deg, #131108 0%, var(--card) 100%);
+			}
+			.path-card.primary::before {
+				transform: scaleX(1);
+			}
+
+			.path-tag {
+				font-family: "DM Mono", monospace;
+				font-size: 9px;
+				letter-spacing: 3px;
+				text-transform: uppercase;
+				padding: 4px 10px;
+				border-radius: 2px;
+				align-self: flex-start;
+			}
+			.path-card.primary .path-tag {
+				background: var(--gold);
+				color: var(--black);
+			}
+			.path-card.secondary .path-tag {
+				background: transparent;
+				border: 1px solid var(--border-gold);
+				color: var(--gold);
+			}
+
+			.path-title {
+				font-family: "Playfair Display", serif;
+				font-size: 24px;
+				font-weight: 700;
+				color: var(--white);
+				line-height: 1.2;
+			}
+
+			.path-desc {
+				font-size: 14px;
+				color: var(--text);
+				line-height: 1.65;
+				font-weight: 300;
+				flex: 1;
+			}
+
+			.path-price {
+				font-family: "DM Mono", monospace;
+				font-size: 11px;
+				color: var(--muted);
+				letter-spacing: 2px;
+			}
+			.path-card.primary .path-price {
+				color: var(--gold);
+			}
+
+			.path-cta {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding-top: 16px;
+				border-top: 1px solid var(--border);
+			}
+			.path-cta-text {
+				font-size: 13px;
+				font-weight: 500;
+				color: var(--white);
+			}
+			.path-cta-arrow {
+				color: var(--gold);
+				transition: transform 0.2s;
+			}
+			.path-card:hover .path-cta-arrow {
+				transform: translateX(6px);
+			}
+
+			/* CERTIFICATE PREVIEW */
+			.cert-preview {
+				border: 1px solid var(--border);
+				border-radius: 4px;
+				padding: 32px;
+				background: var(--card);
+				display: flex;
+				align-items: center;
+				gap: 28px;
+				margin-bottom: 0;
+			}
+			.cert-icon {
+				width: 64px;
+				height: 64px;
+				border-radius: 50%;
+				border: 1px solid var(--border-gold);
+				background: var(--gold-dim);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: var(--gold);
+				flex-shrink: 0;
+			}
+			.cert-info {
+				flex: 1;
+			}
+			.cert-title {
+				font-family: "Playfair Display", serif;
+				font-size: 20px;
+				font-weight: 700;
+				color: var(--white);
+				margin-bottom: 4px;
+			}
+			.cert-name-line {
+				font-family: "DM Mono", monospace;
+				font-size: 11px;
+				color: var(--gold);
+				letter-spacing: 2px;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+			.cert-desc {
+				font-size: 13px;
+				color: var(--muted);
+				line-height: 1.5;
+			}
+			.cert-download {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				background: var(--gold);
+				color: var(--black);
+				font-family: "DM Sans", sans-serif;
+				font-size: 13px;
+				font-weight: 600;
+				padding: 12px 24px;
+				border: none;
+				border-radius: 3px;
+				cursor: pointer;
+				white-space: nowrap;
+				transition: all 0.2s;
+				letter-spacing: 0.3px;
+			}
+			.cert-download:hover {
+				background: var(--gold-light);
+				box-shadow: 0 8px 24px rgba(201, 168, 76, 0.3);
+			}
+
+			/* CERT BUTTON ACTIVE */
+			.cert-btn.active {
+				opacity: 1;
+				cursor: pointer;
+				border-color: var(--border-gold);
+				color: var(--gold);
+				transition: all 0.3s;
+			}
+			.cert-btn.active:hover {
+				background: var(--gold-dim);
+			}
+
+			/* ── QUIZ STYLES ── */
+			.quiz-wrap {
+				margin-top: 48px;
+				border-top: 1px solid var(--border);
+				padding-top: 40px;
+				animation: fadeUp 0.5s ease forwards;
+			}
+
+			.quiz-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 28px;
+				flex-wrap: wrap;
+				gap: 12px;
+			}
+
+			.quiz-label {
+				font-family: "DM Mono", monospace;
+				font-size: 10px;
+				color: var(--gold);
+				letter-spacing: 4px;
+				text-transform: uppercase;
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+			.quiz-label::before {
+				content: "";
+				width: 16px;
+				height: 1px;
+				background: var(--gold);
+			}
+
+			.quiz-score-running {
+				font-family: "DM Mono", monospace;
+				font-size: 12px;
+				color: var(--muted);
+				letter-spacing: 2px;
+			}
+			.quiz-score-running span {
+				color: var(--gold);
+			}
+
+			.quiz-questions {
+				display: flex;
+				flex-direction: column;
+				gap: 28px;
+				margin-bottom: 32px;
+			}
+
+			.quiz-q {
+				display: flex;
+				flex-direction: column;
+				gap: 14px;
+			}
+
+			.quiz-q-text {
+				font-size: 15px;
+				font-weight: 500;
+				color: var(--white);
+				line-height: 1.5;
+				display: flex;
+				gap: 12px;
+			}
+			.quiz-q-num {
+				font-family: "DM Mono", monospace;
+				font-size: 11px;
+				color: var(--gold);
+				letter-spacing: 2px;
+				min-width: 20px;
+				padding-top: 2px;
+			}
+
+			.quiz-options {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+				padding-left: 32px;
+			}
+
+			.quiz-opt {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				padding: 13px 16px;
+				border: 1px solid var(--border);
+				border-radius: 3px;
+				cursor: pointer;
+				transition: all 0.18s;
+				background: transparent;
+				color: var(--text);
+				font-family: "DM Sans", sans-serif;
+				font-size: 14px;
+				text-align: left;
+			}
+			.quiz-opt:hover {
+				border-color: var(--gold);
+				background: var(--gold-dim);
+				color: var(--white);
+			}
+			.quiz-opt.selected {
+				border-color: var(--gold);
+				background: var(--gold-dim);
+				color: var(--white);
+			}
+			.quiz-opt.correct {
+				border-color: #4caf7d;
+				background: rgba(76, 175, 125, 0.1);
+				color: #7ed4a8;
+			}
+			.quiz-opt.wrong {
+				border-color: #e05555;
+				background: rgba(224, 85, 85, 0.08);
+				color: #e08888;
+			}
+			.quiz-opt.reveal-correct {
+				border-color: #4caf7d;
+				background: rgba(76, 175, 125, 0.06);
+				color: #7ed4a8;
+			}
+			.quiz-opt.disabled {
+				cursor: default;
+				pointer-events: none;
+			}
+
+			.quiz-opt-key {
+				font-family: "DM Mono", monospace;
+				font-size: 10px;
+				background: var(--border);
+				color: var(--muted);
+				padding: 2px 7px;
+				border-radius: 2px;
+				min-width: 24px;
+				text-align: center;
+				transition: all 0.18s;
+				flex-shrink: 0;
+			}
+			.quiz-opt.selected .quiz-opt-key,
+			.quiz-opt:hover .quiz-opt-key {
+				background: var(--gold);
+				color: var(--black);
+			}
+			.quiz-opt.correct .quiz-opt-key {
+				background: #4caf7d;
+				color: var(--black);
+			}
+			.quiz-opt.wrong .quiz-opt-key {
+				background: #e05555;
+				color: var(--white);
+			}
+			.quiz-opt.reveal-correct .quiz-opt-key {
+				background: #4caf7d;
+				color: var(--black);
+			}
+
+			/* FEEDBACK */
+			.quiz-feedback {
+				display: none;
+				padding: 14px 18px;
+				border-radius: 3px;
+				font-size: 13px;
+				line-height: 1.5;
+				margin-top: 4px;
+				font-family: "DM Mono", monospace;
+				letter-spacing: 0.5px;
+			}
+			.quiz-feedback.show {
+				display: block;
+			}
+			.quiz-feedback.pass {
+				background: rgba(76, 175, 125, 0.08);
+				border: 1px solid rgba(76, 175, 125, 0.2);
+				color: #7ed4a8;
+			}
+			.quiz-feedback.fail {
+				background: rgba(224, 85, 85, 0.06);
+				border: 1px solid rgba(224, 85, 85, 0.15);
+				color: #e08888;
+			}
+
+			/* QUIZ SUBMIT */
+			.quiz-submit-wrap {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+			}
+			.quiz-submit {
+				display: inline-flex;
+				align-items: center;
+				gap: 12px;
+				background: var(--gold);
+				color: var(--black);
+				font-family: "DM Sans", sans-serif;
+				font-size: 14px;
+				font-weight: 600;
+				padding: 15px 32px;
+				border: none;
+				border-radius: 3px;
+				cursor: pointer;
+				letter-spacing: 0.3px;
+				transition: all 0.2s;
+				align-self: flex-start;
+			}
+			.quiz-submit:hover {
+				background: var(--gold-light);
+				transform: translateY(-1px);
+				box-shadow: 0 8px 28px rgba(201, 168, 76, 0.3);
+			}
+			.quiz-submit:disabled {
+				opacity: 0.4;
+				cursor: not-allowed;
+				transform: none;
+				box-shadow: none;
+			}
+			.quiz-hint {
+				font-family: "DM Mono", monospace;
+				font-size: 11px;
+				color: var(--muted);
+				letter-spacing: 1px;
+			}
+
+			/* QUIZ RESULT BANNER */
+			.quiz-result-banner {
+				display: none;
+				padding: 20px 24px;
+				border-radius: 3px;
+				margin-top: 8px;
+				align-items: center;
+				gap: 16px;
+			}
+			.quiz-result-banner.show {
+				display: flex;
+			}
+			.quiz-result-banner.pass-banner {
+				background: rgba(76, 175, 125, 0.08);
+				border: 1px solid rgba(76, 175, 125, 0.2);
+			}
+			.quiz-result-banner.fail-banner {
+				background: rgba(224, 85, 85, 0.06);
+				border: 1px solid rgba(224, 85, 85, 0.15);
+			}
+			.result-icon {
+				font-size: 24px;
+				flex-shrink: 0;
+			}
+			.result-text {
+			}
+			.result-title {
+				font-size: 15px;
+				font-weight: 600;
+				margin-bottom: 4px;
+			}
+			.pass-banner .result-title {
+				color: #7ed4a8;
+			}
+			.fail-banner .result-title {
+				color: #e08888;
+			}
+			.result-sub {
+				font-size: 13px;
+				color: var(--muted);
+				line-height: 1.5;
+				font-family: "DM Mono", monospace;
+				letter-spacing: 0.5px;
+			}
+			.result-action {
+				margin-left: auto;
+				flex-shrink: 0;
+			}
+			.btn-retry {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				background: transparent;
+				border: 1px solid rgba(224, 85, 85, 0.4);
+				color: #e08888;
+				font-family: "DM Sans", sans-serif;
+				font-size: 13px;
+				font-weight: 500;
+				padding: 10px 20px;
+				border-radius: 3px;
+				cursor: pointer;
+				transition: all 0.2s;
+			}
+			.btn-retry:hover {
+				background: rgba(224, 85, 85, 0.08);
+			}
+
+			.btn-unlock {
+				display: inline-flex;
+				align-items: center;
+				gap: 10px;
+				background: var(--gold);
+				color: var(--black);
+				font-family: "DM Sans", sans-serif;
+				font-size: 14px;
+				font-weight: 600;
+				padding: 12px 24px;
+				border: none;
+				border-radius: 3px;
+				cursor: pointer;
+				transition: all 0.2s;
+				letter-spacing: 0.3px;
+			}
+			.btn-unlock:hover {
+				background: var(--gold-light);
+				box-shadow: 0 8px 24px rgba(201, 168, 76, 0.3);
+			}
+
+			/* TOTAL SCORE in sidebar */
+			.score-tracker {
+				padding: 16px 32px;
+				border-top: 1px solid var(--border);
+				margin-top: auto;
+			}
+			.score-label {
+				font-family: "DM Mono", monospace;
+				font-size: 9px;
+				color: var(--muted);
+				letter-spacing: 3px;
+				text-transform: uppercase;
+				margin-bottom: 8px;
+			}
+			.score-display {
+				display: flex;
+				align-items: baseline;
+				gap: 4px;
+			}
+			.score-num {
+				font-family: "Playfair Display", serif;
+				font-size: 28px;
+				font-weight: 700;
+				color: var(--gold);
+				line-height: 1;
+			}
+			.score-denom {
+				font-family: "DM Mono", monospace;
+				font-size: 13px;
+				color: var(--muted);
+			}
+			.score-bar {
+				height: 2px;
+				background: var(--border);
+				border-radius: 2px;
+				margin-top: 10px;
+				overflow: hidden;
+			}
+			.score-bar-fill {
+				height: 100%;
+				background: linear-gradient(90deg, var(--gold), var(--gold-light));
+				border-radius: 2px;
+				transition: width 0.6s ease;
+			}
+
+			/* MOBILE */
+			@media (max-width: 768px) {
+				.sidebar {
+					display: none;
+				}
+				.main {
+					margin-left: 0;
+				}
+				.topbar,
+				.content {
+					padding-left: 24px;
+					padding-right: 24px;
+				}
+				.content {
+					padding-top: 32px;
+				}
+				.paths-grid {
+					grid-template-columns: 1fr;
+				}
+				.cert-preview {
+					flex-direction: column;
+					text-align: center;
+				}
+				.quiz-options {
+					padding-left: 0;
+				}
+			}
+		</style>
+		<style type="text/css" id="embeddedIframes">
+			.ep-iFrameContainer {
+				width: 100%;
+			}
+			.ep-header,
+			.ep-iFrameContainer,
+			.ep-overlay {
+				display: none;
+			}
+			.ep-iFrame {
+				border: none;
+			}
+			.ep-iFrameLarge {
+				height: 500px;
+				overflow: auto;
+			}
+			.ep-overflow {
+				overflow: unset;
+			}
+			.ep-overlay {
+				z-index: 10000;
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				background: rgba(0, 0, 0, 0.5);
+				transition: opacity 0.2s;
+				width: 100%;
+				justify-content: center;
+				align-items: center;
+			}
+			.ep-wrapper {
+				width: 100%;
+			}
+			.ep-header {
+				justify-content: flex-end;
+				position: fixed;
+				border-radius: 5px;
+				z-index: 1;
+			}
+			.ep-close-icon,
+			.ep-minimize-icon {
+				background: #e8e8e8;
+				width: 23px;
+				height: 23px;
+				margin: 3px 6px 0 0;
+				z-index: 999;
+				color: #4a4a4a;
+				transition: background 0.25s;
+				text-align: center;
+				cursor: pointer;
+			}
+			.ep-minimize-icon {
+				border-radius: 50%;
+				line-height: 0.3ch;
+				font-size: 22px;
+				border: 1px solid #ccc;
+				font-family: sans-serif;
+			}
+			.ep-close-icon {
+				border-radius: 50%;
+				line-height: 1.5ch;
+				font-size: 20px;
+				border: 1px solid #ccc;
+				font-family: Montserrat;
+			}
+			.ep-minimize-text-container {
+				height: 100%;
+				text-align: center;
+			}
+			.ep-minimize-tc-sticky {
+				writing-mode: vertical-lr;
+				justify-content: center;
+			}
+			.ep-minimize-tc-sticky-left {
+				transform: rotate(360deg);
+			}
+			.ep-minimize-tc-sticky-right {
+				transform: rotate(180deg);
+			}
+			.ep-minimize-tc-polite {
+				align-items: end;
+				width: 100%;
+			}
+			.ep-minimize-tc-polite-left {
+				justify-content: start;
+			}
+			.ep-minimize-tc-polite-right {
+				justify-content: end;
+			}
+			.ep-minimize-text {
+				background-color: #000;
+				cursor: pointer;
+				color: #fff;
+				white-space: nowrap;
+				overflow: hidden;
+				max-width: 380px;
+				text-overflow: ellipsis;
+			}
+			.ep-minimize-text-polite {
+				margin-bottom: 8px;
+			}
+			.ep-minimize-text-polite-left {
+				margin-left: 25px;
+				margin-right: 8px;
+			}
+			.ep-minimize-text-polite-right {
+				margin-left: 8px;
+				margin-right: 25px;
+			}
+			.ep-sticky-sidebar {
+				top: 50%;
+				z-index: 9999;
+				position: fixed;
+			}
+			.ep-height,
+			.ep-sticky-sidebar .ep-wrapper {
+				height: 100%;
+			}
+			.ep-polite-slide-in {
+				z-index: 9999;
+				position: fixed;
+			}
+			.ep-inline,
+			.ep-popup {
+				position: relative;
+				margin: auto;
+			}
+			.ep-polite-slide-in .ep-wrapper {
+				position: absolute;
+			}
+			.ep-popup {
+				z-index: 9999;
+			}
+			.ep-inline {
+				overflow: unset;
+				boxshadow: none;
+			}
+			.ep-right {
+				right: 15px;
+			}
+			.ep-left {
+				left: 15px;
+			}
+			.ep-bottom {
+				bottom: 15px;
+			}
+			@media only screen and (max-width: 550px) {
+				.ep-iFrame,
+				.ep-iFrameContainer {
+					width: 100%;
+				}
+				.ep-popup {
+					width: 100% !important;
+				}
+				.ep-right {
+					right: 0;
+				}
+				.ep-left {
+					left: 0;
+				}
+				.ep-bottom {
+					bottom: 0;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- SIDEBAR -->
+		<aside class="sidebar">
+			<div class="sidebar-logo">
+				<div class="logo-mark">HTC</div>
+				<div class="logo-sub">Closer Training</div>
+			</div>
+
+			<div class="sidebar-progress">
+				<div class="prog-label">Your Progress</div>
+				<div class="prog-track">
+					<div class="prog-fill" id="progFill" style="width: 20%"></div>
+				</div>
+				<div class="prog-text">
+					<span id="progDone">1</span> of 5 days complete
+				</div>
+			</div>
+
+			<nav class="sidebar-days" id="sidebarDays">
+				<div class="day-item unlocked active">
+					<div class="day-num">01</div>
+					<div class="day-info">
+						<div class="day-title">The Closer Advantage</div>
+						<div class="day-duration">18 min</div>
+					</div>
+					<div class="day-status done">
+						<svg
+							width="10"
+							height="10"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="#070707"
+							stroke-width="3"
+						>
+							<path d="M20 6L9 17l-5-5"></path>
+						</svg>
+					</div>
+				</div>
+				<div class="day-item unlocked">
+					<div class="day-num">02</div>
+					<div class="day-info">
+						<div class="day-title">The Real Job</div>
+						<div class="day-duration">22 min</div>
+					</div>
+					<div class="day-status"></div>
+				</div>
+				<div class="day-item locked">
+					<div class="day-num">03</div>
+					<div class="day-info">
+						<div class="day-title">Elite Mindset</div>
+						<div class="day-duration">25 min</div>
+					</div>
+					<div class="day-status"></div>
+				</div>
+				<div class="day-item locked">
+					<div class="day-num">04</div>
+					<div class="day-info">
+						<div class="day-title">The Framework</div>
+						<div class="day-duration">31 min</div>
+					</div>
+					<div class="day-status"></div>
+				</div>
+				<div class="day-item locked">
+					<div class="day-num">05</div>
+					<div class="day-info">
+						<div class="day-title">Your Next Move</div>
+						<div class="day-duration">20 min</div>
+					</div>
+					<div class="day-status"></div>
+				</div>
+			</nav>
+
+			<div class="score-tracker">
+				<div class="score-label">Quiz Score</div>
+				<div class="score-display">
+					<div class="score-num" id="totalScoreDisplay">3</div>
+					<div class="score-denom">/ 15</div>
+				</div>
+				<div class="score-bar">
+					<div
+						class="score-bar-fill"
+						id="scoreBarFill"
+						style="width: 20%"
+					></div>
+				</div>
+			</div>
+
+			<div class="sidebar-footer">
+				<div class="streak-badge">
+					<div class="streak-fire">💰</div>
+					<div class="streak-info">
+						<div class="streak-val" id="streakVal">1</div>
+						<div class="streak-label">Day Streak</div>
+					</div>
+				</div>
+				<span
+					class="recovery-link"
+					onclick="
+						document.getElementById('recoveryModal').classList.add('open')
+					"
+					>Lost your link?</span
+				>
+			</div>
+		</aside>
+
+		<!-- LINK RECOVERY MODAL -->
+		<div class="recovery-modal" id="recoveryModal">
+			<div class="recovery-modal-inner">
+				<button
+					class="recovery-modal-close"
+					onclick="
+						document.getElementById('recoveryModal').classList.remove('open')
+					"
+				>
+					×
+				</button>
+				<div class="recovery-modal-title">Lost your link?</div>
+				<div class="recovery-modal-sub">
+					Enter the email you signed up with and we'll send it right back to
+					you.
+				</div>
+				<div
+					id="inline-zyjRC6a660piFavW9EwB-div"
+					class="ep-iFrameContainer"
+					style="border-radius: 3px; display: block"
+				>
+					<div
+						id="inline-zyjRC6a660piFavW9EwB-wrapper"
+						class="ep-wrapper"
+						style="border-radius: 3px"
+					>
+						<iframe
+							src="https://api.leadconnectorhq.com/widget/form/zyjRC6a660piFavW9EwB"
+							style="
+								width: 100%;
+								height: 5px;
+								border: none;
+								border-radius: 4px;
+								opacity: 1;
+								visibility: visible;
+								pointer-events: auto;
+								display: block;
+								overflow: auto;
+							"
+							id="inline-zyjRC6a660piFavW9EwB"
+							data-layout="{'id':'INLINE'}"
+							data-trigger-type="alwaysShow"
+							data-trigger-value=""
+							data-activation-type="alwaysActivated"
+							data-activation-value=""
+							data-deactivation-type="neverDeactivate"
+							data-deactivation-value=""
+							data-form-name="HTC Link Recovery"
+							data-height="249"
+							data-layout-iframe-id="inline-zyjRC6a660piFavW9EwB"
+							data-form-id="zyjRC6a660piFavW9EwB"
+							title="HTC Link Recovery"
+							data-initial-iframe-hidden="true"
+							data-unique-id-mapped="true"
+							data-iframe-resizer-initialized="true"
+							scrolling="yes"
+						>
+						</iframe>
+					</div>
+				</div>
+				<script src="https://link.msgsndr.com/js/form_embed.js"></script>
+			</div>
+		</div>
+
+		<!-- MAIN -->
+		<main class="main">
+			<div class="topbar">
+				<div class="topbar-greeting">
+					Welcome back, <strong id="greetName">Paulo</strong>
+				</div>
+				<div class="cert-btn">
+					<svg
+						width="14"
+						height="14"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<path d="M12 15l-3 6 3-1.5 3 1.5-3-6z"></path>
+						<circle cx="12" cy="8" r="6"></circle>
+					</svg>
+					Certificate — Locked
+				</div>
+			</div>
+
+			<div class="content" id="mainContent">
+				<div class="day-header">
+					<div class="day-badge">Day 01</div>
+					<div class="day-title-block">
+						<div class="day-eyebrow">Day 01 — Belief Install</div>
+						<div class="day-heading">
+							Why Closing Is the<br /><em>Highest-Leverage Skill</em>
+						</div>
+						<div class="day-desc">
+							Most people in sales are order-takers. Closers are a different
+							species. Today you'll understand why this skill creates more
+							leverage than almost anything else you can learn in 2025.
+						</div>
+					</div>
+				</div>
+				<div
+					class="video-wrap"
+					id="videoWrap"
+					onclick="playVideo(this)"
+					data-url="https://player.vimeo.com/video/1087340706?h=690188b40f&amp;autoplay=1"
+				>
+					<div class="video-overlay">
+						<div class="play-btn">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="#070707">
+								<path d="M8 5v14l11-7z"></path>
+							</svg>
+						</div>
+						<div class="video-label">Watch Again</div>
+					</div>
+					<div class="video-duration">18 min</div>
+				</div>
+				<div class="section-label">What You'll Learn</div>
+				<div class="lessons">
+					<div class="lesson">
+						<div class="lesson-num">01</div>
+						<div class="lesson-text">
+							<div class="lesson-title">
+								The difference between selling and closing
+							</div>
+							<div class="lesson-desc">
+								Why most salespeople are leaving 80% of money on the table every
+								single call.
+							</div>
+						</div>
+					</div>
+
+					<div class="lesson">
+						<div class="lesson-num">02</div>
+						<div class="lesson-text">
+							<div class="lesson-title">How closers create $10k months</div>
+							<div class="lesson-desc">
+								The exact math behind a remote closing income and why the
+								barrier to entry is lower than you think.
+							</div>
+						</div>
+					</div>
+
+					<div class="lesson">
+						<div class="lesson-num">03</div>
+						<div class="lesson-text">
+							<div class="lesson-title">
+								The identity shift that changes everything
+							</div>
+							<div class="lesson-desc">
+								You don't learn to close. You become a closer. Here's what that
+								actually means.
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="quiz-wrap">
+					<div class="quiz-header">
+						<div class="quiz-label">Day 1 Quiz</div>
+						<div class="quiz-score-running" style="color: var(--gold)">
+							<svg
+								width="14"
+								height="14"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								style="vertical-align: middle; margin-right: 6px"
+							>
+								<path d="M20 6L9 17l-5-5"></path>
+							</svg>
+							Passed
+						</div>
+					</div>
+					<div
+						style="
+							font-family: &quot;DM Mono&quot;, monospace;
+							font-size: 12px;
+							color: var(--muted);
+							letter-spacing: 2px;
+							padding: 20px 0;
+						"
+					>
+						Quiz complete — day unlocked.
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<!-- TOAST -->
+		<div class="toast" id="toast">
+			<div class="toast-icon">
+				<svg
+					width="20"
+					height="20"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+				>
+					<path
+						d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+					></path>
+				</svg>
+			</div>
+			<div class="toast-text" id="toastText"></div>
+		</div>
+
+		<script>
+			const days = [
+				{
+					title: "Why Closing Is the\nHighest-Leverage Skill",
+					shortTitle: "The Closer Advantage",
+					eyebrow: "Day 01 — Belief Install",
+					desc: "Most people in sales are order-takers. Closers are a different species. Today you'll understand why this skill creates more leverage than almost anything else you can learn in 2025.",
+					duration: "18 min",
+					videoUrl:
+						"https://player.vimeo.com/video/1087340706?h=690188b40f&autoplay=1",
+					lessons: [
+						{
+							title: "The difference between selling and closing",
+							desc: "Why most salespeople are leaving 80% of money on the table every single call.",
+						},
+						{
+							title: "How closers create $10k months",
+							desc: "The exact math behind a remote closing income and why the barrier to entry is lower than you think.",
+						},
+						{
+							title: "The identity shift that changes everything",
+							desc: "You don't learn to close. You become a closer. Here's what that actually means.",
+						},
+					],
+					quiz: [
+						{
+							q: "What's the core difference between a salesperson and a closer?",
+							opts: [
+								"A closer uses more aggressive tactics",
+								"A closer diagnoses the prospect's problem before presenting a solution",
+								"A closer always follows up more than a salesperson",
+								"A closer focuses only on price",
+							],
+							correct: 1,
+							feedback:
+								"Exactly. Closers diagnose first. Order-takers pitch. That's the entire difference.",
+						},
+						{
+							q: "According to Day 1, what percentage of potential income do most salespeople leave on the table?",
+							opts: ["50%", "60%", "80%", "90%"],
+							correct: 2,
+							feedback:
+								"80%. Most salespeople never even get to the real objection — they fold too early.",
+						},
+						{
+							q: "The identity shift in closing means:",
+							opts: [
+								"Pretending to be confident even when you're not",
+								"Memorizing more scripts",
+								"Becoming a closer internally before the results show externally",
+								"Closing as many deals as possible to build experience",
+							],
+							correct: 2,
+							feedback:
+								"Identity before results. You don't wait to feel like a closer — you decide to be one first.",
+						},
+					],
+				},
+				{
+					title: "What Closers\nActually Do",
+					shortTitle: "The Real Job",
+					eyebrow: "Day 02 — Foundations",
+					desc: "Strip away the myths. Today you'll see exactly what a day in the life of a top closer looks like — and why it's nothing like what most people imagine.",
+					duration: "22 min",
+					videoUrl:
+						"https://player.vimeo.com/video/1087341346?h=720662db76&autoplay=1",
+					lessons: [
+						{
+							title: "The remote closer's daily workflow",
+							desc: "Calls, offers, commissions, and how the whole ecosystem fits together.",
+						},
+						{
+							title: "How to find legitimate high-ticket offers",
+							desc: "Not all programs are equal. Here's the filter I use to only work with premium offers.",
+						},
+						{
+							title: "What top closers earn — with real numbers",
+							desc: "Real commission structures, realistic targets, and what 90 days looks like.",
+						},
+					],
+					quiz: [
+						{
+							q: "What is the primary way remote closers get paid?",
+							opts: [
+								"Hourly rate",
+								"Monthly retainer",
+								"Commission on closed deals",
+								"Equity in the company",
+							],
+							correct: 2,
+							feedback:
+								"Commission only. No close, no pay — which is why the skill itself is so valuable.",
+						},
+						{
+							q: "When evaluating a high-ticket offer to close for, what's the most important filter?",
+							opts: [
+								"How high the commission percentage is",
+								"Whether the offer actually delivers results for clients",
+								"How well-known the founder is",
+								"How many closers are already on the team",
+							],
+							correct: 1,
+							feedback:
+								"If the offer doesn't deliver real results, you'll be fighting objections that are justified. Only close for offers you believe in.",
+						},
+						{
+							q: "What's a realistic income target for a closer in their first 90 days?",
+							opts: [
+								"$500–$1,000/month",
+								"$1,000–$3,000/month",
+								"$3,000–$10,000/month",
+								"$20,000+/month immediately",
+							],
+							correct: 2,
+							feedback:
+								"$3k–$10k is the realistic range. Not overnight millions — but real, significant income if you do the work.",
+						},
+					],
+				},
+				{
+					title: "The Mindset That\nSeparates Elite Closers",
+					shortTitle: "Elite Mindset",
+					eyebrow: "Day 03 — Psychology",
+					desc: "Skill gets you on the call. Mindset determines if you close. Today is the hardest day — and the most important.",
+					duration: "25 min",
+					videoUrl:
+						"https://player.vimeo.com/video/1087342795?h=c2513c9ef8&autoplay=1",
+					lessons: [
+						{
+							title: "Why pressure reveals character",
+							desc: "Most people fold the moment a prospect pushes back. You won't — after today.",
+						},
+						{
+							title: "Detachment from outcome",
+							desc: "The counterintuitive mindset that makes you close more by caring less.",
+						},
+						{
+							title: "Identity before results",
+							desc: "How to show up as a closer before you have the results to prove it.",
+						},
+					],
+					quiz: [
+						{
+							q: "What happens to most closers the moment a prospect pushes back?",
+							opts: [
+								"They get more aggressive",
+								"They lower the price immediately",
+								"They fold and lose the sale",
+								"They ask more questions",
+							],
+							correct: 2,
+							feedback:
+								"They fold. Pressure reveals character. The closers who stay calm and curious are the ones who win.",
+						},
+						{
+							q: "What does 'detachment from outcome' mean in closing?",
+							opts: [
+								"Not caring whether you close or not",
+								"Being so focused on process that the result takes care of itself",
+								"Avoiding high-pressure situations",
+								"Letting the prospect make all the decisions",
+							],
+							correct: 1,
+							feedback:
+								"It means trusting the process so completely that your energy isn't desperate. Desperation kills deals. Calm confidence closes them.",
+						},
+						{
+							q: "Why is mindset more important than skill on a sales call?",
+							opts: [
+								"Because scripts don't matter",
+								"Because skill can be faked but mindset cannot",
+								"Because prospects can sense your internal state and react to it",
+								"Because mindset determines how many calls you book",
+							],
+							correct: 2,
+							feedback:
+								"Prospects feel your energy before they process your words. A calm, certain closer wins over a skilled but nervous one every time.",
+						},
+					],
+				},
+				{
+					title: "Your First Live\nClosing Framework",
+					shortTitle: "The Framework",
+					eyebrow: "Day 04 — The Skill",
+					desc: "This is where you go from understanding closing to actually doing it. Today I hand you the exact framework I use on every call.",
+					duration: "31 min",
+					videoUrl:
+						"https://player.vimeo.com/video/1087343397?h=10d9a6cf78&autoplay=1",
+					lessons: [
+						{
+							title: "The diagnostic call structure",
+							desc: "Forget 'Always Be Closing.' Great closers diagnose first. Here's the 5-phase framework.",
+						},
+						{
+							title: "Handling 'I need to think about it'",
+							desc: "The exact words I use. Word for word. And why they work every time.",
+						},
+						{
+							title: "Pattern interrupt for price objections",
+							desc: "When they say the price is too high, most closers panic. You'll know exactly what to say.",
+						},
+					],
+					quiz: [
+						{
+							q: "In the diagnostic call framework, what comes before presenting the solution?",
+							opts: [
+								"Building rapport with small talk",
+								"Deeply understanding the prospect's problem and pain",
+								"Explaining your credentials",
+								"Sharing testimonials from past clients",
+							],
+							correct: 1,
+							feedback:
+								"You diagnose before you prescribe. A doctor doesn't recommend surgery before examining the patient. Neither does a great closer.",
+						},
+						{
+							q: "When a prospect says 'I need to think about it', the best response is:",
+							opts: [
+								"Give them space and follow up in a week",
+								"Immediately offer a discount to speed up the decision",
+								"Ask what specifically they need to think about",
+								"Tell them the price goes up tomorrow",
+							],
+							correct: 2,
+							feedback:
+								"'I need to think about it' is never the real objection. It's a smoke screen. Your job is to find what's underneath it.",
+						},
+						{
+							q: "When a prospect says the price is too high, a closer should:",
+							opts: [
+								"Immediately lower the price",
+								"Defend the price by listing features",
+								"Reframe value by reconnecting them to the cost of NOT solving their problem",
+								"Agree and offer a payment plan first",
+							],
+							correct: 2,
+							feedback:
+								"Price is never the real issue — perceived value is. Reconnect them to what staying stuck costs them, and the price becomes irrelevant.",
+						},
+					],
+				},
+				{
+					title: "What's Holding You\nBack — And What's Next",
+					shortTitle: "Your Next Move",
+					eyebrow: "Day 05 — The Close",
+					desc: "You've done what 99% of people won't. Five days in. Today we diagnose exactly what's standing between you and your first $5k month — and I show you the path forward.",
+					duration: "20 min",
+					videoUrl:
+						"https://player.vimeo.com/video/1087344571?h=a88e600009&autoplay=1",
+					lessons: [
+						{
+							title: "The 3 reasons most closers never make real money",
+							desc: "Brutal honesty about the gaps that separate people who try and people who succeed.",
+						},
+						{
+							title: "Building your 90-day closer roadmap",
+							desc: "Exactly what the next 90 days should look like if you're serious about this.",
+						},
+						{
+							title: "Your next move with HTC",
+							desc: "Two paths forward — and how to know which one is right for you.",
+						},
+					],
+					quiz: [
+						{
+							q: "What is the #1 reason most closers fail to make real income?",
+							opts: [
+								"They don't know enough objection handling scripts",
+								"They treat closing as a skill to learn rather than an identity to embody",
+								"They can't find good offers to close for",
+								"They don't make enough calls per day",
+							],
+							correct: 1,
+							feedback:
+								"Skill without identity is just information. The closers who win have internalized this as who they are — not just what they do.",
+						},
+						{
+							q: "In your 90-day roadmap, what should the first 30 days focus on?",
+							opts: [
+								"Closing as many deals as possible immediately",
+								"Building the foundation — mindset, framework, and landing your first offer",
+								"Building a personal brand on social media",
+								"Studying advanced negotiation tactics",
+							],
+							correct: 1,
+							feedback:
+								"Foundation first. Speed without direction is just chaos. Get the fundamentals locked before scaling volume.",
+						},
+						{
+							q: "After completing this training, what separates people who succeed from those who don't?",
+							opts: [
+								"Having a better script",
+								"Taking immediate action on what they've learned",
+								"Waiting until conditions are perfect",
+								"Finding the cheapest program to join",
+							],
+							correct: 1,
+							feedback:
+								"Information without action is worthless. You now know more than 95% of people who call themselves closers. The only question is — what are you going to do with it?",
+						},
+					],
+				},
+			];
+
+			let currentDay = 0;
+			let unlockedDays = 1;
+			let completedDays = 0;
+			let quizAnswers = {}; // { dayIndex: [answerIndex, answerIndex, answerIndex] }
+			let quizSubmitted = {}; // { dayIndex: bool }
+			let quizPassed = {}; // { dayIndex: bool }
+			let totalScore = 0;
+
+			function updateScoreUI() {
+				const el = document.getElementById("totalScoreDisplay");
+				const bar = document.getElementById("scoreBarFill");
+				if (el) el.textContent = totalScore;
+				if (bar) bar.style.width = (totalScore / 15) * 100 + "%";
+			}
+
+			function buildSidebar() {
+				const nav = document.getElementById("sidebarDays");
+				nav.innerHTML = "";
+				days.forEach((d, i) => {
+					const isUnlocked = i < unlockedDays;
+					const isDone = i < completedDays;
+					const isActive = i === currentDay;
+					const div = document.createElement("div");
+					div.className = `day-item ${isUnlocked ? "unlocked" : "locked"} ${isActive ? "active" : ""}`;
+					div.innerHTML = `
+      <div class="day-num">0${i + 1}</div>
       <div class="day-info">
         <div class="day-title">${d.shortTitle}</div>
         <div class="day-duration">${d.duration}</div>
       </div>
-      <div class="day-status ${isDone ? 'done' : isActive ? 'active-dot' : ''}">
-        ${isDone
-          ? `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#070707" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>`
-          : isActive ? `<div class="dot-inner"></div>` : ''
-        }
+      <div class="day-status ${isDone ? "done" : isActive ? "active-dot" : ""}">
+        ${
+					isDone
+						? `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#070707" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>`
+						: isActive
+							? `<div class="dot-inner"></div>`
+							: ""
+				}
       </div>
     `;
-    if (isUnlocked) div.onclick = () => goToDay(i);
-    nav.appendChild(div);
-  });
-  const pct = (completedDays / 5) * 100;
-  document.getElementById('progFill').style.width = Math.max(pct, 4) + '%';
-  document.getElementById('progDone').textContent = completedDays;
-  document.getElementById('streakVal').textContent = Math.max(completedDays, 1);
-  updateScoreUI();
-}
+					if (isUnlocked) div.onclick = () => goToDay(i);
+					nav.appendChild(div);
+				});
+				const pct = (completedDays / 5) * 100;
+				document.getElementById("progFill").style.width =
+					Math.max(pct, 4) + "%";
+				document.getElementById("progDone").textContent = completedDays;
+				document.getElementById("streakVal").textContent = Math.max(
+					completedDays,
+					1,
+				);
+				updateScoreUI();
+			}
 
-function goToDay(i) {
-  currentDay = i;
-  renderDay();
-  buildSidebar();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+			function goToDay(i) {
+				currentDay = i;
+				renderDay();
+				buildSidebar();
+				window.scrollTo({ top: 0, behavior: "smooth" });
+			}
 
-function renderDay() {
-  const d = days[currentDay];
-  const isLocked = currentDay >= unlockedDays;
-  const content = document.getElementById('mainContent');
+			function renderDay() {
+				const d = days[currentDay];
+				const isLocked = currentDay >= unlockedDays;
+				const content = document.getElementById("mainContent");
 
-  if (isLocked) {
-    content.innerHTML = `
+				if (isLocked) {
+					content.innerHTML = `
       <div class="locked-overlay show">
         <div class="lock-icon">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
@@ -1480,207 +2213,288 @@ function renderDay() {
         <div class="locked-sub">Pass the Day ${currentDay} quiz to unlock this lesson.</div>
       </div>
     `;
-    return;
-  }
+					return;
+				}
 
-  const isDone = currentDay < completedDays;
-  const titleLines = d.title.split('\n');
-  const alreadySubmitted = quizSubmitted[currentDay];
-  const keys = ['A','B','C','D'];
-  const savedAnswers = quizAnswers[currentDay] || {};
-  const allAnswered = Object.keys(savedAnswers).length === 3;
+				const isDone = currentDay < completedDays;
+				const titleLines = d.title.split("\n");
+				const alreadySubmitted = quizSubmitted[currentDay];
+				const keys = ["A", "B", "C", "D"];
+				const savedAnswers = quizAnswers[currentDay] || {};
+				const allAnswered = Object.keys(savedAnswers).length === 3;
 
-  const quizHTML = isDone ? `
+				const quizHTML = isDone
+					? `
     <div class="quiz-wrap">
       <div class="quiz-header">
-        <div class="quiz-label">Day ${currentDay+1} Quiz</div>
+        <div class="quiz-label">Day ${currentDay + 1} Quiz</div>
         <div class="quiz-score-running" style="color:var(--gold);">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px;"><path d="M20 6L9 17l-5-5"/></svg>
           Passed
         </div>
       </div>
-      <div style="font-family:'Inter', sans-serif;font-size:12px;color:var(--muted);letter-spacing:2px;padding:20px 0;">Quiz complete — day unlocked.</div>
-    </div>` : `
+      <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:2px;padding:20px 0;">Quiz complete — day unlocked.</div>
+      ${currentDay === 4 ? `<button class="btn-unlock" onclick="triggerCompletion()" style="margin-top:8px;">See Your Results <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>` : ""}
+    </div>`
+					: `
     <div class="quiz-wrap" id="quizSection">
       <div class="quiz-header">
-        <div class="quiz-label">Day ${currentDay+1} Quiz</div>
-        <div class="quiz-score-running">2/3 correct to unlock <span>Day ${currentDay < 4 ? currentDay+2 : 'results'}</span></div>
+        <div class="quiz-label">Day ${currentDay + 1} Quiz</div>
+        <div class="quiz-score-running">2/3 correct to unlock <span>Day ${currentDay < 4 ? currentDay + 2 : "results"}</span></div>
       </div>
       <div class="quiz-questions">
-        ${d.quiz.map((q, qi) => `
+        ${d.quiz
+					.map(
+						(q, qi) => `
           <div class="quiz-q" id="qq-${qi}">
             <div class="quiz-q-text">
-              <div class="quiz-q-num">Q${qi+1}</div>
+              <div class="quiz-q-num">Q${qi + 1}</div>
               <div>${q.q}</div>
             </div>
             <div class="quiz-options">
-              ${q.opts.map((opt, oi) => {
-                let cls = '';
-                if (alreadySubmitted) {
-                  cls = 'disabled';
-                  if (savedAnswers[qi] === oi && oi === q.correct) cls = 'disabled correct';
-                  else if (savedAnswers[qi] === oi && oi !== q.correct) cls += ' wrong';
-                  else if (oi === q.correct) cls += ' reveal-correct';
-                } else if (savedAnswers[qi] === oi) cls = 'selected';
-                return `<button class="quiz-opt ${cls}" onclick="selectAnswer(${qi}, ${oi})" data-qi="${qi}" data-oi="${oi}">
+              ${q.opts
+								.map((opt, oi) => {
+									let cls = "";
+									if (alreadySubmitted) {
+										cls = "disabled";
+										if (savedAnswers[qi] === oi && oi === q.correct)
+											cls = "disabled correct";
+										else if (savedAnswers[qi] === oi && oi !== q.correct)
+											cls += " wrong";
+										else if (oi === q.correct) cls += " reveal-correct";
+									} else if (savedAnswers[qi] === oi) cls = "selected";
+									return `<button class="quiz-opt ${cls}" onclick="selectAnswer(${qi}, ${oi})" data-qi="${qi}" data-oi="${oi}">
                   <span class="quiz-opt-key">${keys[oi]}</span>${opt}
                 </button>`;
-              }).join('')}
+								})
+								.join("")}
             </div>
-            ${alreadySubmitted ? `<div class="quiz-feedback ${savedAnswers[qi] === q.correct ? 'pass' : 'fail'} show">${q.feedback}</div>` : ''}
+            ${alreadySubmitted ? `<div class="quiz-feedback ${savedAnswers[qi] === q.correct ? "pass" : "fail"} show">${q.feedback}</div>` : ""}
           </div>
-        `).join('')}
+        `,
+					)
+					.join("")}
       </div>
-      ${!alreadySubmitted ? `
+      ${
+				!alreadySubmitted
+					? `
         <div class="quiz-submit-wrap">
-          <button class="quiz-submit" id="quizSubmitBtn" onclick="submitQuiz()" ${allAnswered ? '' : 'disabled'}>
+          <button class="quiz-submit" id="quizSubmitBtn" onclick="submitQuiz()" ${allAnswered ? "" : "disabled"}>
             Submit Quiz
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
           <div class="quiz-hint">Answer all 3 questions to submit</div>
         </div>
-      ` : `
-        <div class="quiz-result-banner ${quizPassed[currentDay] ? 'pass-banner' : 'fail-banner'} show">
-          <div class="result-icon">${quizPassed[currentDay] ? '✓' : '✗'}</div>
+      `
+					: `
+        <div class="quiz-result-banner ${quizPassed[currentDay] ? "pass-banner" : "fail-banner"} show">
+          <div class="result-icon">${quizPassed[currentDay] ? "✓" : "✗"}</div>
           <div class="result-text">
-            <div class="result-title">${quizPassed[currentDay] ? 'Quiz Passed' : 'Not quite'}</div>
-            <div class="result-sub">${quizPassed[currentDay]
-              ? (currentDay < 4 ? 'Day ' + (currentDay+2) + ' is now unlocked.' : 'All 5 days complete.')
-              : 'You need 2/3 to pass. Rewatch the video and try again.'
-            }</div>
+            <div class="result-title">${quizPassed[currentDay] ? "Quiz Passed" : "Not quite"}</div>
+            <div class="result-sub">${
+							quizPassed[currentDay]
+								? currentDay < 4
+									? "Day " + (currentDay + 2) + " is now unlocked."
+									: "All 5 days complete."
+								: "You need 2/3 to pass. Rewatch the video and try again."
+						}</div>
           </div>
           <div class="result-action">
-            ${quizPassed[currentDay]
-              ? `<button class="btn-unlock" onclick="${currentDay < 4 ? 'goToDay('+(currentDay+1)+')' : 'triggerCompletion()'}">
-                  ${currentDay < 4 ? 'Go to Day ' + (currentDay+2) : 'See Your Results'}
+            ${
+							quizPassed[currentDay]
+								? `<button class="btn-unlock" onclick="${currentDay < 4 ? "goToDay(" + (currentDay + 1) + ")" : "triggerCompletion()"}">
+                  ${currentDay < 4 ? "Go to Day " + (currentDay + 2) : "See Your Results"}
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                  </button>`
-              : `<button class="btn-retry" onclick="retakeQuiz()">
+								: `<button class="btn-retry" onclick="retakeQuiz()">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
                   Retake Quiz
                  </button>`
-            }
+						}
           </div>
         </div>
-      `}
+      `
+			}
     </div>`;
 
-  content.innerHTML = `
+				content.innerHTML = `
     <div class="day-header">
       <div class="day-badge">Day 0${currentDay + 1}</div>
       <div class="day-title-block">
         <div class="day-eyebrow">${d.eyebrow}</div>
-        <div class="day-heading">${titleLines[0]}<br><em>${titleLines[1] || ''}</em></div>
+        <div class="day-heading">${titleLines[0]}<br><em>${titleLines[1] || ""}</em></div>
         <div class="day-desc">${d.desc}</div>
       </div>
     </div>
-    <div class="video-wrap">
+    <div class="video-wrap" id="videoWrap" onclick="playVideo(this)" data-url="${d.videoUrl}">
       <div class="video-overlay">
         <div class="play-btn">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="#070707"><path d="M8 5v14l11-7z"/></svg>
         </div>
-        <div class="video-label">${isDone ? 'Watch Again' : 'Play Day ' + (currentDay+1)}</div>
+        <div class="video-label">${isDone ? "Watch Again" : "Play Day " + (currentDay + 1)}</div>
       </div>
       <div class="video-duration">${d.duration}</div>
     </div>
     <div class="section-label">What You'll Learn</div>
     <div class="lessons">
-      ${d.lessons.map((l, i) => `
+      ${d.lessons
+				.map(
+					(l, i) => `
         <div class="lesson">
-          <div class="lesson-num">0${i+1}</div>
+          <div class="lesson-num">0${i + 1}</div>
           <div class="lesson-text">
             <div class="lesson-title">${l.title}</div>
             <div class="lesson-desc">${l.desc}</div>
           </div>
         </div>
-      `).join('')}
+      `,
+				)
+				.join("")}
     </div>
     ${quizHTML}
   `;
-}
+			}
 
-function selectAnswer(qi, oi) {
-  if (quizSubmitted[currentDay]) return;
-  if (!quizAnswers[currentDay]) quizAnswers[currentDay] = {};
-  quizAnswers[currentDay][qi] = oi;
-  document.querySelectorAll(`[data-qi="${qi}"]`).forEach(o => o.classList.remove('selected'));
-  document.querySelector(`[data-qi="${qi}"][data-oi="${oi}"]`).classList.add('selected');
-  const allAnswered = Object.keys(quizAnswers[currentDay]).length === 3;
-  const btn = document.getElementById('quizSubmitBtn');
-  if (btn && allAnswered) btn.disabled = false;
-}
+			function selectAnswer(qi, oi) {
+				if (quizSubmitted[currentDay]) return;
+				if (!quizAnswers[currentDay]) quizAnswers[currentDay] = {};
+				quizAnswers[currentDay][qi] = oi;
+				document
+					.querySelectorAll(`[data-qi="${qi}"]`)
+					.forEach((o) => o.classList.remove("selected"));
+				document
+					.querySelector(`[data-qi="${qi}"][data-oi="${oi}"]`)
+					.classList.add("selected");
+				const allAnswered = Object.keys(quizAnswers[currentDay]).length === 3;
+				const btn = document.getElementById("quizSubmitBtn");
+				if (btn && allAnswered) btn.disabled = false;
+			}
 
-function submitQuiz() {
-  const d = days[currentDay];
-  const answers = quizAnswers[currentDay] || {};
-  if (Object.keys(answers).length < 3) return;
+			function submitQuiz() {
+				const d = days[currentDay];
+				const answers = quizAnswers[currentDay] || {};
+				if (Object.keys(answers).length < 3) return;
 
-  let correct = 0;
-  d.quiz.forEach((q, qi) => { if (answers[qi] === q.correct) correct++; });
+				let correct = 0;
+				d.quiz.forEach((q, qi) => {
+					if (answers[qi] === q.correct) correct++;
+				});
 
-  quizSubmitted[currentDay] = true;
-  quizPassed[currentDay] = correct >= 2;
-  totalScore += correct;
+				quizSubmitted[currentDay] = true;
+				quizPassed[currentDay] = correct >= 2;
+				totalScore += correct;
 
-  if (quizPassed[currentDay]) {
-    completedDays = Math.max(completedDays, currentDay + 1);
-    unlockedDays = Math.min(completedDays + 1, 5);
-    buildSidebar();
-  }
+				if (quizPassed[currentDay]) {
+					completedDays = Math.max(completedDays, currentDay + 1);
+					unlockedDays = Math.min(completedDays + 1, 5);
+					buildSidebar();
+				}
 
-  renderDay();
-  updateScoreUI();
+				renderDay();
+				updateScoreUI();
+				saveProgress();
 
-  const toasts = [
-    [`<strong>${correct}/3 on Day 1.</strong> Day 2 unlocked. Keep going.`, `<strong>${correct}/3 on Day 1.</strong> Rewatch and try again.`],
-    [`<strong>${correct}/3 on Day 2.</strong> Day 3 is yours.`, `<strong>${correct}/3 on Day 2.</strong> Go back and rewatch.`],
-    [`<strong>${correct}/3 on Day 3.</strong> Day 4 unlocked.`, `<strong>${correct}/3 on Day 3.</strong> The answers are in the video.`],
-    [`<strong>${correct}/3 on Day 4.</strong> One more day.`, `<strong>${correct}/3 on Day 4.</strong> Rewatch and lock it in.`],
-    [`<strong>${correct}/3 on Day 5.</strong> Training complete.`, `<strong>${correct}/3 on Day 5.</strong> So close — rewatch and finish strong.`],
-  ];
-  showToast(quizPassed[currentDay] ? toasts[currentDay][0] : toasts[currentDay][1]);
+				const toasts = [
+					[
+						`<strong>${correct}/3 on Day 1.</strong> Day 2 unlocked. Keep going.`,
+						`<strong>${correct}/3 on Day 1.</strong> Rewatch and try again.`,
+					],
+					[
+						`<strong>${correct}/3 on Day 2.</strong> Day 3 is yours.`,
+						`<strong>${correct}/3 on Day 2.</strong> Go back and rewatch.`,
+					],
+					[
+						`<strong>${correct}/3 on Day 3.</strong> Day 4 unlocked.`,
+						`<strong>${correct}/3 on Day 3.</strong> The answers are in the video.`,
+					],
+					[
+						`<strong>${correct}/3 on Day 4.</strong> One more day.`,
+						`<strong>${correct}/3 on Day 4.</strong> Rewatch and lock it in.`,
+					],
+					[
+						`<strong>${correct}/3 on Day 5.</strong> Training complete.`,
+						`<strong>${correct}/3 on Day 5.</strong> So close — rewatch and finish strong.`,
+					],
+				];
+				showToast(
+					quizPassed[currentDay]
+						? toasts[currentDay][0]
+						: toasts[currentDay][1],
+				);
 
-  setTimeout(() => {
-    const quiz = document.getElementById('quizSection');
-    if (quiz) quiz.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, 200);
-}
+				setTimeout(() => {
+					const quiz = document.getElementById("quizSection");
+					if (quiz)
+						quiz.scrollIntoView({ behavior: "smooth", block: "nearest" });
+				}, 200);
+			}
 
-function retakeQuiz() {
-  const d = days[currentDay];
-  const oldAnswers = quizAnswers[currentDay] || {};
-  let oldCorrect = 0;
-  d.quiz.forEach((q, qi) => { if (oldAnswers[qi] === q.correct) oldCorrect++; });
-  totalScore = Math.max(0, totalScore - oldCorrect);
-  quizAnswers[currentDay] = {};
-  quizSubmitted[currentDay] = false;
-  quizPassed[currentDay] = false;
-  updateScoreUI();
-  renderDay();
-  setTimeout(() => {
-    const quiz = document.getElementById('quizSection');
-    if (quiz) quiz.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 100);
-}
+			function playVideo(el) {
+				const url = el.dataset.url;
+				el.innerHTML = `<iframe src="${url}" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="display:block;border-radius:4px;"></iframe>`;
+				el.style.cursor = "default";
+				el.onclick = null;
+			}
 
-function triggerCompletion() {
-  const certBtn = document.querySelector('.cert-btn');
-  certBtn.classList.add('active');
-  certBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-3 6 3-1.5 3 1.5-3-6z"/><circle cx="12" cy="8" r="6"/></svg> View Certificate`;
-  certBtn.onclick = () => showCertificate();
-  showCompletionScreen();
-}
+			function retakeQuiz() {
+				const d = days[currentDay];
+				const oldAnswers = quizAnswers[currentDay] || {};
+				let oldCorrect = 0;
+				d.quiz.forEach((q, qi) => {
+					if (oldAnswers[qi] === q.correct) oldCorrect++;
+				});
+				totalScore = Math.max(0, totalScore - oldCorrect);
+				quizAnswers[currentDay] = {};
+				quizSubmitted[currentDay] = false;
+				quizPassed[currentDay] = false;
+				updateScoreUI();
+				saveProgress();
+				renderDay();
+				setTimeout(() => {
+					const quiz = document.getElementById("quizSection");
+					if (quiz) quiz.scrollIntoView({ behavior: "smooth", block: "start" });
+				}, 100);
+			}
 
-function showCompletionScreen() {
-  const firstName = document.getElementById('greetName').textContent;
-  const content = document.getElementById('mainContent');
-  const score = totalScore;
-  const qualifiesForCall = score >= 13;
-  const qualifiesForAcademy = score >= 10 && score < 13;
-  const scoreColor = score >= 13 ? 'var(--gold)' : score >= 10 ? '#f5c957' : '#e08888';
-  const scoreLabel = score >= 13 ? 'HTC Mastery Call Eligible' : score >= 10 ? 'Academy Eligible' : 'Retake Recommended';
+			function triggerCompletion() {
+				const certBtn = document.querySelector(".cert-btn");
+				certBtn.classList.add("active");
+				certBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15l-3 6 3-1.5 3 1.5-3-6z"/><circle cx="12" cy="8" r="6"/></svg> View Certificate`;
+				certBtn.onclick = () => showCertificate();
 
-  content.innerHTML = `
+				// Fire completion webhook via Netlify Function (server-side, no CORS issues)
+				const tier = totalScore >= 12 ? "qualified" : "unqualified";
+				fetch("/.netlify/functions/completion", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						token: userToken,
+						name: userName,
+						email: userEmail,
+						score: totalScore,
+						tier,
+					}),
+				}).catch(() => {}); // fire-and-forget, never block the UI
+
+				showCompletionScreen();
+			}
+
+			function showCompletionScreen() {
+				const firstName = document.getElementById("greetName").textContent;
+				const content = document.getElementById("mainContent");
+				const score = totalScore;
+				const qualifiesForCall = score >= 12;
+				const qualifiesForAcademy = score >= 10 && score < 12;
+				const scoreColor =
+					score >= 12 ? "var(--gold)" : score >= 10 ? "#c9a84c" : "#e08888";
+				const scoreLabel =
+					score >= 12
+						? "Strategy Call Eligible"
+						: score >= 10
+							? "Academy Eligible"
+							: "Retake Recommended";
+
+				content.innerHTML = `
     <div class="completion-screen show">
       <div class="comp-hero">
         <div class="comp-eyebrow">Training Complete</div>
@@ -1695,13 +2509,15 @@ function showCompletionScreen() {
 
       <div class="paths-label">Your Next Move — Based on Your Score</div>
       <div class="paths-grid">
-        ${qualifiesForCall ? `
+        ${
+					qualifiesForCall
+						? `
           <div class="path-card primary">
             <div class="path-tag">You Qualified — ${score}/15</div>
-            <div class="path-title">Book Your HTC Mastery Call</div>
-            <div class="path-desc">You scored ${score}/15. That puts you in the top tier. I take 5 HTC Mastery Calls a week — I'll personally map out your next 90 days, your offer, your income targets. This is reserved for people who prove they're serious. You did.</div>
+            <div class="path-title">Book a Free Strategy Call</div>
+            <div class="path-desc">You scored ${score}/15. That puts you in the top tier. I take 5 strategy calls a week — I'll personally map out your next 90 days, your offer, your income targets. This is reserved for people who prove they're serious. You did.</div>
             <div class="path-price">Free · 45 minutes · Limited to 5 spots/week</div>
-            <div class="path-cta"><div class="path-cta-text">Book Your HTC Mastery Call →</div><div class="path-cta-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+            <div class="path-cta"><div class="path-cta-text">Book my call →</div><div class="path-cta-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
           </div>
           <div class="path-card secondary">
             <div class="path-tag">Alternative</div>
@@ -1710,7 +2526,9 @@ function showCompletionScreen() {
             <div class="path-price">$297 one-time · Instant access</div>
             <div class="path-cta"><div class="path-cta-text">Join Academy →</div><div class="path-cta-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
           </div>
-        ` : qualifiesForAcademy ? `
+        `
+						: qualifiesForAcademy
+							? `
           <div class="path-card primary">
             <div class="path-tag">Recommended — ${score}/15</div>
             <div class="path-title">Join HTC Academy</div>
@@ -1720,19 +2538,21 @@ function showCompletionScreen() {
           </div>
           <div class="path-card secondary" style="opacity:0.45;pointer-events:none;">
             <div class="path-tag" style="border-color:var(--border);color:var(--muted);">Locked</div>
-            <div class="path-title" style="color:var(--muted);">HTC Mastery Call</div>
-            <div class="path-desc">Strategy calls are reserved for closers who score 13+. Get there through Academy and you'll qualify.</div>
-            <div class="path-price" style="color:var(--muted);">Score 13/15 to unlock</div>
+            <div class="path-title" style="color:var(--muted);">Strategy Call</div>
+            <div class="path-desc">Strategy calls are reserved for closers who score 12+. Get there through Academy and you'll qualify.</div>
+            <div class="path-price" style="color:var(--muted);">Score 12/15 to unlock</div>
             <div class="path-cta"><div class="path-cta-text" style="color:var(--muted);">Not yet unlocked</div></div>
           </div>
-        ` : `
+        `
+							: `
           <div class="path-card" style="border-color:rgba(224,85,85,0.3);grid-column:1/-1;">
             <div class="path-tag" style="background:rgba(224,85,85,0.1);border:1px solid rgba(224,85,85,0.3);color:#e08888;">Score: ${score}/15</div>
             <div class="path-title">You're Not Ready Yet — And That's Okay.</div>
             <div class="path-desc">You scored ${score}/15. The material is in the videos — go back, rewatch, and retake. The closers who succeed are the ones who take this seriously enough to go again. Come back when you're ready.</div>
             <div class="path-cta"><div class="path-cta-text" style="color:#e08888;">Rewatch the training and retake the quizzes →</div></div>
           </div>
-        `}
+        `
+				}
       </div>
 
       <div class="cert-preview">
@@ -1751,31 +2571,19 @@ function showCompletionScreen() {
       </div>
     </div>
   `;
-}
+			}
 
-function showCertificate() {
-  const firstName = document.getElementById('greetName').textContent;
-  const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  const score = totalScore;
-  const certHTML = `<!DOCTYPE html><html lang="en" style="background:#0a0a09;color-scheme:dark"><head><meta charset="UTF-8"><title>HTC Certificate</title>
-<style>
-html, body, #root, #app {
-  background: #0a0a09 !important;
-  background-color: #0a0a09 !important;
-}
-html { -webkit-text-size-adjust: 100%; }
-*{box-sizing:border-box;margin:0;padding:0}body{
-  background: #0a0a09 !important;
-  background-color: #0a0a09 !important;
-  min-height: 100dvh;
-background:#070707;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:40px;font-family:'Inter', sans-serif}.cert{background:#0d0a00;border:1px solid rgba(245,201,87,0.4);max-width:760px;width:100%;padding:72px 80px;position:relative;text-align:center}.cert::before,.cert::after{content:'';position:absolute;width:60px;height:60px;border-color:rgba(245,201,87,0.3);border-style:solid}.cert::before{top:16px;left:16px;border-width:1px 0 0 1px}.cert::after{bottom:16px;right:16px;border-width:0 1px 1px 0}.logo{font-family:'GFS Didot', serif;font-size:20px;font-weight:900;color:#f5c957;letter-spacing:4px;margin-bottom:40px}.presents{font-family:'Inter', sans-serif;font-size:10px;color:#555;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}.name{font-family:'GFS Didot', serif;font-size:40px;font-style:italic;color:#f5c957;margin-bottom:16px}.title{font-family:'GFS Didot', serif;font-size:48px;font-weight:900;color:#f4efe5;line-height:1.05;margin-bottom:8px}.title em{font-style:italic;color:#f5c957}.divider{width:60px;height:1px;background:rgba(245,201,87,0.4);margin:32px auto}.score{font-family:'Inter', sans-serif;font-size:12px;color:#555;letter-spacing:3px;margin-bottom:24px}.score span{color:#f5c957}.body{
-  background: #0a0a09 !important;
-  background-color: #0a0a09 !important;
-  min-height: 100dvh;
-font-size:15px;color:#9a9080;line-height:1.7;max-width:480px;margin:0 auto 48px;font-weight:300}.footer{display:flex;justify-content:space-between;align-items:flex-end;padding-top:40px;border-top:1px solid #1c1c1c}.sig-name{font-family:'GFS Didot', serif;font-size:20px;font-style:italic;color:#f4efe5}.sig-role{font-family:'Inter', sans-serif;font-size:10px;color:#555;letter-spacing:3px;text-transform:uppercase;margin-top:4px}.date{font-family:'Inter', sans-serif;font-size:10px;color:#555;letter-spacing:2px}</style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=GFS+Didot&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+			function showCertificate() {
+				const firstName = document.getElementById("greetName").textContent;
+				const today = new Date().toLocaleDateString("en-US", {
+					year: "numeric",
+					month: "long",
+					day: "numeric",
+				});
+				const score = totalScore;
+				const certHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>HTC Certificate</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box;margin:0;padding:0}body{background:#070707;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:40px;font-family:'DM Sans',sans-serif}.cert{background:#0d0a00;border:1px solid rgba(201,168,76,0.4);max-width:760px;width:100%;padding:72px 80px;position:relative;text-align:center}.cert::before,.cert::after{content:'';position:absolute;width:60px;height:60px;border-color:rgba(201,168,76,0.3);border-style:solid}.cert::before{top:16px;left:16px;border-width:1px 0 0 1px}.cert::after{bottom:16px;right:16px;border-width:0 1px 1px 0}.logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:#c9a84c;letter-spacing:4px;margin-bottom:40px}.presents{font-family:'DM Mono',monospace;font-size:10px;color:#555;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}.name{font-family:'Playfair Display',serif;font-size:40px;font-style:italic;color:#c9a84c;margin-bottom:16px}.title{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:#f4efe5;line-height:1.05;margin-bottom:8px}.title em{font-style:italic;color:#c9a84c}.divider{width:60px;height:1px;background:rgba(201,168,76,0.4);margin:32px auto}.score{font-family:'DM Mono',monospace;font-size:12px;color:#555;letter-spacing:3px;margin-bottom:24px}.score span{color:#c9a84c}.body{font-size:15px;color:#9a9080;line-height:1.7;max-width:480px;margin:0 auto 48px;font-weight:300}.footer{display:flex;justify-content:space-between;align-items:flex-end;padding-top:40px;border-top:1px solid #1c1c1c}.sig-name{font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:#f4efe5}.sig-role{font-family:'DM Mono',monospace;font-size:10px;color:#555;letter-spacing:3px;text-transform:uppercase;margin-top:4px}.date{font-family:'DM Mono',monospace;font-size:10px;color:#555;letter-spacing:2px}</style>
 </head><body><div class="cert">
 <div class="logo">HTC</div>
 <div class="presents">High Ticket Consulting — Certifies That</div>
@@ -1786,23 +2594,61 @@ font-size:15px;color:#9a9080;line-height:1.7;max-width:480px;margin:0 auto 48px;
 <div class="body">Has successfully completed the HTC 5-Day Closer Training — demonstrating commitment, discipline, and the foundational knowledge required to operate as a high-ticket remote closer.</div>
 <div class="footer"><div><div class="sig-name">Bruno Bajrami</div><div class="sig-role">Founder, High Ticket Consulting</div></div><div class="date">${today}</div></div>
 </div></body></html>`;
-  const win = window.open('', '_blank');
-  win.document.write(certHTML);
-  win.document.close();
-}
+				const win = window.open("", "_blank");
+				win.document.write(certHTML);
+				win.document.close();
+			}
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  document.getElementById('toastText').innerHTML = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 4500);
-}
+			function showToast(msg) {
+				const t = document.getElementById("toast");
+				document.getElementById("toastText").innerHTML = msg;
+				t.classList.add("show");
+				setTimeout(() => t.classList.remove("show"), 4500);
+			}
 
-// Init
-const name = new URLSearchParams(location.search).get('name') || 'Closer';
-document.getElementById('greetName').textContent = name;
-buildSidebar();
-renderDay();
-</script>
-</body>
+			// ── Token + localStorage persistence ─────────────────────────────────
+			const _params = new URLSearchParams(location.search);
+			const userToken = _params.get("token") || "guest";
+			const userName = _params.get("name") || "Closer";
+			const userEmail = _params.get("email") || "";
+			const STORAGE_KEY = "htc_progress_" + userToken;
+
+			function saveProgress() {
+				localStorage.setItem(
+					STORAGE_KEY,
+					JSON.stringify({
+						currentDay,
+						unlockedDays,
+						completedDays,
+						quizAnswers,
+						quizSubmitted,
+						quizPassed,
+						totalScore,
+					}),
+				);
+			}
+
+			function loadProgress() {
+				const saved = localStorage.getItem(STORAGE_KEY);
+				if (!saved) return;
+				try {
+					const s = JSON.parse(saved);
+					currentDay = s.currentDay ?? currentDay;
+					unlockedDays = s.unlockedDays ?? unlockedDays;
+					completedDays = s.completedDays ?? completedDays;
+					quizAnswers = s.quizAnswers ?? quizAnswers;
+					quizSubmitted = s.quizSubmitted ?? quizSubmitted;
+					quizPassed = s.quizPassed ?? quizPassed;
+					totalScore = s.totalScore ?? totalScore;
+				} catch (e) {}
+			}
+
+			// Init
+			document.getElementById("greetName").textContent = userName;
+			loadProgress();
+			buildSidebar();
+			renderDay();
+			updateScoreUI();
+		</script>
+	</body>
 </html>

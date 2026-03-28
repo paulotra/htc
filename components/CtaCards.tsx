@@ -75,7 +75,7 @@ const cards: CtaCardData[] = [
 			},
 		],
 		ctaText: "Start free training",
-		ctaHref: "/training",
+		ctaHref: "/apply",
 		ctaIcon: "/images/figma/8bfb72c0-fdd2-41ca-83ec-d96dc00bd81d.svg",
 	},
 ];

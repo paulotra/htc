@@ -720,6 +720,62 @@
 		display: flex;
 	}
 
+	/* ── Training portal ── */
+	.htc-play-btn:hover {
+		transform: scale(1.08) !important;
+		box-shadow: 0 0 60px rgba(201, 168, 76, 0.5) !important;
+	}
+
+	.htc-complete-cta:hover {
+		background: #e8c96a !important;
+		transform: translateY(-2px) !important;
+		box-shadow: 0 12px 40px rgba(201, 168, 76, 0.35) !important;
+	}
+
+	.htc-submit:hover:not(:disabled) {
+		background: #e8c96a !important;
+		transform: translateY(-1px) !important;
+	}
+
+	.htc-path-card:hover {
+		border-color: rgba(201, 168, 76, 0.25) !important;
+		background: #131108 !important;
+		transform: translateY(-3px) !important;
+		box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5) !important;
+	}
+
+	.htc-cert-dl:hover {
+		background: #e8c96a !important;
+		box-shadow: 0 8px 24px rgba(201, 168, 76, 0.3) !important;
+	}
+
+	.htc-unlock:hover {
+		background: #e8c96a !important;
+		box-shadow: 0 8px 24px rgba(201, 168, 76, 0.3) !important;
+	}
+
+	.htc-retry:hover {
+		background: rgba(224, 85, 85, 0.08) !important;
+	}
+
+	@media (max-width: 768px) {
+		.htc-sidebar {
+			display: none !important;
+		}
+		.htc-main {
+			margin-left: 0 !important;
+		}
+		.htc-content {
+			padding: 32px 24px !important;
+		}
+		.htc-paths-grid {
+			grid-template-columns: 1fr !important;
+		}
+		.htc-cert-row {
+			flex-direction: column !important;
+		}
+	}
+
 	/* ── Booking: confirmation screen ── */
 	.conf-icon {
 		width: 52px;
