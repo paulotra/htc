@@ -84,13 +84,13 @@ export default function CtaCards() {
 	return (
 		<div
 			data-gsap="stagger-parent"
-			className="flex flex-wrap gap-8 justify-center mt-20 md:mt-[200px]"
+			className="flex flex-wrap gap-8 justify-center mt-10 md:mt-[200px]"
 		>
 			{cards.map((card) => (
 				<div
 					data-gsap="stagger-child"
 					key={card.label}
-					className={`cta-card mt-[52px] flex-[0_0_100%] lg:flex-[0_0_calc(4/12*100%)] max-w-[480px] ${card.variant === "silver" ? "cta-card-silver h-fit" : ""}`}
+					className={`cta-card mt-10 flex-[0_0_100%] lg:flex-[0_0_calc(4/12*100%)] max-w-[480px] ${card.variant === "silver" ? "cta-card-silver h-fit" : ""}`}
 				>
 					<div className="relative flex flex-col">
 						<div className="inline-flex items-center justify-center self-start">
@@ -99,7 +99,7 @@ export default function CtaCards() {
 							</span>
 						</div>
 						<div>
-							<h3 className="font-serif text-[2.75rem] leading-[3.75rem] font-normal text-white">
+							<h3 className="font-serif text-4xl leading-normal font-normal text-white">
 								{card.title}
 								<span
 									className={`block ${card.titleLine2Gold ? "text-[#f0df7a]" : ""}`}
@@ -135,7 +135,7 @@ export default function CtaCards() {
 					<div className="flex flex-col gap-5 items-center w-full">
 						<a
 							href={card.ctaHref}
-							className={`${card.variant === "gold" ? "btn-cta-gold" : "btn-cta-silver"} w-full flex items-center justify-center gap-2.5 px-11 py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80`}
+							className={`${card.variant === "gold" ? "btn-cta-gold" : "btn-cta-silver"} w-full flex items-center justify-center gap-2.5 px-11 py-4 md:py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80`}
 						>
 							{card.ctaText}
 							{/* eslint-disable-next-line @next/next/no-img-element */}

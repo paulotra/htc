@@ -33,7 +33,10 @@ export default function ConfirmationPage() {
 						alt=""
 					/>
 					{/* eslint-disable-next-line @next/next/no-img-element */}
-					<div data-gsap="confirm-header" className="flex-1 flex flex-col items-center justify-center text-center gap-8 pt-20 pb-20">
+					<div
+						data-gsap="confirm-header"
+						className="flex-1 flex flex-col items-center justify-center text-center gap-8 pt-20 pb-20"
+					>
 						<img
 							src="/images/figma/57a5ad31-52f7-44a9-adb0-b632819f627c.svg"
 							className="md:mt-12 mt-20 w-[80px] md:w-[120px] h-[80px] md:h-[120px]"
@@ -41,7 +44,7 @@ export default function ConfirmationPage() {
 						/>
 
 						<div className="flex flex-col gap-5 items-center">
-							<h1 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white">
+							<h1 className="font-serif text-4xl  md:text-[3.75rem] md:leading-[4.25rem] font-normal text-white">
 								Your Call Is
 								<span className="block text-[#f0df7a]">Confirmed</span>
 							</h1>

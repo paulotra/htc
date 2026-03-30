@@ -64,12 +64,9 @@ function TestimonialCard({ t }: { t: Testimonial }) {
 	const [playing, setPlaying] = useState(false);
 
 	return (
-		<div className="tc-card flex flex-col gap-8 border border-[#423a2e] rounded-[4px] overflow-hidden">
+		<div className="tc-card flex flex-col gap-8 md:border md:border-[#423a2e] rounded-[4px] overflow-hidden">
 			{/* Portrait / Video */}
-			<div
-				className="relative w-full overflow-hidden rounded-[2px]"
-				style={{ aspectRatio: "9/16" }}
-			>
+			<div className="relative w-1/2 md:w-full mx-auto overflow-hidden rounded-[2px] aspect-[9/16]">
 				<iframe
 					className="absolute inset-0 w-full h-full border-none m-auto"
 					src={
@@ -182,7 +179,7 @@ export default function TestimonialsCarousel() {
 				</div>
 				<h2
 					data-gsap-tc
-					className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white mt-5"
+					className="font-serif text-4xl  md:text-[3.75rem] md:leading-[4.25rem] font-normal text-white mt-5"
 				>
 					What Our
 					<span className="block text-[#f0df7a]">Closer Says</span>

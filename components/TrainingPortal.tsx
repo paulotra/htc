@@ -62,11 +62,13 @@ function Portal() {
 				setQuizAnswers(saved.quizAnswers ?? {});
 				setQuizSubmitted(saved.quizSubmitted ?? {});
 				setQuizPassed(saved.quizPassed ?? {});
-					setTotalScore(saved.totalScore ?? 0);
+				setTotalScore(saved.totalScore ?? 0);
 			}
 		} catch {}
 		try {
-			const savedRetake = JSON.parse(localStorage.getItem(RETAKE_KEY) || "null");
+			const savedRetake = JSON.parse(
+				localStorage.getItem(RETAKE_KEY) || "null",
+			);
 			if (savedRetake) setRetakeLockedUntil(savedRetake);
 		} catch {}
 		setLoaded(true);
@@ -934,7 +936,8 @@ function Portal() {
 															: "You need 2/3 to pass. Rewatch the video and try again."}
 													</div>
 												</div>
-												<div className="ml-auto shrink-0">
+
+												<div className="shrink-0">
 													{passed ? (
 														<button
 															className="htc-unlock btn-cta-gold inline-flex items-center gap-[10px] text-sm font-semibold rounded-[3px] cursor-pointer tracking-[0.3px] transition-all duration-200"
@@ -1021,6 +1024,79 @@ function Portal() {
 											</div>
 										)}
 									</>
+								)}
+							</div>
+
+							{/* PREV / NEXT NAV */}
+							<div className="flex items-center justify-between pt-4">
+								{currentDay > 0 ? (
+									<button
+										onClick={() => goToDay(currentDay - 1)}
+										className="inline-flex items-center gap-[10px] border border-[#4e4233] min-w-[120px] justify-center text-white text-[13px] font-medium rounded-[3px] cursor-pointer transition-all duration-200 hover:text-[#f7e280]"
+										style={{
+											fontFamily: "'DM Sans',sans-serif",
+											padding: "12px 20px",
+										}}
+									>
+										<svg
+											width="14"
+											height="14"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											strokeWidth="2"
+										>
+											<path d="M19 12H5M12 19l-7-7 7-7" />
+										</svg>
+										Day {currentDay}
+									</button>
+								) : (
+									<div />
+								)}
+								{currentDay < unlockedDays - 1 ? (
+									<button
+										onClick={() => goToDay(currentDay + 1)}
+										className="inline-flex items-center gap-[10px] border border-[#4e4233] min-w-[120px] justify-center text-white text-[13px] font-medium rounded-[3px] cursor-pointer transition-all duration-200 hover:text-[#f7e280]"
+										style={{
+											fontFamily: "'DM Sans',sans-serif",
+											padding: "12px 20px",
+										}}
+									>
+										Day {currentDay + 2}
+										<svg
+											width="14"
+											height="14"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											strokeWidth="2"
+										>
+											<path d="M5 12h14M12 5l7 7-7 7" />
+										</svg>
+									</button>
+								) : currentDay === 4 && isDone ? (
+									<button
+										onClick={triggerCompletion}
+										className="inline-flex items-center gap-[10px] btn-cta-gold text-[13px] font-semibold rounded-[3px] cursor-pointer transition-all duration-200"
+										style={{
+											fontFamily: "'DM Sans',sans-serif",
+											padding: "12px 20px",
+										}}
+									>
+										See Results
+										<svg
+											width="14"
+											height="14"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											strokeWidth="2"
+										>
+											<path d="M5 12h14M12 5l7 7-7 7" />
+										</svg>
+									</button>
+								) : (
+									<div />
 								)}
 							</div>
 						</>

@@ -17,25 +17,25 @@ export default function HeroSection() {
 					{/* eslint-disable-next-line @next/next/no-img-element */}
 					<img
 						src="/images/name.svg"
-						className="max-w-[1200px] mt-[240px] mx-auto opacity-20 w-[88%] lg:w-full"
+						className="max-w-[1200px] mt-[160px] md:mt-[240px] mx-auto opacity-20 w-[88%] lg:w-full"
 						alt=""
 					/>
 					{/* eslint-disable-next-line @next/next/no-img-element */}
 					<img
 						src="/images/bruno.webp"
-						className="absolute z-0 top-[60px] md:top-[12px] lg:top-[-40px] w-[120%] max-w-none md:w-full md:max-w-[1080px]"
+						className="absolute z-0 top-[40px] md:top-[12px] lg:top-[-40px] w-[120%] max-w-none md:w-full md:max-w-[1080px]"
 						alt=""
 					/>
 				</div>
 
-				<div className="flex flex-col gap-[32px] items-center text-center px-7 relative max-w-[760px] w-full">
+				<div className="flex flex-col gap-4 md:gap-6 items-center text-center px-7 relative max-w-[760px] w-full">
 					<div className="flex flex-col gap-5 items-center">
 						{/* <div className="border border-white/[0.12] rounded-[30px] px-4 py-2 text-xs font-normal tracking-[0.125rem] uppercase text-white">
 							High Ticket Consulting
 						</div> */}
 						<h1
 							data-gsap="hero-title"
-							className="font-serif text-[3.75rem] leading-[4rem] font-normal text-white mt-5"
+							className="font-serif text-4xl  md:text-[3.75rem] leading-[4rem] font-normal text-white mt-5"
 						>
 							The Skill That
 							<span className="block text-[#f0df7a]">Changes Everything</span>
@@ -55,7 +55,7 @@ export default function HeroSection() {
 					>
 						<Link
 							href="/booking"
-							className="btn-cta-gold flex-1 flex items-center justify-center gap-2.5 px-11 py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"
+							className="btn-cta-gold flex-1 flex items-center justify-center gap-2.5 py-4 px-11 md:py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"
 						>
 							Book your HTC mastery call
 							{/* eslint-disable-next-line @next/next/no-img-element */}
@@ -68,7 +68,7 @@ export default function HeroSection() {
 						</Link>
 						<Link
 							href="/application"
-							className="btn-cta-silver flex-1 flex items-center justify-center gap-2.5 px-11 py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"
+							className="btn-cta-silver flex-1 flex items-center justify-center gap-2.5 px-11 py-4 md:py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"
 						>
 							Start free training
 							{/* eslint-disable-next-line @next/next/no-img-element */}

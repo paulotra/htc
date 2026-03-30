@@ -41,7 +41,7 @@ export default function Footer({ hideCta = false }: FooterProps) {
 							</div>
 							<h2
 								data-gsap="stagger-child"
-								className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white text-center capitalize"
+								className="font-serif text-4xl  md:text-[3.75rem] md:leading-[4.25rem] font-normal text-white text-center capitalize"
 							>
 								Ready to Write Your
 								<br />
@@ -62,7 +62,7 @@ export default function Footer({ hideCta = false }: FooterProps) {
 						>
 							<h2
 								data-gsap="stagger-child"
-								className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white text-center capitalize"
+								className="font-serif text-4xl  md:text-[3.75rem] md:leading-[4.25rem] font-normal text-white text-center capitalize"
 							>
 								See You
 								<br />
@@ -88,7 +88,7 @@ export default function Footer({ hideCta = false }: FooterProps) {
 						<Link
 							data-gsap="fade-up"
 							href="/booking"
-							className="btn-cta-gold flex items-center justify-center gap-2.5 px-11 py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"
+							className="btn-cta-gold flex items-center justify-center gap-2.5 px-11 py-4 md:py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"
 						>
 							Book Your HTC Mastery Call
 							{/* eslint-disable-next-line @next/next/no-img-element */}

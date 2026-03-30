@@ -61,19 +61,15 @@ export default function Nav({
 		>
 			<div
 				ref={innerRef}
-				className="max-w-container px-5 md:px-7 mx-auto flex-1 flex flex-col md:flex-row items-center justify-between"
-				style={{
-					paddingTop: border ? 16 : 32,
-					paddingBottom: border ? 16 : 32,
-				}}
+				className={`max-w-container px-6 md:px-7 !py-4 mx-auto flex-1 flex flex-row items-center justify-between ${border ? "md:py-4" : "md:py-8"}`}
 			>
 				<Link
 					href="/"
 					className="font-light text-base tracking-[0.4rem] text-white"
 				>
-					<img src="/images/logo.svg" width="200" />
+					<img src="/images/logo.svg" className="max-w-[160px]" width="200" />
 				</Link>
-				<div className="flex items-center gap-4 py-3.5 rounded-[40px]">
+				<div className="flex items-center gap-2 md:gap-4 py-3.5 rounded-[40px]">
 					<div className="relative w-[12px] h-[12px] shrink-0">
 						<div className="w-[12px] h-[12px] rounded-full bg-gold relative z-[1]" />
 					</div>

@@ -141,8 +141,7 @@
 
 	/* ── CTA Cards ── */
 	.cta-card {
-		@apply border rounded-[4px] overflow-hidden relative flex flex-col gap-10;
-		padding: 40px 40px 48px;
+		@apply border rounded-[4px] overflow-hidden relative flex flex-col gap-10 pt-8 md:pt-10 px-8 md:px-10 pb-10 md:pb-12;
 		border-color: #423a2e;
 		background:
 			linear-gradient(180deg, rgba(99, 99, 99, 0.02) 19.4%, transparent 104%),
@@ -204,13 +203,13 @@
 	/* ── Testimonials carousel ── */
 
 	.tc-card {
+		@apply md:p-8;
 		position: relative;
 		border-radius: 4px;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		padding: 32px 34px;
 		flex-shrink: 0;
 		transform: translateZ(0);
 		-webkit-mask-image: radial-gradient(white, white);

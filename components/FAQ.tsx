@@ -22,9 +22,12 @@ export default function FAQ() {
 	return (
 		<div className="flex flex-col md:flex-row items-center md:items-start justify-between mt-10 md:mt-[160px] gap-8">
 			{/* Left */}
-			<div data-gsap="fade-up" className="flex flex-col gap-5 items-center md:items-start shrink-0 flex-[1]">
+			<div
+				data-gsap="fade-up"
+				className="flex flex-col gap-5 items-center md:items-start shrink-0 flex-[1]"
+			>
 				<Pill>Before The Call</Pill>
-				<h2 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white">
+				<h2 className="font-serif text-4xl  md:text-[3.75rem] md:leading-[4.25rem] font-normal text-white">
 					Questions You
 					<span className="block text-[#f0df7a]">Probably Have</span>
 				</h2>
@@ -35,7 +38,10 @@ export default function FAQ() {
 			</div>
 
 			{/* Right: accordion */}
-			<div data-gsap="stagger-parent" className="flex flex-col gap-5 items-start shrink-0 flex-[2] w-full">
+			<div
+				data-gsap="stagger-parent"
+				className="flex flex-col gap-5 items-start shrink-0 flex-[2] w-full"
+			>
 				{questions.map((q, i) => {
 					const isOpen = open === i;
 					return (

@@ -178,10 +178,8 @@ export default function TrainingPage() {
 					<div className="flex-[0_0_380px] sticky top-36 flex flex-col gap-8">
 						<div className="flex flex-col gap-3">
 							<h1 className="font-serif text-[2rem] leading-[2.5rem] font-normal">
-								<span className="text-[#9a9a9a]">HTC</span>
-								<span className="block text-white text-transparent">
-									Training
-								</span>
+								<span className="text-[#9a9a9a]">HTC</span>{" "}
+								<span className="text-white text-transparent">Training</span>
 							</h1>
 							<div className="flex gap-3 flex-wrap">
 								{["5 Days", "Video + Live", "Free"].map((label) => (

@@ -6,13 +6,19 @@ export default function BrunoMessage() {
 	return (
 		<div className="text-center md:text-left flex flex-col md:flex-row items-center justify-between mt-16 md:mt-[160px]">
 			{/* Left: text block */}
-			<div data-gsap="stagger-parent" className="flex flex-col gap-10 shrink-0 flex-1">
-				<div data-gsap="stagger-child" className="flex flex-col gap-5 items-center md:items-start">
+			<div
+				data-gsap="stagger-parent"
+				className="flex flex-col gap-10 shrink-0 flex-1"
+			>
+				<div
+					data-gsap="stagger-child"
+					className="flex flex-col gap-5 items-center md:items-start"
+				>
 					{/* Badge */}
 					<Pill>Watch This Now</Pill>
 
 					{/* Heading */}
-					<h2 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white">
+					<h2 className="font-serif text-4xl  md:text-[3.75rem] md:leading-[4.25rem] font-normal text-white">
 						A Message
 						<span className="block text-[#f0df7a]">From Bruno</span>
 					</h2>
@@ -26,7 +32,8 @@ export default function BrunoMessage() {
 
 				{/* Callout box */}
 				<div
-					data-gsap="stagger-child" className="flex flex-col gap-4 border-l-2 border-[#e5ce78] px-8 py-5 w-full mx-auto md:mx-0 max-w-[446px] text-left"
+					data-gsap="stagger-child"
+					className="flex flex-col gap-4 border-l-2 border-[#e5ce78] px-8 py-5 w-full mx-auto md:mx-0 max-w-[446px] text-left"
 					style={{
 						background: "linear-gradient(to right, #000000 0%, #D6B87560 100%)",
 						WebkitMaskImage:

@@ -10,7 +10,7 @@ export default function ContentSection() {
 				<div>
 					<Pill>Choose Your Path</Pill>
 				</div>
-				<h2 className="font-serif text-[3.75rem] leading-[4.25rem] font-normal text-white">
+				<h2 className="font-serif text-4xl  md:text-[3.75rem] md:leading-[4.25rem] font-normal text-white">
 					One Skill.
 					<span className="block text-[#f0df7a]">No Ceiling.</span>
 				</h2>
@@ -34,10 +34,10 @@ export default function ContentSection() {
 				{/* eslint-disable-next-line @next/next/no-img-element */}
 				<img
 					src="/images/figma/8213e8df-28ed-4522-8e94-cdb49ca061a7.svg"
-					className="w-[50px] h-10 mx-auto md:ml-auto"
+					className="w-[50px] h-10 mx-auto md:ml-auto md:mr-0"
 					alt=""
 				/>
-				<p className="font-serif text-[2.25rem] italic font-normal text-white leading-normal">
+				<p className="font-serif text-4xl italic font-normal text-white leading-normal">
 					Most people spend years waiting for a raise. My students spend 8 weeks
 					learning to close.
 				</p>
