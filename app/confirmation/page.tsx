@@ -59,7 +59,7 @@ export default function ConfirmationPage() {
 					</div>
 				</main>
 			</div>
-			<div className="relative pb-[160px]">
+			<div className="relative pb-16 md:pb-[160px]">
 				<div
 					className="absolute inset-0 opacity-70 z-0"
 					style={{

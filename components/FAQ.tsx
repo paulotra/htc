@@ -31,7 +31,7 @@ export default function FAQ() {
 					Questions You
 					<span className="block text-[#f0df7a]">Probably Have</span>
 				</h2>
-				<p className="text-lg font-light leading-8 text-[#9a9a9a]">
+				<p className="text-lg md:text-left text-center font-light leading-8 text-[#9a9a9a]">
 					Bruno answers every question you have before you even ask it. Tap to
 					watch.
 				</p>

@@ -174,7 +174,7 @@ export default function TrainingPage() {
 			/>
 			<div className="max-w-container mx-auto px-7 lg:flex gap-16 items-start pt-32 pb-10 min-h-screen relative z-10">
 				{/* ── Left panel ── */}
-				<div className="relative md:pt-0 pt-10">
+				<div className="relative md:pt-0">
 					<div className="flex-[0_0_380px] sticky top-36 flex flex-col gap-8">
 						<div className="flex flex-col gap-3">
 							<h1 className="font-serif text-[2rem] leading-[2.5rem] font-normal">

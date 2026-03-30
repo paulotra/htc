@@ -45,16 +45,24 @@ const guidelines: Guideline[] = [
 
 export default function CallGuidelines() {
 	return (
-		<section data-gsap="stagger-parent" className="flex flex-col gap-[40px] items-center mt-20 md:mt-[160px]">
-			<div data-gsap="stagger-child"><Pill>Before The Call</Pill></div>
+		<section
+			data-gsap="stagger-parent"
+			className="flex flex-col gap-[40px] items-center mt-20 md:mt-[160px]"
+		>
+			<div data-gsap="stagger-child">
+				<Pill>Before The Call</Pill>
+			</div>
 
-			<div data-gsap="stagger-child" className="flex flex-col gap-[40px] w-full">
+			<div
+				data-gsap="stagger-child"
+				className="flex flex-col gap-[40px] w-full"
+			>
 				{guidelines.map((item, i) => {
 					const isLast = i === guidelines.length - 1;
 
 					const circle = (
 						<div
-							className={`relative shrink-0 size-[80px] rounded-[32px] flex items-center justify-center border ${item.isGold ? "border-[#423a2e]" : "border-[#414141]"}`}
+							className={`relative shrink-0 size-[60px] md:size-[80px] rounded-[20px] md:rounded-[32px] flex items-center justify-center border ${item.isGold ? "border-[#423a2e]" : "border-[#414141]"}`}
 							style={{
 								background:
 									"linear-gradient(180deg, rgba(99,99,99,0.2) 0%, rgba(255,255,255,0) 100%)",
@@ -82,7 +90,7 @@ export default function CallGuidelines() {
 							className={`flex-1 flex flex-col gap-3 ${item.side === "left" ? "md:text-right" : ""}`}
 						>
 							<h3
-								className={`font-serif text-[2rem] leading-[2.5rem] font-normal capitalize ${
+								className={`font-serif text-3xl leading-normal font-normal capitalize ${
 									item.isGold
 										? "bg-clip-text text-transparent bg-gradient-to-b from-[#f0df7a] to-[#c9a572]"
 										: "text-white"
