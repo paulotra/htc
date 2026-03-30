@@ -5,7 +5,7 @@ export default function HeroSection() {
 	return (
 		<section>
 			<Nav />
-			<div className="relative min-h-screen flex flex-col items-center justify-center pb-[3.75rem]">
+			<div className="relative md:min-h-screen flex flex-col items-center justify-center pb-[3.75rem]">
 				<div className="max-w-container mx-auto relative overflow-visible flex items-center justify-center">
 					{/* eslint-disable-next-line @next/next/no-img-element */}
 					<img

@@ -35,7 +35,7 @@ export default function ConfirmationPage() {
 					{/* eslint-disable-next-line @next/next/no-img-element */}
 					<div
 						data-gsap="confirm-header"
-						className="flex-1 flex flex-col items-center justify-center text-center gap-8 pt-20 pb-10 md:pb-20"
+						className="flex-1 flex flex-col items-center justify-center text-center gap-8 pt-20 pb-10	 md:pb-20"
 					>
 						<img
 							src="/images/figma/57a5ad31-52f7-44a9-adb0-b632819f627c.svg"
