@@ -139,16 +139,6 @@ export default function BookingPage() {
 		return () => clearTimeout(t);
 	}, []);
 
-	useEffect(() => {
-		if (visibleCount > 0) {
-			const t = setTimeout(
-				() => fieldRefs.current[visibleCount - 1]?.focus(),
-				400,
-			);
-			return () => clearTimeout(t);
-		}
-	}, [visibleCount]);
-
 	function handleFieldChange(
 		key: keyof FormData,
 		value: string,
