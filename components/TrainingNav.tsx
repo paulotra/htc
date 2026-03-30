@@ -10,7 +10,7 @@ export default function TrainingNav({
 	onShowCertificate,
 }: TrainingNavProps) {
 	return (
-		<div className="flex items-center gap-3 px-8 py-[20px] border-b border-[rgba(66,58,46,0.59)] bg-[#000] relative z-10">
+		<div className="flex items-center gap-3 px-8 py-6 border-b border-[rgba(66,58,46,0.59)] bg-[#000] relative z-10">
 			<p className="flex-1 text-[20px] font-light text-white">
 				Welcome back, <span className="font-medium">{name}</span>
 			</p>

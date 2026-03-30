@@ -13,7 +13,7 @@ export default function Home() {
 			<HomeAnimations />
 			<HeroSection />
 			<ProofBar />
-			<div className="relative pb-[10rem]">
+			<div className="relative pb-20">
 				<div
 					className="absolute inset-0 opacity-70 z-0"
 					style={{

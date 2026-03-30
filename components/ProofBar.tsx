@@ -15,14 +15,14 @@ export default function ProofBar() {
 	return (
 		<div
 			data-gsap="stagger-parent"
-			className="md:flex items-stretch justify-center max-w-[1000px] mt-0	 md:mt-[3.75rem] mx-auto px-4 pb-6"
+			className="flex items-stretch justify-center max-w-[1000px] mt-0 md:mt-[3.75rem] mx-auto px-4 pb-6"
 		>
 			{stats.map((stat, i) => (
 				<Fragment key={stat.value}>
-					{i > 0 && <div className="proof-divider" />}
+					{i > 0 && <div className="proof-divider hidden md:block" />}
 					<div
 						data-gsap="stagger-child"
-						className="relative flex flex-col gap-1 items-center justify-center px-11 py-4 md:py-8 md:pb-10 rounded-[20px] flex-1"
+						className="relative flex flex-col gap-1 items-center justify-center md:px-11 py-4 md:py-8 md:pb-10 rounded-[20px] flex-1"
 					>
 						<div className="font-serif gold-text text-4xl md:text-6xl leading-none text-center whitespace-nowrap">
 							{stat.value}
