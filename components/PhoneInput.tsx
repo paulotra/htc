@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import intlTelInput from "intl-tel-input";
+import intlTelInput from "intl-tel-input/intlTelInputWithUtils";
 import "intl-tel-input/build/css/intlTelInput.css";
 
 interface PhoneInputProps {
@@ -26,16 +26,15 @@ export default function PhoneInput({
 		const el = elRef.current;
 		if (!el) return;
 
+		let mounted = true;
 		itiRef.current = intlTelInput(el, {
 			initialCountry: "auto",
 			geoIpLookup: (cb) => {
 				fetch("https://ipapi.co/json")
 					.then((r) => r.json())
-					.then((d) => cb(d.country_code))
-					.catch(() => cb("us"));
+					.then((d) => { if (mounted) cb(d.country_code); })
+					.catch(() => { if (mounted) cb("us"); });
 			},
-			loadUtilsOnInit:
-				"https://cdn.jsdelivr.net/npm/intl-tel-input@25/build/js/utils.js",
 		});
 
 		const handleChange = () => {
@@ -55,6 +54,7 @@ export default function PhoneInput({
 		el.addEventListener("countrychange", handleChange);
 
 		return () => {
+			mounted = false;
 			el.removeEventListener("input", handleChange);
 			el.removeEventListener("countrychange", handleChange);
 			itiRef.current?.destroy();
