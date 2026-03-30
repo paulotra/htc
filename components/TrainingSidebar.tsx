@@ -28,9 +28,9 @@ export default function TrainingSidebar({
 	const scoreBarPct = (totalScore / 15) * 100;
 
 	return (
-		<aside className="htc-sidebar fixed left-0 top-0 bottom-0 w-[300px] bg-[#070707] border-r border-[rgba(66,58,46,0.5)] flex flex-col z-10">
+		<aside className="htc-sidebar md:fixed left-0 top-0 bottom-0 md:w-[300px] bg-[#070707] md:border-r border-[rgba(66,58,46,0.5)] flex flex-col z-10">
 			{/* Logo */}
-			<div className="px-6 h-[81px] flex items-center shrink-0">
+			<div className="px-6 h-[81px] hidden md:flex items-center shrink-0">
 				<Link href="/">
 					{/* eslint-disable-next-line @next/next/no-img-element */}
 					<img
@@ -59,7 +59,7 @@ export default function TrainingSidebar({
 			</div>
 
 			{/* Day nav */}
-			<nav className="flex-1 overflow-y-auto">
+			<nav className="flex-1 overflow-y-auto md:block hidden">
 				{days.map((day, i) => {
 					const isUnlocked = i < unlockedDays;
 					const isDone = i < completedDays;

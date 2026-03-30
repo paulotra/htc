@@ -10,14 +10,14 @@ export default function TrainingNav({
 	onShowCertificate,
 }: TrainingNavProps) {
 	return (
-		<div className="flex items-center gap-3 px-8 py-6 border-b border-[rgba(66,58,46,0.59)] bg-[#000] relative z-10">
-			<p className="flex-1 text-[20px] font-light text-white">
+		<div className="md:flex items-center gap-3 px-6 md:px-8 py-5 border-b border-[rgba(66,58,46,0.59)] text-center md:text-left md:bg-[#000] relative z-10">
+			<p className="flex-1 text-2xl md:text-xl font-light text-white">
 				Welcome back, <span className="font-medium">{name}</span>
 			</p>
 
 			<button
 				onClick={certActive ? onShowCertificate : undefined}
-				className={`flex items-center gap-[10px] px-4 py-[10px] border rounded-[4px] shrink-0 transition-opacity ${
+				className={`flex items-center mt-4 md:mt-0 w-full md:w-auto justify-center md:justify-start gap-[10px] px-4 py-[10px] border rounded-[4px] shrink-0 transition-opacity ${
 					certActive
 						? "border-[#e5ce78] text-gold cursor-pointer opacity-100"
 						: "border-[rgba(66,58,46,0.5)] text-[#9a9a9a] cursor-default opacity-50"

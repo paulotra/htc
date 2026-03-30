@@ -260,7 +260,7 @@ function Portal() {
 				: "Retake Recommended";
 
 	return (
-		<div className="bg-[#070707] min-h-screen flex">
+		<div className="bg-[#070707] min-h-screen flex flex-col-reverse md:flex-row">
 			{/* SIDEBAR */}
 			<TrainingSidebar
 				days={DAYS}
@@ -287,7 +287,7 @@ function Portal() {
 				/>
 
 				{/* CONTENT */}
-				<div className="htc-content flex-1 max-w-[900px] px-7 py-8">
+				<div className="htc-content flex-1 max-w-[900px] px-6 md:px-7 py-8">
 					<div
 						className="absolute inset-0 opacity-50 z-0 pointer-events-none"
 						style={{
@@ -299,22 +299,24 @@ function Portal() {
 					></div>
 					{/* ── COMPLETION SCREEN ── */}
 					{showCompletion ? (
-						<div style={{ animation: "fadeUp 0.7s ease forwards" }}>
+						<div
+							className="text-center md:text-left"
+							style={{ animation: "fadeUp 0.7s ease forwards" }}
+						>
 							<div
-								className="rounded border border-[rgba(201,168,76,0.25)] relative overflow-hidden mb-[40px]"
+								className="rounded border border-[rgba(201,168,76,0.25)] relative overflow-hidden mb-10 p-8 md:p-10"
 								style={{
 									background: "#0a080480",
-									padding: "56px 48px",
 								}}
 							>
-								<div className="text-[10px] text-[#c9a84c] tracking-[5px] uppercase mb-[24px] flex items-center gap-[12px]">
+								<div className="text-[10px] text-[#c9a84c] justify-center md:justify-start tracking-[5px] uppercase mb-[24px] flex items-center gap-[12px]">
 									<span
 										className="inline-block h-px bg-[#c9a84c]"
 										style={{ width: 20 }}
 									/>
 									Training Complete
 								</div>
-								<div className="font-serif leading-none text-[#f4efe5] mb-[20px] text-5xl">
+								<div className="font-serif leading-none text-[#f4efe5] mb-6 text-4xl md:text-5xl">
 									You&apos;ve done what
 									<br />
 									<span className="text-[#c9a84c]">
@@ -326,7 +328,7 @@ function Portal() {
 									just finished all 5 — and proved you actually paid attention.
 									That tells me everything I need to know about you, {name}.
 								</div>
-								<div className="flex gap-[40px] mt-[36px] pt-[36px] border-t border-[rgba(66,58,46,0.5)] flex-wrap">
+								<div className="flex gap-x-20 gap-y-4 md:gap-10 mt-4 md:mt-10 pt-4 md:pt-10 border-t border-[rgba(66,58,46,0.5)] flex-wrap justify-center md:justify-start">
 									<div>
 										<div className="font-serif text-2xl font-bold text-[#c9a84c] leading-none">
 											5
@@ -375,13 +377,13 @@ function Portal() {
 									<>
 										<a
 											href="/booking"
-											className="htc-path-card border border-[rgba(201,168,76,0.25)] rounded flex flex-col gap-[16px] cursor-pointer relative overflow-hidden no-underline text-inherit transition-all duration-300"
+											className="htc-path-card border border-[rgba(201,168,76,0.25)] rounded flex flex-col gap-[16px] cursor-pointer relative overflow-hidden no-underline text-inherit transition-all duration-300 items-center md:items-stretch"
 											style={{
 												background: "#0a080480",
 												padding: "32px 28px",
 											}}
 										>
-											<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] self-start bg-[#c9a84c] text-[#070707]">
+											<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] self-start bg-[#c9a84c] text-[#070707] mx-auto md:mx-0">
 												You Qualified — {score}/15
 											</div>
 											<div className="font-serif text-[24px] font-bold text-[#f4efe5] leading-[1.2]">
@@ -622,23 +624,23 @@ function Portal() {
 						/* ── DAY CONTENT ── */
 						<>
 							<div
-								className="flex flex-col gap-5 mb-12"
+								className="flex flex-col gap-5 mb-12 text-center md:text-left"
 								style={{ animation: "fadeUp 0.6s ease forwards" }}
 							>
-								<div className="inline-flex items-center justify-center px-3 py-2 border border-[rgba(255,255,255,0.2)] rounded-[4px] self-start">
+								<div className="inline-flex mx-auto md:mx-0 items-center justify-center px-3 py-2 border border-[rgba(255,255,255,0.2)] rounded-[4px] self-start">
 									<span className="text-xs tracking-[1.2px] uppercase text-white whitespace-nowrap">
 										{d.eyebrow}
 									</span>
 								</div>
 								<div className="font-serif leading-[1.13]">
-									<p className="text-[clamp(36px,5vw,60px)] text-white">
+									<p className="text-4xl md:text-6xl text-white">
 										{d.title.split("\n")[0]}
 									</p>
-									<p className="text-[clamp(36px,5vw,60px)] text-[#f0df7a]">
+									<p className="text-4xl md:text-6xl text-[#f0df7a]">
 										{d.title.split("\n")[1] || ""}
 									</p>
 								</div>
-								<p className="text-[18px] font-light text-[#9a9a9a] leading-8 max-w-[600px]">
+								<p className="text-lg font-light text-[#9a9a9a] leading-8 max-w-[600px]">
 									{d.desc}
 								</p>
 							</div>
@@ -734,7 +736,7 @@ function Portal() {
 
 							{/* QUIZ */}
 							<div
-								className="rounded-sm border border-[rgba(66,58,46,0.5)] py-8 px-8 mt-[48px]"
+								className="rounded-sm border border-[rgba(66,58,46,0.5)] md:py-8 md:px-8 py-6 px-6 mt-[48px]"
 								style={{
 									animation: "fadeUp 0.5s ease forwards",
 									background: "rgba(10,8,4,0.5)",
@@ -781,7 +783,7 @@ function Portal() {
 										</div>
 										{currentDay === 4 && (
 											<button
-												className="htc-unlock btn-cta-gold inline-flex items-center gap-[10px] text-sm font-semibold rounded-[3px] cursor-pointer tracking-[0.3px] mt-[8px] transition-all duration-200"
+												className="htc-unlock btn-cta-gold inline-flex items-center gap-[10px] text-sm font-semibold rounded-[3px] cursor-pointer tracking-[0.3px] mt-[8px] transition-all duration-200 md:w-auto w-full justify-center md:justify-start"
 												style={{
 													fontFamily: "'DM Sans',sans-serif",
 													padding: "12px 24px",
@@ -814,7 +816,7 @@ function Portal() {
 															</span>
 															<span>{q.q}</span>
 														</div>
-														<div className="flex flex-col gap-[8px] pl-[32px]">
+														<div className="flex flex-col gap-[8px] md:pl-[32px]">
 															{q.opts.map((opt, oi) => {
 																const isSelected = answers[qi] === oi;
 																let bg = "transparent",
@@ -909,7 +911,7 @@ function Portal() {
 											</div>
 										) : (
 											<div
-												className="flex rounded-[3px] mt-[8px] items-center gap-[16px]"
+												className="text-center md:text-left flex md:flex-row flex-col rounded-[3px] mt-5 items-center gap-[16px]"
 												style={{
 													padding: "20px 24px",
 													background: "rgba(255,255,255,0.03)",
@@ -937,7 +939,7 @@ function Portal() {
 													</div>
 												</div>
 
-												<div className="shrink-0">
+												<div className="flex-1 shrink-0">
 													{passed ? (
 														<button
 															className="htc-unlock btn-cta-gold inline-flex items-center gap-[10px] text-sm font-semibold rounded-[3px] cursor-pointer tracking-[0.3px] transition-all duration-200"
@@ -966,7 +968,7 @@ function Portal() {
 															</svg>
 														</button>
 													) : retakeLocked ? (
-														<div className="flex flex-col items-end gap-[4px]">
+														<div className="flex flex-col items-center md:items-end gap-[4px]">
 															<div
 																className="inline-flex items-center gap-[8px] border border-[rgba(255,255,255,0.08)] text-[#555] text-[13px] font-medium rounded-[3px] cursor-not-allowed"
 																style={{
@@ -1028,11 +1030,13 @@ function Portal() {
 							</div>
 
 							{/* PREV / NEXT NAV */}
-							<div className="flex items-center justify-between pt-4">
+							<div
+								className={`flex items-center justify-between pt-4 relative ${currentDay > 0 && currentDay < unlockedDays - 1 ? "gap-4" : ""}`}
+							>
 								{currentDay > 0 ? (
 									<button
 										onClick={() => goToDay(currentDay - 1)}
-										className="inline-flex items-center gap-[10px] border border-[#4e4233] min-w-[120px] justify-center text-white text-[13px] font-medium rounded-[3px] cursor-pointer transition-all duration-200 hover:text-[#f7e280]"
+										className="inline-flex flex-1 md:flex-[0] items-center gap-[10px] border border-[#f7e28064] min-w-[120px] justify-center text-white text-[13px] font-medium rounded-[3px] cursor-pointer transition-all duration-200 hover:text-[#f7e280]"
 										style={{
 											fontFamily: "'DM Sans',sans-serif",
 											padding: "12px 20px",
@@ -1056,34 +1060,13 @@ function Portal() {
 								{currentDay < unlockedDays - 1 ? (
 									<button
 										onClick={() => goToDay(currentDay + 1)}
-										className="inline-flex items-center gap-[10px] border border-[#4e4233] min-w-[120px] justify-center text-white text-[13px] font-medium rounded-[3px] cursor-pointer transition-all duration-200 hover:text-[#f7e280]"
+										className="inline-flex flex-1 md:flex-[0] items-center gap-[10px] border border-[#f7e28064] min-w-[120px] justify-center text-white text-[13px] font-medium rounded-[3px] cursor-pointer transition-all duration-200 hover:text-[#f7e280]"
 										style={{
 											fontFamily: "'DM Sans',sans-serif",
 											padding: "12px 20px",
 										}}
 									>
 										Day {currentDay + 2}
-										<svg
-											width="14"
-											height="14"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeWidth="2"
-										>
-											<path d="M5 12h14M12 5l7 7-7 7" />
-										</svg>
-									</button>
-								) : currentDay === 4 && isDone ? (
-									<button
-										onClick={triggerCompletion}
-										className="inline-flex items-center gap-[10px] btn-cta-gold text-[13px] font-semibold rounded-[3px] cursor-pointer transition-all duration-200"
-										style={{
-											fontFamily: "'DM Sans',sans-serif",
-											padding: "12px 20px",
-										}}
-									>
-										See Results
 										<svg
 											width="14"
 											height="14"
