@@ -26,7 +26,7 @@ const cards: CtaCardData[] = [
 		titleLine2: "HTC Mastery Call",
 		titleLine2Gold: true,
 		description:
-			"No fluff. No pitch. Your exact path to $5K–$20K a month, built live on the call.",
+			"No fluff. Your exact path to $5K–$20K a month, built live on the call.",
 		features: [
 			{
 				icon: "/images/figma/9aade471-d946-4303-bf2e-268ce39656ce.svg",
@@ -82,7 +82,10 @@ const cards: CtaCardData[] = [
 
 export default function CtaCards() {
 	return (
-		<div data-gsap="stagger-parent" className="flex flex-wrap gap-8 justify-center mt-20 md:mt-[200px]">
+		<div
+			data-gsap="stagger-parent"
+			className="flex flex-wrap gap-8 justify-center mt-20 md:mt-[200px]"
+		>
 			{cards.map((card) => (
 				<div
 					data-gsap="stagger-child"

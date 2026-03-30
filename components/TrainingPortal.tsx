@@ -32,6 +32,7 @@ function Portal() {
 	const token = sp.get("token") || "guest";
 	const email = sp.get("email") || "";
 	const STORAGE_KEY = `htc_progress_${token}`;
+	const RETAKE_KEY = `htc_retake_${token}`;
 
 	const [currentDay, setCurrentDay] = useState(0);
 	const [unlockedDays, setUnlockedDays] = useState(1);
@@ -39,6 +40,9 @@ function Portal() {
 	const [quizAnswers, setQuizAnswers] = useState<QAnswers>({});
 	const [quizSubmitted, setQuizSubmitted] = useState<QFlags>({});
 	const [quizPassed, setQuizPassed] = useState<QFlags>({});
+	const [retakeLockedUntil, setRetakeLockedUntil] = useState<
+		Record<number, number>
+	>({});
 	const [totalScore, setTotalScore] = useState(0);
 	const [showCompletion, setShowCompletion] = useState(false);
 	const [playedVideo, setPlayedVideo] = useState(false);
@@ -46,6 +50,7 @@ function Portal() {
 	const [toastVisible, setToastVisible] = useState(false);
 	const [recoveryOpen, setRecoveryOpen] = useState(false);
 	const [loaded, setLoaded] = useState(false);
+	const [now, setNow] = useState(() => Date.now());
 
 	useEffect(() => {
 		try {
@@ -57,11 +62,15 @@ function Portal() {
 				setQuizAnswers(saved.quizAnswers ?? {});
 				setQuizSubmitted(saved.quizSubmitted ?? {});
 				setQuizPassed(saved.quizPassed ?? {});
-				setTotalScore(saved.totalScore ?? 0);
+					setTotalScore(saved.totalScore ?? 0);
 			}
 		} catch {}
+		try {
+			const savedRetake = JSON.parse(localStorage.getItem(RETAKE_KEY) || "null");
+			if (savedRetake) setRetakeLockedUntil(savedRetake);
+		} catch {}
 		setLoaded(true);
-	}, [STORAGE_KEY]);
+	}, [STORAGE_KEY, RETAKE_KEY]);
 
 	useEffect(() => {
 		if (!loaded) return;
@@ -74,6 +83,7 @@ function Portal() {
 				quizAnswers,
 				quizSubmitted,
 				quizPassed,
+				retakeLockedUntil,
 				totalScore,
 			}),
 		);
@@ -90,8 +100,18 @@ function Portal() {
 	]);
 
 	useEffect(() => {
+		if (!loaded) return;
+		localStorage.setItem(RETAKE_KEY, JSON.stringify(retakeLockedUntil));
+	}, [RETAKE_KEY, loaded, retakeLockedUntil]);
+
+	useEffect(() => {
 		setPlayedVideo(false);
 	}, [currentDay]);
+
+	useEffect(() => {
+		const id = setInterval(() => setNow(Date.now()), 1000);
+		return () => clearInterval(id);
+	}, []);
 
 	const showToast = useCallback((msg: string) => {
 		setToastMsg(msg);
@@ -125,6 +145,12 @@ function Portal() {
 		setQuizSubmitted((prev) => ({ ...prev, [currentDay]: true }));
 		setQuizPassed((prev) => ({ ...prev, [currentDay]: passed }));
 		setTotalScore((prev) => prev + correct);
+		if (!passed) {
+			setRetakeLockedUntil((prev) => ({
+				...prev,
+				[currentDay]: Date.now() + 86400000,
+			}));
+		}
 		if (passed) {
 			const newCompleted = Math.max(completedDays, currentDay + 1);
 			setCompletedDays(newCompleted);
@@ -166,6 +192,11 @@ function Portal() {
 		setQuizAnswers((prev) => ({ ...prev, [currentDay]: {} }));
 		setQuizSubmitted((prev) => ({ ...prev, [currentDay]: false }));
 		setQuizPassed((prev) => ({ ...prev, [currentDay]: false }));
+		setRetakeLockedUntil((prev) => {
+			const n = { ...prev };
+			delete n[currentDay];
+			return n;
+		});
 	};
 
 	const triggerCompletion = () => {
@@ -201,6 +232,19 @@ function Portal() {
 	const passed = quizPassed[currentDay];
 	const answers = quizAnswers[currentDay] || {};
 	const allAnswered = Object.keys(answers).length === 3;
+
+	const retakeLockMs = retakeLockedUntil[currentDay] ?? 0;
+	const retakeLocked = retakeLockMs > now;
+	const retakeRemaining = (() => {
+		if (!retakeLocked) return "";
+		const ms = retakeLockMs - now;
+		const h = Math.floor(ms / 3600000);
+		const m = Math.floor((ms % 3600000) / 60000);
+		const s = Math.floor((ms % 60000) / 1000);
+		if (h > 0) return `${h}h ${m}m remaining`;
+		if (m > 0) return `${m}m ${s}s remaining`;
+		return `${s}s remaining`;
+	})();
 
 	const score = totalScore;
 	const qualifiesForCall = score >= 12;
@@ -320,11 +364,8 @@ function Portal() {
 							</div>
 
 							<div
-								className="htc-paths-grid mb-[48px]"
+								className="htc-paths-grid mb-6"
 								style={{
-									display: "grid",
-									gridTemplateColumns:
-										qualifiesForCall || qualifiesForAcademy ? "1fr 1fr" : "1fr",
 									gap: 16,
 								}}
 							>
@@ -370,7 +411,7 @@ function Portal() {
 												</svg>
 											</div>
 										</a>
-										<a
+										{/* <a
 											href="/application"
 											className="htc-path-card border border-[rgba(66,58,46,0.5)] rounded bg-[#0a080480] flex flex-col gap-[16px] cursor-pointer relative overflow-hidden no-underline text-inherit transition-all duration-300"
 											style={{ padding: "32px 28px" }}
@@ -404,7 +445,7 @@ function Portal() {
 													<path d="M5 12h14M12 5l7 7-7 7" />
 												</svg>
 											</div>
-										</a>
+										</a> */}
 									</>
 								) : qualifiesForAcademy ? (
 									<>
@@ -779,27 +820,13 @@ function Portal() {
 																	color = C.text,
 																	keyBg = C.border,
 																	keyColor = C.muted;
-																if (submitted) {
-																	if (answers[qi] === oi && oi === q.correct) {
-																		bg = "rgba(76,175,125,0.1)";
-																		border = "#4caf7d";
-																		color = "#7ed4a8";
-																		keyBg = "#4caf7d";
-																		keyColor = C.black;
-																	} else if (answers[qi] === oi) {
-																		bg = "rgba(224,85,85,0.08)";
-																		border = "#e05555";
-																		color = "#e08888";
-																		keyBg = "#e05555";
-																		keyColor = C.white;
-																	} else if (oi === q.correct) {
-																		bg = "rgba(76,175,125,0.06)";
-																		border = "#4caf7d";
-																		color = "#7ed4a8";
-																		keyBg = "#4caf7d";
-																		keyColor = C.black;
-																	}
-																} else if (isSelected) {
+																if (submitted && isSelected) {
+																	bg = "rgba(255,255,255,0.04)";
+																	border = "rgba(255,255,255,0.15)";
+																	color = C.white;
+																	keyBg = "rgba(255,255,255,0.15)";
+																	keyColor = C.white;
+																} else if (!submitted && isSelected) {
 																	bg = C.goldDim;
 																	border = C.gold;
 																	color = C.white;
@@ -845,29 +872,6 @@ function Portal() {
 																);
 															})}
 														</div>
-														{submitted && (
-															<div
-																className="rounded-sm text-sm leading-normal mt-[4px] tracking-[0.5px]"
-																style={{
-																	padding: "14px 18px",
-																	...(answers[qi] === q.correct
-																		? {
-																				background: "rgba(76,175,125,0.08)",
-																				border:
-																					"1px solid rgba(76,175,125,0.2)",
-																				color: "#7ed4a8",
-																			}
-																		: {
-																				background: "rgba(224,85,85,0.06)",
-																				border:
-																					"1px solid rgba(224,85,85,0.15)",
-																				color: "#e08888",
-																			}),
-																}}
-															>
-																{q.feedback}
-															</div>
-														)}
 													</div>
 												);
 											})}
@@ -906,26 +910,21 @@ function Portal() {
 												className="flex rounded-[3px] mt-[8px] items-center gap-[16px]"
 												style={{
 													padding: "20px 24px",
-													...(passed
-														? {
-																background: "rgba(76,175,125,0.08)",
-																border: "1px solid rgba(76,175,125,0.2)",
-															}
-														: {
-																background: "rgba(224,85,85,0.06)",
-																border: "1px solid rgba(224,85,85,0.15)",
-															}),
+													background: "rgba(255,255,255,0.03)",
+													border: "1px solid rgba(255,255,255,0.08)",
 												}}
 											>
-												<div className="text-[24px] shrink-0">
-													{passed ? "✓" : "✗"}
-												</div>
 												<div className="flex-1">
-													<div
-														className="text-base font-semibold mb-[4px]"
-														style={{ color: passed ? "#7ed4a8" : "#e08888" }}
-													>
-														{passed ? "Quiz Passed" : "Not quite"}
+													<div className="text-base font-semibold mb-[4px] text-[#f4efe5]">
+														{(() => {
+															const dayAnswers = quizAnswers[currentDay] || {};
+															const correct = d.quiz.reduce(
+																(n, q, qi) =>
+																	n + (dayAnswers[qi] === q.correct ? 1 : 0),
+																0,
+															);
+															return `${correct}/3`;
+														})()}
 													</div>
 													<div className="text-[13px] text-[#555] leading-[1.5] tracking-[0.5px]">
 														{passed
@@ -943,6 +942,11 @@ function Portal() {
 																fontFamily: "'DM Sans',sans-serif",
 																padding: "12px 24px",
 															}}
+															onClick={() =>
+																currentDay < 4
+																	? goToDay(currentDay + 1)
+																	: triggerCompletion()
+															}
 														>
 															{currentDay < 4
 																? `Go to Day ${currentDay + 2}`
@@ -958,9 +962,41 @@ function Portal() {
 																<path d="M5 12h14M12 5l7 7-7 7" />
 															</svg>
 														</button>
+													) : retakeLocked ? (
+														<div className="flex flex-col items-end gap-[4px]">
+															<div
+																className="inline-flex items-center gap-[8px] border border-[rgba(255,255,255,0.08)] text-[#555] text-[13px] font-medium rounded-[3px] cursor-not-allowed"
+																style={{
+																	fontFamily: "'DM Sans',sans-serif",
+																	padding: "10px 20px",
+																}}
+															>
+																<svg
+																	width="13"
+																	height="13"
+																	viewBox="0 0 24 24"
+																	fill="none"
+																	stroke="currentColor"
+																	strokeWidth="2"
+																>
+																	<rect
+																		x="3"
+																		y="11"
+																		width="18"
+																		height="11"
+																		rx="2"
+																	/>
+																	<path d="M7 11V7a5 5 0 0110 0v4" />
+																</svg>
+																Retake Locked
+															</div>
+															<div className="text-[11px] text-[#555] tracking-[0.5px]">
+																{retakeRemaining}
+															</div>
+														</div>
 													) : (
 														<button
-															className="htc-retry inline-flex items-center gap-[8px] bg-transparent border border-[rgba(224,85,85,0.4)] text-[#e08888] text-[13px] font-medium rounded-[3px] cursor-pointer transition-all duration-200"
+															className="htc-retry inline-flex items-center gap-[8px] bg-transparent border border-[rgba(255,255,255,0.15)] text-[#9a9a9a] text-[13px] font-medium rounded-[3px] cursor-pointer transition-all duration-200"
 															onClick={retakeQuiz}
 															style={{
 																fontFamily: "'DM Sans',sans-serif",

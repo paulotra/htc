@@ -33,7 +33,11 @@ export default function TrainingSidebar({
 			<div className="px-6 h-[81px] flex items-center shrink-0">
 				<Link href="/">
 					{/* eslint-disable-next-line @next/next/no-img-element */}
-					<img src="/images/logo.svg" width={180} alt="High Ticket Consulting" />
+					<img
+						src="/images/logo.svg"
+						width={180}
+						alt="High Ticket Consulting"
+					/>
 				</Link>
 			</div>
 
@@ -175,7 +179,7 @@ export default function TrainingSidebar({
 			</nav>
 
 			{/* Quiz score */}
-			<div className="border-t border-[rgba(66,58,46,0.5)] px-6 pt-5 pb-4 shrink-0">
+			{/* <div className="border-t border-[rgba(66,58,46,0.5)] px-6 pt-5 pb-4 shrink-0">
 				<p className="text-[#9a9a9a] text-[11px] tracking-[1.2px] uppercase font-light mb-3">
 					Quiz score
 				</p>
@@ -193,10 +197,10 @@ export default function TrainingSidebar({
 						style={{ width: scoreBarPct + "%" }}
 					/>
 				</div>
-			</div>
+			</div> */}
 
 			{/* Streak + recovery */}
-			<div className="px-6 pb-6 pt-2 shrink-0 flex flex-col items-center gap-3">
+			<div className="px-6 pb-6 pt-6 shrink-0 flex flex-col items-center gap-3">
 				<div
 					className="w-full border border-[rgba(247,226,128,0.2)] rounded-[2px] px-4 pt-3 pb-2 flex flex-col gap-1"
 					style={{

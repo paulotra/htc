@@ -260,7 +260,7 @@ export default function BookingPage() {
 								</span>
 							</h1>
 							<div className="flex gap-3 flex-wrap">
-								{["45 min", "Direct with Bruno", "No pitch"].map((label) => (
+								{["45 min", "Direct with Bruno"].map((label) => (
 									<div
 										key={label}
 										className="border border-[#423a2e] rounded-[4px] px-2 py-1 text-[#9a9a9a] text-[0.75rem] tracking-[0.075rem] uppercase whitespace-nowrap"
@@ -399,8 +399,12 @@ export default function BookingPage() {
 												) : f.key === "phone" ? (
 													<PhoneInput
 														value={form.phone}
-														onChange={(num) => handleFieldChange("phone", num, i)}
-														inputRef={(el) => { fieldRefs.current[i] = el; }}
+														onChange={(num) =>
+															handleFieldChange("phone", num, i)
+														}
+														inputRef={(el) => {
+															fieldRefs.current[i] = el;
+														}}
 														className="w-full bg-transparent text-[0.9375rem] font-light outline-none placeholder:text-[#9a9a9a] text-white border-b border-[#423a2e] py-3 focus:border-[#f5c957] transition-colors"
 													/>
 												) : (
@@ -434,9 +438,6 @@ export default function BookingPage() {
 									pointerEvents: visibleCount >= FIELDS.length ? "all" : "none",
 								}}
 							>
-								<p className="text-[#9a9a9a] text-sm mb-4 text-center">
-									No pressure. No pitch. Just clarity.
-								</p>
 								<button
 									onClick={() => setStep(2)}
 									className="btn-cta-gold flex items-center w-full justify-center gap-2.5 px-11 py-4 rounded-[4px] text-base font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"
