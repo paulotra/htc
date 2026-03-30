@@ -64,7 +64,7 @@ const sections = [
 export default function PrivacyPolicyPage() {
 	return (
 		<div className="relative">
-			<div className="max-w-container mx-auto px-7 min-h-screen flex flex-col">
+			<div className="max-w-container mx-auto px-6 md:px-7 min-h-screen flex flex-col">
 				<Nav />
 				<div
 					className="absolute inset-0 opacity-60 z-0"
@@ -75,7 +75,7 @@ export default function PrivacyPolicyPage() {
 						backgroundSize: "cover",
 					}}
 				></div>
-				<main className="flex-1 flex flex-col pt-40 pb-20 max-w-[920px] mx-auto relative">
+				<main className="flex-1 flex flex-col pt-20 md:pt-40 pb-20 max-w-[920px] mx-auto relative">
 					<h1 className="font-serif text-[2.625rem] leading-[1.1] font-normal text-white mb-2">
 						Privacy Policy
 					</h1>
