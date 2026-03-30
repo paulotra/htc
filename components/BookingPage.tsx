@@ -292,7 +292,7 @@ export default function BookingPage() {
 
 				{/* ── Right card ── */}
 				<div
-					className={`flex-1 cta-card !p-0 bg-black min-h-[calc(100vh_-_168px)] mt-10 lg:mt-0`}
+					className={`flex-1 cta-card !p-0 bg-black md:min-h-[calc(100vh_-_168px)] mt-10 lg:mt-0`}
 				>
 					{/* Step indicator */}
 					<div className="relative grid grid-cols-1 md:grid-cols-2">

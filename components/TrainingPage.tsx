@@ -196,7 +196,7 @@ export default function TrainingPage() {
 				</div>
 
 				{/* ── Right card ── */}
-				<div className="flex-1 cta-card cta-card-silver !p-0 !bg-black min-h-[calc(100vh_-_168px)] flex flex-col  mt-10 lg:mt-0">
+				<div className="flex-1 cta-card cta-card-silver !p-0 !bg-black md:min-h-[calc(100vh_-_168px)] flex flex-col  mt-10 lg:mt-0">
 					{/* Progress bar */}
 					{slide > 0 && slide < 7 && (
 						<div className="h-[2px] bg-[#1a1a18] rounded-t-sm overflow-hidden">
