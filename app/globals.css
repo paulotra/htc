@@ -202,37 +202,9 @@
 	}
 
 	/* ── Testimonials carousel ── */
-	.tc-scroll {
-		display: flex;
-		gap: 32px;
-		overflow-x: auto;
-		padding: 52px calc(50% - 632px) 0;
-		scrollbar-width: none;
-		-webkit-mask-image: linear-gradient(
-			to right,
-			transparent 0%,
-			black 120px,
-			black calc(100% - 120px),
-			transparent 100%
-		);
-		mask-image: linear-gradient(
-			to right,
-			transparent 0%,
-			black 120px,
-			black calc(100% - 120px),
-			transparent 100%
-		);
-	}
-
-	.tc-scroll::-webkit-scrollbar {
-		display: none;
-	}
 
 	.tc-card {
 		position: relative;
-		min-width: 400px;
-		width: 400px;
-		aspect-ratio: 9 / 16;
 		border-radius: 4px;
 		overflow: hidden;
 		display: flex;
@@ -747,6 +719,38 @@
 
 	.booking-confirmed.show {
 		display: flex;
+	}
+
+	/* ── intl-tel-input dark theme overrides ── */
+	.iti {
+		width: 100%;
+	}
+	.iti__flag-container {
+		border-bottom: 1px solid #423a2e;
+	}
+	.iti__selected-dial-code {
+		color: rgba(237, 232, 222, 0.55);
+		font-size: 0.9375rem;
+		font-weight: 300;
+	}
+	.iti__dropdown-content,
+	.iti__country-list {
+		background: #0d0d0b;
+		border: 1px solid #423a2e;
+		color: #ede8de;
+	}
+	.iti__country.iti__highlight,
+	.iti__country:hover {
+		background: rgba(245, 201, 87, 0.08);
+	}
+	.iti__search-input {
+		background: #060605;
+		border-bottom: 1px solid #423a2e;
+		color: #ede8de;
+		outline: none;
+	}
+	.iti__dial-code {
+		color: rgba(237, 232, 222, 0.55);
 	}
 
 	/* ── Training portal ── */

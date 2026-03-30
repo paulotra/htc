@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Nav from "./Nav";
 import Pill from "./Pill";
+import PhoneInput from "./PhoneInput";
 
 const MONTHS = [
 	"January",
@@ -395,6 +396,13 @@ export default function BookingPage() {
 															<path d="M6 9l6 6 6-6" />
 														</svg>
 													</div>
+												) : f.key === "phone" ? (
+													<PhoneInput
+														value={form.phone}
+														onChange={(num) => handleFieldChange("phone", num, i)}
+														inputRef={(el) => { fieldRefs.current[i] = el; }}
+														className="w-full bg-transparent text-[0.9375rem] font-light outline-none placeholder:text-[#9a9a9a] text-white border-b border-[#423a2e] py-3 focus:border-[#f5c957] transition-colors"
+													/>
 												) : (
 													<input
 														type={f.type}
