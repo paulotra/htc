@@ -201,8 +201,8 @@ export default function DayCompleteModal({
 											background: isDone
 												? "linear-gradient(135deg, #c9a84c, #f7e280)"
 												: isNext
-													? "rgba(247,226,128,0.08)"
-													: "#111",
+													? "#111"
+													: "#000",
 											border: isDone
 												? "none"
 												: isNext
