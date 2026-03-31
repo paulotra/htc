@@ -11,6 +11,7 @@ import {
 	type QAnswers,
 	type QFlags,
 } from "./training-data";
+import DayCompleteModal from "./DayCompleteModal";
 
 const C = {
 	black: "#070707",
@@ -32,7 +33,6 @@ function Portal() {
 	const token = sp.get("token") || "guest";
 	const email = sp.get("email") || "";
 	const STORAGE_KEY = `htc_progress_${token}`;
-	const RETAKE_KEY = `htc_retake_${token}`;
 
 	const [currentDay, setCurrentDay] = useState(0);
 	const [unlockedDays, setUnlockedDays] = useState(1);
@@ -40,17 +40,15 @@ function Portal() {
 	const [quizAnswers, setQuizAnswers] = useState<QAnswers>({});
 	const [quizSubmitted, setQuizSubmitted] = useState<QFlags>({});
 	const [quizPassed, setQuizPassed] = useState<QFlags>({});
-	const [retakeLockedUntil, setRetakeLockedUntil] = useState<
-		Record<number, number>
-	>({});
 	const [totalScore, setTotalScore] = useState(0);
 	const [showCompletion, setShowCompletion] = useState(false);
+	const [showDayComplete, setShowDayComplete] = useState(false);
+	const [dayCompleteScore, setDayCompleteScore] = useState(0);
 	const [playedVideo, setPlayedVideo] = useState(false);
 	const [toastMsg, setToastMsg] = useState("");
 	const [toastVisible, setToastVisible] = useState(false);
 	const [recoveryOpen, setRecoveryOpen] = useState(false);
 	const [loaded, setLoaded] = useState(false);
-	const [now, setNow] = useState(() => Date.now());
 
 	useEffect(() => {
 		try {
@@ -65,14 +63,8 @@ function Portal() {
 				setTotalScore(saved.totalScore ?? 0);
 			}
 		} catch {}
-		try {
-			const savedRetake = JSON.parse(
-				localStorage.getItem(RETAKE_KEY) || "null",
-			);
-			if (savedRetake) setRetakeLockedUntil(savedRetake);
-		} catch {}
 		setLoaded(true);
-	}, [STORAGE_KEY, RETAKE_KEY]);
+	}, [STORAGE_KEY]);
 
 	useEffect(() => {
 		if (!loaded) return;
@@ -85,7 +77,6 @@ function Portal() {
 				quizAnswers,
 				quizSubmitted,
 				quizPassed,
-				retakeLockedUntil,
 				totalScore,
 			}),
 		);
@@ -102,18 +93,8 @@ function Portal() {
 	]);
 
 	useEffect(() => {
-		if (!loaded) return;
-		localStorage.setItem(RETAKE_KEY, JSON.stringify(retakeLockedUntil));
-	}, [RETAKE_KEY, loaded, retakeLockedUntil]);
-
-	useEffect(() => {
 		setPlayedVideo(false);
 	}, [currentDay]);
-
-	useEffect(() => {
-		const id = setInterval(() => setNow(Date.now()), 1000);
-		return () => clearInterval(id);
-	}, []);
 
 	const showToast = useCallback((msg: string) => {
 		setToastMsg(msg);
@@ -147,16 +128,13 @@ function Portal() {
 		setQuizSubmitted((prev) => ({ ...prev, [currentDay]: true }));
 		setQuizPassed((prev) => ({ ...prev, [currentDay]: passed }));
 		setTotalScore((prev) => prev + correct);
-		if (!passed) {
-			setRetakeLockedUntil((prev) => ({
-				...prev,
-				[currentDay]: Date.now() + 86400000,
-			}));
-		}
 		if (passed) {
 			const newCompleted = Math.max(completedDays, currentDay + 1);
 			setCompletedDays(newCompleted);
 			setUnlockedDays(Math.min(newCompleted + 1, 5));
+			setDayCompleteScore(correct);
+			setShowDayComplete(true);
+			return;
 		}
 		const toasts = [
 			[
@@ -194,11 +172,6 @@ function Portal() {
 		setQuizAnswers((prev) => ({ ...prev, [currentDay]: {} }));
 		setQuizSubmitted((prev) => ({ ...prev, [currentDay]: false }));
 		setQuizPassed((prev) => ({ ...prev, [currentDay]: false }));
-		setRetakeLockedUntil((prev) => {
-			const n = { ...prev };
-			delete n[currentDay];
-			return n;
-		});
 	};
 
 	const triggerCompletion = () => {
@@ -235,19 +208,6 @@ function Portal() {
 	const answers = quizAnswers[currentDay] || {};
 	const allAnswered = Object.keys(answers).length === 3;
 
-	const retakeLockMs = retakeLockedUntil[currentDay] ?? 0;
-	const retakeLocked = retakeLockMs > now;
-	const retakeRemaining = (() => {
-		if (!retakeLocked) return "";
-		const ms = retakeLockMs - now;
-		const h = Math.floor(ms / 3600000);
-		const m = Math.floor((ms % 3600000) / 60000);
-		const s = Math.floor((ms % 60000) / 1000);
-		if (h > 0) return `${h}h ${m}m remaining`;
-		if (m > 0) return `${m}m ${s}s remaining`;
-		return `${s}s remaining`;
-	})();
-
 	const score = totalScore;
 	const qualifiesForCall = score >= 12;
 	const qualifiesForAcademy = score >= 10 && score < 12;
@@ -261,6 +221,19 @@ function Portal() {
 
 	return (
 		<div className="bg-[#070707] min-h-screen flex flex-col-reverse md:flex-row">
+			{showDayComplete && (
+				<DayCompleteModal
+					day={currentDay}
+					score={dayCompleteScore}
+					quizAnswers={quizAnswers}
+					quizPassed={quizPassed}
+					completedDays={Math.max(completedDays, currentDay + 1)}
+					onContinue={() => {
+						setShowDayComplete(false);
+						if (currentDay < 4) goToDay(currentDay + 1);
+					}}
+				/>
+			)}
 			{/* SIDEBAR */}
 			<TrainingSidebar
 				days={DAYS}
@@ -939,7 +912,7 @@ function Portal() {
 													</div>
 												</div>
 
-												<div className="flex-1 shrink-0">
+												<div className="flex-1 md:flex-none shrink-0">
 													{passed ? (
 														<button
 															className="htc-unlock btn-cta-gold inline-flex items-center gap-[10px] text-sm font-semibold rounded-[3px] cursor-pointer tracking-[0.3px] transition-all duration-200"
@@ -967,38 +940,6 @@ function Portal() {
 																<path d="M5 12h14M12 5l7 7-7 7" />
 															</svg>
 														</button>
-													) : retakeLocked ? (
-														<div className="flex flex-col items-center md:items-end gap-[4px]">
-															<div
-																className="inline-flex items-center gap-[8px] border border-[rgba(255,255,255,0.08)] text-[#555] text-[13px] font-medium rounded-[3px] cursor-not-allowed"
-																style={{
-																	fontFamily: "'DM Sans',sans-serif",
-																	padding: "10px 20px",
-																}}
-															>
-																<svg
-																	width="13"
-																	height="13"
-																	viewBox="0 0 24 24"
-																	fill="none"
-																	stroke="currentColor"
-																	strokeWidth="2"
-																>
-																	<rect
-																		x="3"
-																		y="11"
-																		width="18"
-																		height="11"
-																		rx="2"
-																	/>
-																	<path d="M7 11V7a5 5 0 0110 0v4" />
-																</svg>
-																Retake Locked
-															</div>
-															<div className="text-[11px] text-[#555] tracking-[0.5px]">
-																{retakeRemaining}
-															</div>
-														</div>
 													) : (
 														<button
 															className="htc-retry inline-flex items-center gap-[8px] bg-transparent border border-[rgba(255,255,255,0.15)] text-[#9a9a9a] text-[13px] font-medium rounded-[3px] cursor-pointer transition-all duration-200"
