@@ -156,14 +156,14 @@ export default function DayCompleteModal({
 				</p>
 
 				{/* Progress map */}
-				<div className="w-full mb-10 px-6">
+				<div className="w-full mb-10 mx-6">
 					<div className="relative flex items-start justify-between w-full">
 						{/* Track */}
 						<div className="absolute top-[39px] left-[20px] right-[20px] h-[2px] bg-[#262626]" />
 						{/* Filled progress */}
 						<div
 							className="absolute top-[39px] left-[20px] h-[2px] bg-[#f7e280] transition-all duration-700 ease-out"
-							style={{ width: `calc(${lineProgress}% - 0px)` }}
+							style={{ width: `calc(${lineProgress}% - 20px)` }}
 						/>
 
 						{[0, 1, 2, 3, 4].map((i) => {
