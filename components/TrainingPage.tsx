@@ -256,8 +256,10 @@ export default function TrainingPage() {
 								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
 									What's your first name?
 								</p>
+								<label htmlFor="tp-name" className="sr-only">First name</label>
 								<input
 									ref={nameRef}
+									id="tp-name"
 									type="text"
 									placeholder="Type your answer..."
 									value={answers.name ?? ""}
@@ -269,7 +271,7 @@ export default function TrainingPage() {
 									className="bg-transparent border-b border-[#2a2a2a] focus:border-[#fff] text-white text-[1.375rem] font-light py-3 outline-none w-full transition-colors caret-[#fff] placeholder:text-[#333]"
 								/>
 								{error && (
-									<p className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
+									<p role="alert" className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
 										{error}
 									</p>
 								)}
@@ -290,8 +292,10 @@ export default function TrainingPage() {
 									We'll send your training link here.
 								</p>
 								<div className="flex flex-col gap-4 w-full">
+									<label htmlFor="tp-email" className="sr-only">Email address</label>
 									<input
 										ref={emailRef}
+										id="tp-email"
 										type="email"
 										placeholder="your@email.com"
 										autoComplete="email"
@@ -303,7 +307,9 @@ export default function TrainingPage() {
 										onKeyDown={(e) => e.key === "Enter" && validateAndNext()}
 										className="bg-transparent border-b border-[#2a2a2a] focus:border-[#fff] text-white text-[1.375rem] font-light py-3 outline-none w-full transition-colors caret-[#fff] placeholder:text-[#333]"
 									/>
+									<label htmlFor="tp-phone" className="sr-only">Phone number (optional)</label>
 									<input
+										id="tp-phone"
 										type="tel"
 										placeholder="Phone number (optional)"
 										autoComplete="tel"
@@ -315,7 +321,7 @@ export default function TrainingPage() {
 									/>
 								</div>
 								{error && (
-									<p className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
+									<p role="alert" className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
 										{error}
 									</p>
 								)}
@@ -342,7 +348,7 @@ export default function TrainingPage() {
 									onSelect={(k) => selectChoice(k, "situation")}
 								/>
 								{error && (
-									<p className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
+									<p role="alert" className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
 										{error}
 									</p>
 								)}
@@ -362,7 +368,7 @@ export default function TrainingPage() {
 									onSelect={(k) => selectChoice(k, "goal")}
 								/>
 								{error && (
-									<p className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
+									<p role="alert" className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
 										{error}
 									</p>
 								)}
@@ -382,7 +388,7 @@ export default function TrainingPage() {
 									onSelect={(k) => selectChoice(k, "obstacle")}
 								/>
 								{error && (
-									<p className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
+									<p role="alert" className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
 										{error}
 									</p>
 								)}
@@ -407,6 +413,8 @@ export default function TrainingPage() {
 											<button
 												key={n}
 												onClick={() => selectScale(n)}
+												aria-pressed={answers.scale === n}
+												aria-label={`Commitment level ${n}`}
 												className={`flex-1 h-10 rounded-[3px] border text-[0.8125rem] font-light transition-all ${
 													answers.scale === n
 														? "bg-[#fff] border-[#fff] text-black font-medium"
@@ -423,7 +431,7 @@ export default function TrainingPage() {
 									</div>
 								</div>
 								{error && (
-									<p className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
+									<p role="alert" className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
 										{error}
 									</p>
 								)}

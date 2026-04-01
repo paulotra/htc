@@ -59,48 +59,82 @@ export default function DayCompleteModal({
 	onContinue,
 }: Props) {
 	const firedRef = useRef(false);
+	const continueRef = useRef<HTMLButtonElement>(null);
+	const dialogRef = useRef<HTMLDivElement>(null);
 
+	// Confetti
 	useEffect(() => {
 		if (firedRef.current) return;
 		firedRef.current = true;
+
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
 		import("canvas-confetti").then(({ default: confetti }) => {
 			const end = Date.now() + 2200;
 			const colors = ["#f7e280", "#c9a84c", "#ffffff", "#f0df7a", "#ffe066"];
 
 			function frame() {
-				confetti({
-					particleCount: 3,
-					angle: 60,
-					spread: 55,
-					origin: { x: 0 },
-					colors,
-					zIndex: 9999,
-				});
-				confetti({
-					particleCount: 3,
-					angle: 120,
-					spread: 55,
-					origin: { x: 1 },
-					colors,
-					zIndex: 9999,
-				});
+				confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors, zIndex: 9999 });
+				confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors, zIndex: 9999 });
 				if (Date.now() < end) requestAnimationFrame(frame);
 			}
 			frame();
 		});
 	}, []);
 
+	// Auto-focus dialog on open so screen readers announce its title first
+	useEffect(() => {
+		dialogRef.current?.focus();
+	}, []);
+
+	// Escape key closes modal
+	useEffect(() => {
+		function onKeyDown(e: KeyboardEvent) {
+			if (e.key === "Escape") onContinue();
+		}
+		document.addEventListener("keydown", onKeyDown);
+		return () => document.removeEventListener("keydown", onKeyDown);
+	}, [onContinue]);
+
+	// Focus trap
+	useEffect(() => {
+		const dialog = dialogRef.current;
+		if (!dialog) return;
+
+		function onKeyDown(e: KeyboardEvent) {
+			if (e.key !== "Tab") return;
+			const focusable = dialog!.querySelectorAll<HTMLElement>(
+				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+			);
+			const first = focusable[0];
+			const last = focusable[focusable.length - 1];
+			if (e.shiftKey) {
+				if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+			} else {
+				if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+			}
+		}
+		dialog.addEventListener("keydown", onKeyDown);
+		return () => dialog.removeEventListener("keydown", onKeyDown);
+	}, []);
+
 	const msg = DAY_MESSAGES[day] ?? DAY_MESSAGES[0];
-	// Progress line width: completed days / 4 segments × 100%
 	const lineProgress = Math.min(completedDays / 4, 1) * 100;
+	const nextDay = day + 2; // human-readable next day number
 
 	return (
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center px-4"
 			style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}
+			onClick={(e) => { if (e.target === e.currentTarget) onContinue(); }}
 		>
 			<div
+				ref={dialogRef}
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="day-complete-title"
+				aria-describedby="day-complete-desc"
+				tabIndex={-1}
 				className="relative w-full max-w-[440px] rounded-[4px] overflow-hidden flex flex-col items-center gap-0 pb-10 pt-14 px-8"
 				style={{
 					background: "#000",
@@ -108,12 +142,12 @@ export default function DayCompleteModal({
 					animation: "fadeUp 0.4s ease forwards",
 				}}
 			>
-				{/* Star icon */}
-				<div className="relative w-[80px] h-[80px] flex items-center justify-center">
+				{/* Star icon — decorative */}
+				<div className="relative w-[80px] h-[80px] flex items-center justify-center" aria-hidden="true">
 					<svg
 						width="80"
 						height="80"
-						viewBox="0 0 80	 80	"
+						viewBox="0 0 80 80"
 						fill="none"
 						className="relative z-10"
 						style={{ filter: "drop-shadow(0 0 12px rgba(247,226,128,0.5))" }}
@@ -122,21 +156,22 @@ export default function DayCompleteModal({
 							d="M39.9998 6.15381L48.4614 23.2307L67.3845 26L53.6922 39.3846L56.9229 58.1538L39.9998 49.0769L23.0768 58.1538L26.3075 39.3846L12.6152 26L31.5383 23.2307L39.9998 6.15381Z"
 							fill="#C9A84C"
 							stroke="#F7E280"
-							stroke-width="2.30769"
-							stroke-linejoin="round"
+							strokeWidth="2.30769"
+							strokeLinejoin="round"
 						/>
 						<path
 							d="M34 35.4444L37.3846 39L45 31"
 							stroke="black"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
 						/>
 					</svg>
 				</div>
 
 				{/* Heading */}
 				<h2
+					id="day-complete-title"
 					className="font-serif text-[2rem] text-white text-center mb-3 leading-tight"
 					style={{ fontFamily: "'Didact Gothic', 'Playfair Display', serif" }}
 				>
@@ -144,25 +179,23 @@ export default function DayCompleteModal({
 				</h2>
 
 				{/* Score + message */}
-				<p className="text-[15px] font-light text-[#9a9a9a] text-center leading-[1.6] mb-8 max-w-[320px]">
+				<p id="day-complete-desc" className="text-[15px] font-light text-[#9a9a9a] text-center leading-[1.6] mb-8 max-w-[320px]">
 					You scored{" "}
-					<span
-						className="font-bold text-[#f7e280]"
-						style={{ fontSize: "1.05em" }}
-					>
+					<span className="font-bold text-[#f7e280]" style={{ fontSize: "1.05em" }}>
 						{score}/3
 					</span>{" "}
 					on Day {day + 1}. <span>{msg.sub(score)}</span>
 				</p>
 
 				{/* Progress map */}
-				<div className="w-full mb-10 mx-6">
-					<div className="relative flex items-start justify-between w-full">
+				<div className="w-full mb-10 mx-6" aria-label="Training progress">
+					<div className="relative flex items-start justify-between w-full" role="list">
 						{/* Track */}
-						<div className="absolute top-[39px] left-[20px] right-[20px] h-[2px] bg-[#262626]" />
+						<div className="absolute top-[39px] left-[20px] right-[20px] h-[2px] bg-[#262626]" aria-hidden="true" />
 						{/* Filled progress */}
 						<div
 							className="absolute top-[39px] left-[20px] h-[2px] bg-[#f7e280] transition-all duration-700 ease-out"
+							aria-hidden="true"
 							style={{ width: `calc(${lineProgress}% - 20px)` }}
 						/>
 
@@ -180,14 +213,23 @@ export default function DayCompleteModal({
 								return c;
 							})();
 
+							const nodeLabel = isDone
+								? `Day ${i + 1}: completed, scored ${correctCount} out of 3`
+								: isNext
+									? `Day ${i + 1}: unlocked, ready to start`
+									: `Day ${i + 1}: locked`;
+
 							return (
 								<div
 									key={i}
+									role="listitem"
+									aria-label={nodeLabel}
 									className="relative z-10 flex flex-col items-center gap-2"
 									style={{ width: 40 }}
 								>
 									<p
 										className="text-[10px] tracking-[1px] uppercase whitespace-nowrap"
+										aria-hidden="true"
 										style={{
 											color: isDone || isNext ? "#fff" : "#555",
 											fontFamily: "'DM Sans', sans-serif",
@@ -196,6 +238,7 @@ export default function DayCompleteModal({
 										Day {String(i + 1).padStart(2, "0")}
 									</p>
 									<div
+										aria-hidden="true"
 										className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
 										style={{
 											background: isDone
@@ -216,52 +259,23 @@ export default function DayCompleteModal({
 										}}
 									>
 										{isDone ? (
-											/* Checkmark */
-											<svg
-												width="14"
-												height="14"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="#000"
-												strokeWidth="2.8"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											>
+											<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
 												<polyline points="20 6 9 17 4 12" />
 											</svg>
 										) : isNext ? (
-											/* Unlocked lock */
-											<svg
-												width="13"
-												height="13"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="#f7e280"
-												strokeWidth="2"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											>
+											<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f7e280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
 												<rect x="3" y="11" width="18" height="11" rx="2" />
 												<path d="M7 11V7a5 5 0 019.9-1" />
 											</svg>
 										) : (
-											/* Locked lock */
-											<svg
-												width="12"
-												height="12"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="#333"
-												strokeWidth="2"
-												strokeLinecap="round"
-												strokeLinejoin="round"
-											>
+											<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
 												<rect x="3" y="11" width="18" height="11" rx="2" />
 												<path d="M7 11V7a5 5 0 0110 0v4" />
 											</svg>
 										)}
 									</div>
 									<p
+										aria-hidden="true"
 										className="text-[11px]"
 										style={{
 											color: isDone ? "#f7e280" : isNext ? "#f7e280" : "#333",
@@ -278,26 +292,18 @@ export default function DayCompleteModal({
 
 				{/* Continue button */}
 				<button
+					ref={continueRef}
 					onClick={onContinue}
+					aria-label={day < 4 ? `Continue to Day ${nextDay}` : "View your results"}
 					className="relative w-full flex items-center justify-center gap-3 py-4 px-10 rounded-[60px] text-white text-[17px] font-light cursor-pointer transition-opacity hover:opacity-90 active:opacity-70 overflow-hidden"
 					style={{
 						border: "1px solid #dfcaac",
-						background:
-							"radial-gradient(ellipse at 50% 120%, #c9a572 0%, rgba(240,223,122,0) 70%)",
+						background: "radial-gradient(ellipse at 50% 120%, #c9a572 0%, rgba(240,223,122,0) 70%)",
 						boxShadow: "inset 0px -2px 14px 0px #ffc26c",
 					}}
 				>
 					Continue
-					<svg
-						width="18"
-						height="18"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="2"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-					>
+					<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
 						<path d="M5 12h14M12 5l7 7-7 7" />
 					</svg>
 				</button>

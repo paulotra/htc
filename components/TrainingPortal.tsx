@@ -1030,6 +1030,9 @@ function Portal() {
 
 			{/* TOAST */}
 			<div
+				role="status"
+				aria-live="polite"
+				aria-atomic="true"
 				className="fixed bottom-[32px] right-[32px] bg-black border border-[rgba(201,168,76,0.25)] rounded max-w-[360px] flex items-center gap-[14px] pointer-events-none z-[999]"
 				style={{
 					padding: "16px 24px",

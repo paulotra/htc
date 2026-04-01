@@ -75,6 +75,7 @@ export default function PhoneInput({
 			type="tel"
 			defaultValue={value}
 			placeholder="Phone number"
+			aria-label="Phone number"
 			className={className}
 		/>
 	);

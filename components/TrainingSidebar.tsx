@@ -59,7 +59,7 @@ export default function TrainingSidebar({
 			</div>
 
 			{/* Day nav */}
-			<nav className="flex-1 overflow-y-auto md:block hidden">
+			<nav aria-label="Day navigation" className="flex-1 overflow-y-auto md:block hidden">
 				{days.map((day, i) => {
 					const isUnlocked = i < unlockedDays;
 					const isDone = i < completedDays;
@@ -71,10 +71,13 @@ export default function TrainingSidebar({
 					const dashOffset = circ - (pct / 100) * circ;
 
 					return (
-						<div
+						<button
 							key={i}
-							onClick={() => (isUnlocked ? onGoToDay(i) : undefined)}
-							className={`flex gap-[10px] items-start pl-4 pr-6 py-4 border-b border-[rgba(66,58,46,0.5)] transition-all ${isUnlocked ? "cursor-pointer" : "cursor-default opacity-20"}`}
+							onClick={() => isUnlocked && onGoToDay(i)}
+							disabled={!isUnlocked}
+							aria-current={isActive ? "step" : undefined}
+							aria-label={`${day.shortTitle}, Day ${i + 1}${isDone ? ', completed' : isActive ? ', current' : isUnlocked ? ', unlocked' : ', locked'}`}
+							className={`w-full text-left flex gap-[10px] items-start pl-4 pr-6 py-4 border-b border-[rgba(66,58,46,0.5)] transition-all ${isUnlocked ? "cursor-pointer" : "cursor-default opacity-20"}`}
 							style={
 								isActive
 									? {
@@ -173,7 +176,7 @@ export default function TrainingSidebar({
 									/>
 								</svg>
 							</div>
-						</div>
+						</button>
 					);
 				})}
 			</nav>

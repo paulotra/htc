@@ -8,6 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function HomeAnimations() {
 	useEffect(() => {
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
 		const ctx = gsap.context(() => {
 			// ── Hero (load, no scroll trigger) ──
 			const tl = gsap.timeline({ delay: 0.15 });

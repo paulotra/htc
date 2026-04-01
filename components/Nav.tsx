@@ -57,6 +57,7 @@ export default function Nav({
 
 	return (
 		<nav
+			aria-label="Main navigation"
 			className={`fixed top-0 left-0 right-0 z-[100] w-full${border ? " border-b border-[#423a2e]" : ""}`}
 		>
 			<div
@@ -67,7 +68,7 @@ export default function Nav({
 					href="/"
 					className="font-light text-base tracking-[0.4rem] text-white"
 				>
-					<img src="/images/logo.svg" className="max-w-[160px]" width="200" />
+					<img src="/images/logo.svg" className="max-w-[160px]" width="200" alt="High Ticket Consulting — home" />
 				</Link>
 				<div className="flex items-center gap-2 md:gap-4 py-3.5 rounded-[40px]">
 					<div className="relative w-[12px] h-[12px] shrink-0">
