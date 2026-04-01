@@ -33,7 +33,7 @@ export default function ConfirmationPage() {
 						alt=""
 					/>
 					{/* eslint-disable-next-line @next/next/no-img-element */}
-					<div
+					{/* <div
 						data-gsap="confirm-header"
 						className="flex-1 flex flex-col items-center justify-center text-center gap-8 pt-20 pb-10	 md:pb-20"
 					>
@@ -56,7 +56,7 @@ export default function ConfirmationPage() {
 								details. We&apos;ll see you soon.
 							</p>
 						</div>
-					</div>
+					</div> */}
 				</main>
 			</div>
 			<div className="relative pb-16 md:pb-[160px]">
