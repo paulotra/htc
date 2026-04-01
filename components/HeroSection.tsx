@@ -49,6 +49,10 @@ export default function HeroSection() {
 						</p>
 					</div>
 
+					<div class="inline-flex items-center justify-center border border-white/[0.12] rounded-[30px] px-4 py-2 text-xs font-normal tracking-[0.125rem] uppercase text-white whitespace-nowrap ">
+						Choose Your Path
+					</div>
+
 					<div
 						data-gsap="hero-ctas"
 						className="flex gap-5 flex-wrap justify-center w-full"
@@ -57,7 +61,7 @@ export default function HeroSection() {
 							href="/booking"
 							className="btn-cta-gold flex-1 flex items-center justify-center gap-2.5 py-4 px-11 md:py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"
 						>
-							Book your HTC mastery call
+							Apply for the Mastery Call
 							{/* eslint-disable-next-line @next/next/no-img-element */}
 							<img
 								src="/images/figma/ab357bbf-fa5c-4743-af89-87f90cfb66ba.svg"
@@ -70,7 +74,7 @@ export default function HeroSection() {
 							href="/application"
 							className="btn-cta-silver flex-1 flex items-center justify-center gap-2.5 px-11 py-4 md:py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"
 						>
-							Start free training
+							Begin your 5-Day Training
 							{/* eslint-disable-next-line @next/next/no-img-element */}
 							<img
 								src="/images/figma/8bfb72c0-fdd2-41ca-83ec-d96dc00bd81d.svg"
