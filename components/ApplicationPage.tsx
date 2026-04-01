@@ -133,14 +133,14 @@ export default function ApplicationPage() {
 						{/* ── Slide 0: Welcome (kept as-is from TrainingPage) ── */}
 						{slide === 0 && (
 							<div className={slideClass}>
-								<div className="flex items-center gap-6">
+								<div className="md:flex items-center gap-6">
 									<img
 										src="/images/laptop.webp"
-										className="w-full max-w-[440px]"
+										className="w-full max-w-[440px] mb-6 md:mb-0"
 										alt=""
 									/>
 									<div className="flex flex-col gap-6">
-										<h2 className="font-serif text-[3.25rem] leading-[1.0] font-normal text-white">
+										<h2 className="font-serif text-3xl md:text-5xl leading-normal font-normal text-white">
 											The Free <span className={GOLD}>5-Day</span>
 											<br />
 											Closer Training
@@ -190,7 +190,7 @@ export default function ApplicationPage() {
 									01
 									<span className="block w-6 h-px bg-white opacity-50" />
 								</div>
-								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
+								<p className="font-serif text-3xl md:text-5xl leading-normal font-normal text-white">
 									What&apos;s your email?
 								</p>
 								<p
@@ -252,7 +252,7 @@ export default function ApplicationPage() {
 									02
 									<span className="block w-6 h-px bg-white opacity-50" />
 								</div>
-								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
+								<p className="font-serif text-3xl md:text-5xl leading-normal font-normal text-white">
 									Want the scripts + reminders sent to your phone?
 								</p>
 								<p
@@ -308,7 +308,7 @@ export default function ApplicationPage() {
 										<path d="M20 6L9 17l-5-5" />
 									</svg>
 								</div>
-								<h2 className="font-serif text-[3.25rem] leading-[1.0] font-normal text-white">
+								<h2 className="font-serif text-3xl md:text-5xl leading-normal font-normal text-white">
 									You&apos;re In, Closer
 								</h2>
 								<p
