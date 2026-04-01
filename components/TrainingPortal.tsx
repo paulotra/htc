@@ -434,7 +434,7 @@ function Portal() {
 												padding: "32px 28px",
 											}}
 										>
-											<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] self-start bg-[#c9a84c] text-[#070707]">
+											<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] md:self-start bg-[#c9a84c] text-[#070707]">
 												Recommended — {score}/15
 											</div>
 											<div className="font-serif text-[24px] font-bold text-[#f4efe5] leading-[1.2]">
@@ -468,7 +468,7 @@ function Portal() {
 											className="border border-[rgba(66,58,46,0.5)] rounded bg-black flex flex-col gap-[16px] opacity-[0.45] pointer-events-none"
 											style={{ padding: "32px 28px" }}
 										>
-											<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] self-start bg-transparent border border-[rgba(66,58,46,0.5)] text-[#555]">
+											<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] md:self-start bg-transparent border border-[rgba(66,58,46,0.5)] text-[#555]">
 												Locked
 											</div>
 											<div className="font-serif text-[24px] font-bold text-[#555] leading-[1.2]">
