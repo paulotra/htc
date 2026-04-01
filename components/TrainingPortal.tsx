@@ -465,7 +465,7 @@ function Portal() {
 											</div>
 										</a>
 										<div
-											className="border border-[rgba(66,58,46,0.5)] rounded bg-black flex flex-col gap-[16px] opacity-[0.45] pointer-events-none"
+											className="border border-[rgba(66,58,46,0.5)] rounded bg-black flex flex-col gap-[16px] opacity-[0.45] pointer-events-none mt-6"
 											style={{ padding: "32px 28px" }}
 										>
 											<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] md:self-start bg-transparent border border-[rgba(66,58,46,0.5)] text-[#555]">
