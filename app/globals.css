@@ -756,22 +756,49 @@
 	}
 	.iti__dropdown-content,
 	.iti__country-list {
-		background: #0d0d0b;
-		border: 1px solid #423a2e;
-		color: #ede8de;
+		background: #0d0d0b !important;
+		border: 1px solid #423a2e !important;
+		color: #ede8de !important;
+	}
+	.iti__country {
+		background: #0d0d0b !important;
+		color: #ede8de !important;
 	}
 	.iti__country.iti__highlight,
 	.iti__country:hover {
-		background: rgba(245, 201, 87, 0.08);
+		background: rgba(245, 201, 87, 0.08) !important;
 	}
 	.iti__search-input {
-		background: #060605;
-		border-bottom: 1px solid #423a2e;
-		color: #ede8de;
-		outline: none;
+		background: #060605 !important;
+		border: none !important;
+		border-bottom: 1px solid #423a2e !important;
+		color: #ede8de !important;
+		outline: none !important;
+		box-shadow: none !important;
+		width: 100%;
+		padding: 8px 10px;
+	}
+	.iti__search-input::placeholder {
+		color: rgba(237, 232, 222, 0.35) !important;
 	}
 	.iti__dial-code {
 		color: rgba(237, 232, 222, 0.55);
+	}
+	.iti__country-name {
+		color: #ede8de !important;
+	}
+	.iti__dropdown-content {
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+	}
+	.iti__country-list::-webkit-scrollbar {
+		width: 4px;
+	}
+	.iti__country-list::-webkit-scrollbar-track {
+		background: #0d0d0b;
+	}
+	.iti__country-list::-webkit-scrollbar-thumb {
+		background: #423a2e;
+		border-radius: 2px;
 	}
 
 	/* ── Training portal ── */

@@ -74,8 +74,22 @@ export default function DayCompleteModal({
 			const colors = ["#f7e280", "#c9a84c", "#ffffff", "#f0df7a", "#ffe066"];
 
 			function frame() {
-				confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors, zIndex: 9999 });
-				confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors, zIndex: 9999 });
+				confetti({
+					particleCount: 3,
+					angle: 60,
+					spread: 55,
+					origin: { x: 0 },
+					colors,
+					zIndex: 9999,
+				});
+				confetti({
+					particleCount: 3,
+					angle: 120,
+					spread: 55,
+					origin: { x: 1 },
+					colors,
+					zIndex: 9999,
+				});
 				if (Date.now() < end) requestAnimationFrame(frame);
 			}
 			frame();
@@ -109,9 +123,15 @@ export default function DayCompleteModal({
 			const first = focusable[0];
 			const last = focusable[focusable.length - 1];
 			if (e.shiftKey) {
-				if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+				if (document.activeElement === first) {
+					e.preventDefault();
+					last.focus();
+				}
 			} else {
-				if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+				if (document.activeElement === last) {
+					e.preventDefault();
+					first.focus();
+				}
 			}
 		}
 		dialog.addEventListener("keydown", onKeyDown);
@@ -126,7 +146,9 @@ export default function DayCompleteModal({
 		<div
 			className="fixed inset-0 z-[200] flex items-center justify-center px-4"
 			style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}
-			onClick={(e) => { if (e.target === e.currentTarget) onContinue(); }}
+			onClick={(e) => {
+				if (e.target === e.currentTarget) onContinue();
+			}}
 		>
 			<div
 				ref={dialogRef}
@@ -143,7 +165,10 @@ export default function DayCompleteModal({
 				}}
 			>
 				{/* Star icon — decorative */}
-				<div className="relative w-[80px] h-[80px] flex items-center justify-center" aria-hidden="true">
+				<div
+					className="relative w-[80px] h-[80px] flex items-center justify-center"
+					aria-hidden="true"
+				>
 					<svg
 						width="80"
 						height="80"
@@ -179,9 +204,15 @@ export default function DayCompleteModal({
 				</h2>
 
 				{/* Score + message */}
-				<p id="day-complete-desc" className="text-[15px] font-light text-[#9a9a9a] text-center leading-[1.6] mb-8 max-w-[320px]">
+				<p
+					id="day-complete-desc"
+					className="text-[15px] font-light text-[#9a9a9a] text-center leading-[1.6] mb-8 max-w-[320px]"
+				>
 					You scored{" "}
-					<span className="font-bold text-[#f7e280]" style={{ fontSize: "1.05em" }}>
+					<span
+						className="font-bold text-[#f7e280]"
+						style={{ fontSize: "1.05em" }}
+					>
 						{score}/3
 					</span>{" "}
 					on Day {day + 1}. <span>{msg.sub(score)}</span>
@@ -189,12 +220,18 @@ export default function DayCompleteModal({
 
 				{/* Progress map */}
 				<div className="w-full mb-10 mx-6" aria-label="Training progress">
-					<div className="relative flex items-start justify-between w-full" role="list">
+					<div
+						className="relative flex items-start justify-between w-full"
+						role="list"
+					>
 						{/* Track */}
-						<div className="absolute top-[39px] left-[20px] right-[20px] h-[2px] bg-[#262626]" aria-hidden="true" />
+						<div
+							className="absolute top-[46px] left-[20px] right-[20px] h-[2px] bg-[#262626]"
+							aria-hidden="true"
+						/>
 						{/* Filled progress */}
 						<div
-							className="absolute top-[39px] left-[20px] h-[2px] bg-[#f7e280] transition-all duration-700 ease-out"
+							className="absolute top-[46px] left-[20px] h-[2px] bg-[#f7e280] transition-all duration-700 ease-out"
 							aria-hidden="true"
 							style={{ width: `calc(${lineProgress}% - 20px)` }}
 						/>
@@ -239,17 +276,17 @@ export default function DayCompleteModal({
 									</p>
 									<div
 										aria-hidden="true"
-										className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
+										className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300"
 										style={{
 											background: isDone
-												? "linear-gradient(135deg, #c9a84c, #f7e280)"
+												? "#362f17"
 												: isNext
-													? "#111"
+													? "#362f17"
 													: "#000",
 											border: isDone
-												? "none"
+												? "1.5px solid #f7e280"
 												: isNext
-													? "1.5px solid #f7e280"
+													? "1.5px solid #362f17"
 													: "1px solid #2a2a2a",
 											boxShadow: isDone
 												? "0 0 14px rgba(201,168,76,0.4)"
@@ -258,21 +295,14 @@ export default function DayCompleteModal({
 													: "none",
 										}}
 									>
-										{isDone ? (
-											<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
-												<polyline points="20 6 9 17 4 12" />
-											</svg>
-										) : isNext ? (
-											<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f7e280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-												<rect x="3" y="11" width="18" height="11" rx="2" />
-												<path d="M7 11V7a5 5 0 019.9-1" />
-											</svg>
-										) : (
-											<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-												<rect x="3" y="11" width="18" height="11" rx="2" />
-												<path d="M7 11V7a5 5 0 0110 0v4" />
-											</svg>
-										)}
+										<span
+											style={{
+												fontSize: 18,
+												opacity: isDone || isNext ? 1 : 0.25,
+											}}
+										>
+											{["🔑", "🧠", "🗺️", "⚔️", "🏆"][i]}
+										</span>
 									</div>
 									<p
 										aria-hidden="true"
@@ -294,16 +324,29 @@ export default function DayCompleteModal({
 				<button
 					ref={continueRef}
 					onClick={onContinue}
-					aria-label={day < 4 ? `Continue to Day ${nextDay}` : "View your results"}
+					aria-label={
+						day < 4 ? `Continue to Day ${nextDay}` : "View your results"
+					}
 					className="relative w-full flex items-center justify-center gap-3 py-4 px-10 rounded-[60px] text-white text-[17px] font-light cursor-pointer transition-opacity hover:opacity-90 active:opacity-70 overflow-hidden"
 					style={{
 						border: "1px solid #dfcaac",
-						background: "radial-gradient(ellipse at 50% 120%, #c9a572 0%, rgba(240,223,122,0) 70%)",
+						background:
+							"radial-gradient(ellipse at 50% 120%, #c9a572 0%, rgba(240,223,122,0) 70%)",
 						boxShadow: "inset 0px -2px 14px 0px #ffc26c",
 					}}
 				>
 					Continue
-					<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+					<svg
+						aria-hidden="true"
+						width="18"
+						height="18"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						strokeWidth="2"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					>
 						<path d="M5 12h14M12 5l7 7-7 7" />
 					</svg>
 				</button>

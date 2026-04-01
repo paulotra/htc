@@ -337,11 +337,11 @@ export default function BookingPage() {
 												transform: visible
 													? "translateY(0)"
 													: "translateY(8px)",
-												overflow: "hidden",
 												transition:
 													"max-height 0.4s ease, opacity 0.35s ease, transform 0.35s ease",
 												pointerEvents: visible ? "all" : "none",
 											}}
+											className={`${f.key === "phone" ? "relative z-10" : ""}`}
 										>
 											<div className="flex flex-col gap-1 py-4">
 												<label
@@ -461,10 +461,18 @@ export default function BookingPage() {
 										{MONTHS[calMonth]} {calYear}
 									</div>
 									<div className="cal-nav-wrap">
-										<button className="cal-nav" onClick={() => changeMonth(-1)} aria-label="Previous month">
+										<button
+											className="cal-nav"
+											onClick={() => changeMonth(-1)}
+											aria-label="Previous month"
+										>
 											<span aria-hidden="true">←</span>
 										</button>
-										<button className="cal-nav" onClick={() => changeMonth(1)} aria-label="Next month">
+										<button
+											className="cal-nav"
+											onClick={() => changeMonth(1)}
+											aria-label="Next month"
+										>
 											<span aria-hidden="true">→</span>
 										</button>
 									</div>
@@ -481,7 +489,11 @@ export default function BookingPage() {
 											className={`cal-day ${!cell.d ? "empty" : cell.disabled ? "past" : cell.selected ? "selected" : "available"}`}
 											onClick={() => cell.d && pickDay(cell.d, cell.disabled)}
 											disabled={!cell.d || cell.disabled}
-											aria-label={cell.d ? `${MONTHS[calMonth]} ${cell.d}, ${calYear}${cell.disabled ? " — unavailable" : cell.selected ? " — selected" : ""}` : undefined}
+											aria-label={
+												cell.d
+													? `${MONTHS[calMonth]} ${cell.d}, ${calYear}${cell.disabled ? " — unavailable" : cell.selected ? " — selected" : ""}`
+													: undefined
+											}
 											aria-pressed={cell.selected || undefined}
 										>
 											{cell.d ?? ""}

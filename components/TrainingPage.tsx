@@ -211,40 +211,49 @@ export default function TrainingPage() {
 						{/* ── Slide 0: Welcome ── */}
 						{slide === 0 && (
 							<div className={slideClass}>
-								<h2 className="font-serif text-[3.25rem] leading-[1.0] font-normal text-white">
-									The Free <span className={GOLD}>5-Day</span>
-									<br />
-									Closer Training
-								</h2>
-								<p
-									className={`text-base font-light leading-[1.7] max-w-[480px] ${TEXT}`}
-								>
-									Most people spend years stuck in low-ticket jobs, watching
-									others close $10k months. This training changes that. 5 days.
-									Real frameworks. Zero fluff.
-								</p>
-								<div>
-									<button
-										onClick={goNext}
-										className="btn-cta-silver w-full max-w-[280px] justify-center inline-flex items-center gap-3 px-8 py-4 rounded-full text-base font-medium text-white transition-opacity active:opacity-80"
-									>
-										Apply Now
-										<svg
-											width="16"
-											height="16"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeWidth="2"
+								<div className="flex items-center gap-6">
+									<img
+										src="/images/laptop.png"
+										className="w-full max-w-[440px]"
+										alt=""
+									/>
+									<div className="flex flex-col gap-6">
+										<h2 className="font-serif text-[3.25rem] leading-[1.0] font-normal text-white">
+											The Free <span className={GOLD}>5-Day</span>
+											<br />
+											Closer Training
+										</h2>
+										<p
+											className={`text-base font-light leading-[1.7] max-w-[480px] ${TEXT}`}
 										>
-											<path d="M5 12h14M12 5l7 7-7 7" />
-										</svg>
-									</button>
-									<p
-										className={`text-[0.75rem] mt-3 tracking-[0.0625rem] ${TEXT}`}
-									>
-										TAKES 2 MINUTES
-									</p>
+											Most people spend years stuck in low-ticket jobs, watching
+											others close $10k months. This training changes that. 5
+											days. Real frameworks. Zero fluff.
+										</p>
+										<div>
+											<button
+												onClick={goNext}
+												className="btn-cta-silver w-full max-w-[280px] justify-center inline-flex items-center gap-3 px-8 py-4 rounded-full text-base font-medium text-white transition-opacity active:opacity-80"
+											>
+												Start Day 1 Now
+												<svg
+													width="16"
+													height="16"
+													viewBox="0 0 24 24"
+													fill="none"
+													stroke="currentColor"
+													strokeWidth="2"
+												>
+													<path d="M5 12h14M12 5l7 7-7 7" />
+												</svg>
+											</button>
+											<p
+												className={`text-[0.75rem] mt-3 tracking-[0.0625rem] ${TEXT}`}
+											>
+												TAKES 30 SECONDS
+											</p>
+										</div>
+									</div>
 								</div>
 							</div>
 						)}
@@ -256,7 +265,9 @@ export default function TrainingPage() {
 								<p className="font-serif text-[2.5rem] leading-[1.05] font-normal text-white">
 									What's your first name?
 								</p>
-								<label htmlFor="tp-name" className="sr-only">First name</label>
+								<label htmlFor="tp-name" className="sr-only">
+									First name
+								</label>
 								<input
 									ref={nameRef}
 									id="tp-name"
@@ -271,7 +282,10 @@ export default function TrainingPage() {
 									className="bg-transparent border-b border-[#2a2a2a] focus:border-[#fff] text-white text-[1.375rem] font-light py-3 outline-none w-full transition-colors caret-[#fff] placeholder:text-[#333]"
 								/>
 								{error && (
-									<p role="alert" className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
+									<p
+										role="alert"
+										className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]"
+									>
 										{error}
 									</p>
 								)}
@@ -292,7 +306,9 @@ export default function TrainingPage() {
 									We'll send your training link here.
 								</p>
 								<div className="flex flex-col gap-4 w-full">
-									<label htmlFor="tp-email" className="sr-only">Email address</label>
+									<label htmlFor="tp-email" className="sr-only">
+										Email address
+									</label>
 									<input
 										ref={emailRef}
 										id="tp-email"
@@ -307,7 +323,9 @@ export default function TrainingPage() {
 										onKeyDown={(e) => e.key === "Enter" && validateAndNext()}
 										className="bg-transparent border-b border-[#2a2a2a] focus:border-[#fff] text-white text-[1.375rem] font-light py-3 outline-none w-full transition-colors caret-[#fff] placeholder:text-[#333]"
 									/>
-									<label htmlFor="tp-phone" className="sr-only">Phone number (optional)</label>
+									<label htmlFor="tp-phone" className="sr-only">
+										Phone number (optional)
+									</label>
 									<input
 										id="tp-phone"
 										type="tel"
@@ -321,7 +339,10 @@ export default function TrainingPage() {
 									/>
 								</div>
 								{error && (
-									<p role="alert" className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
+									<p
+										role="alert"
+										className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]"
+									>
 										{error}
 									</p>
 								)}
@@ -348,7 +369,10 @@ export default function TrainingPage() {
 									onSelect={(k) => selectChoice(k, "situation")}
 								/>
 								{error && (
-									<p role="alert" className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
+									<p
+										role="alert"
+										className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]"
+									>
 										{error}
 									</p>
 								)}
@@ -368,7 +392,10 @@ export default function TrainingPage() {
 									onSelect={(k) => selectChoice(k, "goal")}
 								/>
 								{error && (
-									<p role="alert" className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
+									<p
+										role="alert"
+										className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]"
+									>
 										{error}
 									</p>
 								)}
@@ -388,7 +415,10 @@ export default function TrainingPage() {
 									onSelect={(k) => selectChoice(k, "obstacle")}
 								/>
 								{error && (
-									<p role="alert" className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
+									<p
+										role="alert"
+										className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]"
+									>
 										{error}
 									</p>
 								)}
@@ -431,7 +461,10 @@ export default function TrainingPage() {
 									</div>
 								</div>
 								{error && (
-									<p role="alert" className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]">
+									<p
+										role="alert"
+										className="text-[#e05555] text-[0.8125rem] tracking-[0.0625rem]"
+									>
 										{error}
 									</p>
 								)}
@@ -477,18 +510,13 @@ export default function TrainingPage() {
 									</svg>
 								</div>
 								<h2 className="font-serif text-[3.25rem] leading-[1.0] font-normal text-white">
-									You're In, {answers.name || "Closer"}
+									You’re In. Day 1 Starts Now.
 								</h2>
 								<p
 									className={`text-[1rem] font-light leading-[1.7] max-w-[480px] ${TEXT}`}
 								>
-									You've done what most people never will — you took the first
-									step.
-									<br />
-									<br />
-									Day 1 of your closer training starts right now. 5 videos. Real
-									frameworks. By the end, you'll know exactly how to close
-									high-ticket offers and what your next move is.
+									Most people say “I’ll start later.” Later never comes. Let’s
+									see if you’re different.
 								</p>
 								<div>
 									<button

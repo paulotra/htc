@@ -1,11 +1,11 @@
 
 import type { Metadata } from "next";
-import TrainingPage from "@/components/TrainingPage";
+import ApplicationPage from "@/components/ApplicationPage";
 
 export const metadata: Metadata = {
 	title: "HTC — Training",
 };
 
 export default function Training() {
-	return <TrainingPage />;
+	return <ApplicationPage />;
 }
