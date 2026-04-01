@@ -90,7 +90,7 @@ export default function Footer({ hideCta = false }: FooterProps) {
 							href="/booking"
 							className="btn-cta-gold flex items-center justify-center gap-2.5 px-11 py-4 md:py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"
 						>
-							Book Your HTC Mastery Call
+							Apply for the Mastery Call
 							{/* eslint-disable-next-line @next/next/no-img-element */}
 							<img src={imgArrow} width={24} height={24} alt="" />
 						</Link>

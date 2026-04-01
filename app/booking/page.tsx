@@ -1,9 +1,8 @@
-
 import type { Metadata } from "next";
 import BookingPage from "@/components/BookingPage";
 
 export const metadata: Metadata = {
-	title: "HTC — Book Your HTC Mastery Call",
+	title: "HTC — Apply for the Mastery Call",
 };
 
 export default function Booking() {

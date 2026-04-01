@@ -12,6 +12,7 @@ import {
 	type QFlags,
 } from "./training-data";
 import DayCompleteModal from "./DayCompleteModal";
+import WelcomeModal from "./WelcomeModal";
 
 const C = {
 	black: "#070707",
@@ -42,6 +43,7 @@ function Portal() {
 	const [quizPassed, setQuizPassed] = useState<QFlags>({});
 	const [totalScore, setTotalScore] = useState(0);
 	const [showCompletion, setShowCompletion] = useState(false);
+	const [showWelcome, setShowWelcome] = useState(false);
 	const [showDayComplete, setShowDayComplete] = useState(false);
 	const [dayCompleteScore, setDayCompleteScore] = useState(0);
 	const [playedVideo, setPlayedVideo] = useState(false);
@@ -63,6 +65,8 @@ function Portal() {
 				setTotalScore(saved.totalScore ?? 0);
 			}
 		} catch {}
+		const seenWelcome = localStorage.getItem("htc_welcome_seen");
+		if (!seenWelcome) setShowWelcome(true);
 		setLoaded(true);
 	}, [STORAGE_KEY]);
 
@@ -221,6 +225,12 @@ function Portal() {
 
 	return (
 		<div className="bg-[#070707] min-h-screen flex flex-col-reverse md:flex-row">
+			{showWelcome && completedDays === 0 && (
+				<WelcomeModal onContinue={() => {
+					localStorage.setItem("htc_welcome_seen", "1");
+					setShowWelcome(false);
+				}} />
+			)}
 			{showDayComplete && (
 				<DayCompleteModal
 					day={currentDay}

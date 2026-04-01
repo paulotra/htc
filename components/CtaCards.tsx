@@ -35,7 +35,7 @@ const cards: CtaCardData[] = [
 			},
 			{
 				icon: "/images/figma/9aade471-d946-4303-bf2e-268ce39656ce.svg",
-				label: "90-day plan",
+				label: "60-day plan",
 				detail: "built live on the call",
 			},
 			{
@@ -44,7 +44,7 @@ const cards: CtaCardData[] = [
 				detail: "limited access",
 			},
 		],
-		ctaText: "Book your HTC mastery call",
+		ctaText: "Apply for the Mastery Call",
 		ctaHref: "/booking",
 		ctaIcon: "/images/figma/ab357bbf-fa5c-4743-af89-87f90cfb66ba.svg",
 		scarcity: "3 spots",
@@ -52,29 +52,28 @@ const cards: CtaCardData[] = [
 	{
 		variant: "silver",
 		label: "Show Me First",
-		title: "Free 5-Day",
+		title: "Your 5-Day",
 		titleLine2: "Closer Training",
 		titleLine2Gold: false,
-		description:
-			"Not sure yet? 5 days of real training. Understand the skill before you commit.",
+		description: "Not ready to apply yet?. Start with the training.",
 		features: [
 			{
 				icon: "/images/figma/90688006-70b1-4791-b37d-d2ba8f113996.svg",
-				label: "5 videos",
-				detail: "one per day",
+				label: "Built from 1,000+ closers",
+				detail: "",
 			},
 			{
 				icon: "/images/figma/90688006-70b1-4791-b37d-d2ba8f113996.svg",
-				label: "Real framework",
-				detail: "not theory",
+				label: "The exact 60-day framework",
+				detail: "",
 			},
 			{
 				icon: "/images/figma/90688006-70b1-4791-b37d-d2ba8f113996.svg",
-				label: "Qualify for a call",
-				detail: "on completion",
+				label: "5 days. Only what works",
+				detail: "",
 			},
 		],
-		ctaText: "Start free training",
+		ctaText: "Start Day 1",
 		ctaHref: "/application",
 		ctaIcon: "/images/figma/8bfb72c0-fdd2-41ca-83ec-d96dc00bd81d.svg",
 	},
@@ -126,7 +125,8 @@ export default function CtaCards() {
 									alt=""
 								/>
 								<span>
-									{f.label} – <span className="text-[#9a9a9a]">{f.detail}</span>
+									{f.label} {f.detail && "- "}
+									<span className="text-[#9a9a9a]">{f.detail}</span>
 								</span>
 							</div>
 						))}
