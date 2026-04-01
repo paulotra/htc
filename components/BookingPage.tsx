@@ -266,12 +266,12 @@ export default function BookingPage() {
 								<div>
 									<Pill>Almost There</Pill>
 								</div>
-								<h1 className="font-serif text-[2rem] leading-[2.5rem] font-normal">
+								<h2 className="font-serif text-[2rem] leading-[2.5rem] font-normal">
 									Pick Your Slot,
 									<span className="block text-[#f0df7a]">
 										{form.fname || "there"}
 									</span>
-								</h1>
+								</h2>
 								<p className={`text-sm font-light leading-relaxed ${TEXT}`}>
 									Choose a day and time. Bruno will be there.
 								</p>
@@ -345,6 +345,7 @@ export default function BookingPage() {
 										>
 											<div className="flex flex-col gap-1 py-4">
 												<label
+													htmlFor={`booking-${f.key}`}
 													className={`text-[0.5625rem] font-medium tracking-[0.1875rem] uppercase ${TEXT}`}
 												>
 													{f.label}
@@ -352,6 +353,7 @@ export default function BookingPage() {
 												{f.type === "select" ? (
 													<div className="relative">
 														<select
+															id={`booking-${f.key}`}
 															value={form[f.key]}
 															ref={(el) => {
 																fieldRefs.current[i] = el;
@@ -399,6 +401,7 @@ export default function BookingPage() {
 													/>
 												) : (
 													<input
+														id={`booking-${f.key}`}
 														type={f.type}
 														value={form[f.key]}
 														placeholder={f.placeholder}
@@ -458,11 +461,11 @@ export default function BookingPage() {
 										{MONTHS[calMonth]} {calYear}
 									</div>
 									<div className="cal-nav-wrap">
-										<button className="cal-nav" onClick={() => changeMonth(-1)}>
-											←
+										<button className="cal-nav" onClick={() => changeMonth(-1)} aria-label="Previous month">
+											<span aria-hidden="true">←</span>
 										</button>
-										<button className="cal-nav" onClick={() => changeMonth(1)}>
-											→
+										<button className="cal-nav" onClick={() => changeMonth(1)} aria-label="Next month">
+											<span aria-hidden="true">→</span>
 										</button>
 									</div>
 								</div>
@@ -473,13 +476,16 @@ export default function BookingPage() {
 										</div>
 									))}
 									{calCells.map((cell, i) => (
-										<div
+										<button
 											key={i}
 											className={`cal-day ${!cell.d ? "empty" : cell.disabled ? "past" : cell.selected ? "selected" : "available"}`}
 											onClick={() => cell.d && pickDay(cell.d, cell.disabled)}
+											disabled={!cell.d || cell.disabled}
+											aria-label={cell.d ? `${MONTHS[calMonth]} ${cell.d}, ${calYear}${cell.disabled ? " — unavailable" : cell.selected ? " — selected" : ""}` : undefined}
+											aria-pressed={cell.selected || undefined}
 										>
 											{cell.d ?? ""}
-										</div>
+										</button>
 									))}
 								</div>
 							</div>
@@ -496,13 +502,15 @@ export default function BookingPage() {
 								</div>
 								<div className="time-slots">
 									{TIMES.map((t) => (
-										<div
+										<button
 											key={t}
 											className={`time-slot ${selTime === t ? "selected" : ""}`}
 											onClick={() => pickTime(t)}
+											aria-pressed={selTime === t}
+											aria-label={`Select time ${t}`}
 										>
 											{t}
-										</div>
+										</button>
 									))}
 								</div>
 							</div>

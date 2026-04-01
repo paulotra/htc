@@ -8,6 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ConfirmationAnimations() {
 	useEffect(() => {
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
 		const ctx = gsap.context(() => {
 			// Confirmed header — load animation
 			gsap.from("[data-gsap='confirm-header'] > *", {

@@ -52,6 +52,7 @@ export default function FAQ() {
 							{/* Row */}
 							<button
 								onClick={() => setOpen(isOpen ? null : i)}
+								aria-expanded={isOpen}
 								className="relative flex items-center justify-between w-full p-6 text-left"
 								style={
 									!isOpen

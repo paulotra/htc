@@ -74,6 +74,7 @@ function TestimonialCard({ t }: { t: Testimonial }) {
 							? `https://player.vimeo.com/video/${t.vimeoId}?autoplay=1&controls=1&autopause=0&app_id=122963`
 							: `https://player.vimeo.com/video/${t.vimeoId}?autoplay=0&controls=0&background=1&app_id=122963`
 					}
+					title={`Testimonial video from ${t.name}`}
 					allow="autoplay; fullscreen"
 					allowFullScreen
 				/>
@@ -81,7 +82,7 @@ function TestimonialCard({ t }: { t: Testimonial }) {
 					<button
 						onClick={() => setPlaying(true)}
 						className="absolute inset-0 z-10 flex items-center justify-center w-full h-full bg-transparent cursor-pointer"
-						aria-label="Play video"
+						aria-label={`Play testimonial video from ${t.name}`}
 					>
 						<div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm flex items-center justify-center transition-transform hover:scale-110">
 							<svg

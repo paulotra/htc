@@ -65,6 +65,24 @@
 			color: #f5c957;
 		}
 	}
+
+	/* ── Focus indicators for keyboard users ── */
+	:focus-visible {
+		outline: 2px solid #f5c957;
+		outline-offset: 3px;
+		border-radius: 2px;
+	}
+
+	/* ── Respect reduced-motion preference ── */
+	@media (prefers-reduced-motion: reduce) {
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+		}
+	}
 }
 
 @layer components {
@@ -603,6 +621,8 @@
 		cursor: default;
 	}
 
+	.cal-day.available:hover,
+	.cal-day.available:focus-visible,
 	.cal-day.available:active {
 		background: var(--gold-dim);
 		color: var(--gold);
@@ -656,6 +676,8 @@
 		transition: all 0.15s;
 	}
 
+	.time-slot:hover,
+	.time-slot:focus-visible,
 	.time-slot:active {
 		background: var(--gold-dim);
 		color: var(--gold);
