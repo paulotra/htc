@@ -66,7 +66,7 @@ function Portal() {
 			}
 		} catch {}
 		const seenWelcome = localStorage.getItem("htc_welcome_seen");
-		if (!seenWelcome) setShowWelcome(true);
+		setShowWelcome(true);
 		setLoaded(true);
 	}, [STORAGE_KEY]);
 
@@ -225,11 +225,14 @@ function Portal() {
 
 	return (
 		<div className="bg-[#070707] min-h-screen flex flex-col-reverse md:flex-row">
+			{completedDays}
 			{showWelcome && completedDays === 0 && (
-				<WelcomeModal onContinue={() => {
-					localStorage.setItem("htc_welcome_seen", "1");
-					setShowWelcome(false);
-				}} />
+				<WelcomeModal
+					onContinue={() => {
+						localStorage.setItem("htc_welcome_seen", "1");
+						setShowWelcome(false);
+					}}
+				/>
 			)}
 			{showDayComplete && (
 				<DayCompleteModal
