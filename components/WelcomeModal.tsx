@@ -16,19 +16,19 @@ export default function WelcomeModal({ onContinue }: Props) {
 
 		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-		import("canvas-confetti").then(({ default: confetti }) => {
-			const colors = ["#f7e280", "#c9a84c", "#ffffff", "#f0df7a", "#ffe066"];
-			confetti({
-				particleCount: 120,
-				spread: 360,
-				startVelocity: 28,
-				decay: 0.92,
-				scalar: 0.9,
-				origin: { x: 0.5, y: 0.5 },
-				colors,
-				zIndex: 9999,
-			});
-		});
+		// import("canvas-confetti").then(({ default: confetti }) => {
+		// 	const colors = ["#f7e280", "#c9a84c", "#ffffff", "#f0df7a", "#ffe066"];
+		// 	confetti({
+		// 		particleCount: 120,
+		// 		spread: 360,
+		// 		startVelocity: 28,
+		// 		decay: 0.92,
+		// 		scalar: 0.9,
+		// 		origin: { x: 0.5, y: 0.5 },
+		// 		colors,
+		// 		zIndex: 9999,
+		// 	});
+		// });
 	}, []);
 
 	useEffect(() => {

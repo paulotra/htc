@@ -12,7 +12,6 @@ import {
 	type QFlags,
 } from "./training-data";
 import DayCompleteModal from "./DayCompleteModal";
-import WelcomeModal from "./WelcomeModal";
 
 const C = {
 	black: "#070707",
@@ -226,14 +225,6 @@ function Portal() {
 	return (
 		<div className="bg-[#070707] min-h-screen flex flex-col-reverse md:flex-row">
 			{completedDays}
-			{showWelcome && completedDays === 0 && (
-				<WelcomeModal
-					onContinue={() => {
-						localStorage.setItem("htc_welcome_seen", "1");
-						setShowWelcome(false);
-					}}
-				/>
-			)}
 			{showDayComplete && (
 				<DayCompleteModal
 					day={currentDay}
@@ -263,7 +254,7 @@ function Portal() {
 			{/* MAIN */}
 			<main
 				className="htc-main relative flex flex-col flex-1 min-h-screen"
-				style={{ marginLeft: 300 }}
+				style={{ marginLeft: 290 }}
 			>
 				{/* TOPBAR */}
 				<TrainingNav
