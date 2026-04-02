@@ -309,18 +309,11 @@ export default function ApplicationPage() {
 									</svg>
 								</div>
 								<h2 className="font-serif text-3xl md:text-5xl leading-normal font-normal text-white">
-									You&apos;re In, Closer
+									You’re In. Day 1 Starts Now.
 								</h2>
-								<p
-									className={`text-[1rem] font-light leading-[1.7] max-w-[480px] ${TEXT}`}
-								>
-									You&apos;ve done what most people never will — you took the
-									first step.
-									<br />
-									<br />
-									Day 1 of your closer training starts right now. 5 videos. Real
-									frameworks. By the end, you&apos;ll know exactly how to close
-									high-ticket offers and what your next move is.
+								<p className={`text-[1rem] font-light leading-[1.7] ${TEXT}`}>
+									Most people say “I’ll start later.” Later never comes. Let’s
+									see if you’re different.
 								</p>
 								<div>
 									<button
