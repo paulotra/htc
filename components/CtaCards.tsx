@@ -52,7 +52,7 @@ const cards: CtaCardData[] = [
 	{
 		variant: "silver",
 		label: "Show Me First",
-		title: "Your 5-Day",
+		title: "Your 3-Day",
 		titleLine2: "Closer Training",
 		titleLine2Gold: false,
 		description: "Not ready to apply yet?. Start with the training.",
@@ -69,7 +69,7 @@ const cards: CtaCardData[] = [
 			},
 			{
 				icon: "/images/figma/90688006-70b1-4791-b37d-d2ba8f113996.svg",
-				label: "5 days. Only what works",
+				label: "3 days. Only what works",
 				detail: "",
 			},
 		],

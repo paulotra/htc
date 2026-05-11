@@ -25,15 +25,16 @@ const DAY_MESSAGES = [
 		sub: (s: number) =>
 			s === 3
 				? "Flawless. Most people quit before this point — you're thriving."
-				: "Halfway there. Most people quit here. You didn't.",
+				: "Two down, one to go. Most people quit here. You didn't.",
 	},
 	{
-		headline: "Day 3 Locked In.",
+		headline: "Training Complete.",
 		sub: (s: number) =>
 			s === 3
-				? "Three perfect days. You're built for this."
-				: "3 of 5 complete. You're past the halfway mark — keep the momentum.",
+				? "Three perfect days. You finished what most won't even start."
+				: "You finished what most won't even start. That says everything.",
 	},
+	/* Day 4 message — temporarily disabled
 	{
 		headline: "Day 4 Mastered.",
 		sub: (s: number) =>
@@ -41,6 +42,8 @@ const DAY_MESSAGES = [
 				? "Four clean days. One left between you and the finish line."
 				: "One day left. The finish line is in sight — don't stop now.",
 	},
+	*/
+	/* Day 5 message — temporarily disabled
 	{
 		headline: "Training Complete.",
 		sub: (s: number) =>
@@ -48,6 +51,7 @@ const DAY_MESSAGES = [
 				? "Perfect run. You finished what most won't even start."
 				: "You finished what most won't even start. That says everything.",
 	},
+	*/
 ];
 
 export default function DayCompleteModal({
@@ -139,7 +143,7 @@ export default function DayCompleteModal({
 	}, []);
 
 	const msg = DAY_MESSAGES[day] ?? DAY_MESSAGES[0];
-	const lineProgress = Math.min(completedDays / 4, 1) * 100;
+	const lineProgress = Math.min(completedDays / 2, 1) * 100;
 	const nextDay = day + 2; // human-readable next day number
 
 	return (
@@ -236,9 +240,9 @@ export default function DayCompleteModal({
 							style={{ width: `calc(${lineProgress}% - 20px)` }}
 						/>
 
-						{[0, 1, 2, 3, 4].map((i) => {
+						{[0, 1, 2].map((i) => {
 							const isDone = i < completedDays;
-							const isNext = i === completedDays && i < 5;
+							const isNext = i === completedDays && i < 3;
 
 							const correctCount = (() => {
 								if (!isDone) return null;
@@ -301,7 +305,7 @@ export default function DayCompleteModal({
 												opacity: isDone || isNext ? 1 : 0.25,
 											}}
 										>
-											{["🔑", "🧠", "🗺️", "⚔️", "🏆"][i]}
+											{["🔑", "🧠", "🏆"][i]}
 										</span>
 									</div>
 									<p
@@ -325,7 +329,7 @@ export default function DayCompleteModal({
 					ref={continueRef}
 					onClick={onContinue}
 					aria-label={
-						day < 4 ? `Continue to Day ${nextDay}` : "View your results"
+						day < 2 ? `Continue to Day ${nextDay}` : "View your results"
 					}
 					className="relative w-full flex items-center justify-center gap-3 py-4 px-10 rounded-[60px] text-white text-[17px] font-light cursor-pointer transition-opacity hover:opacity-90 active:opacity-70 overflow-hidden"
 					style={{

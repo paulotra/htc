@@ -182,7 +182,7 @@ export default function TrainingPage() {
 								<span className="text-white text-transparent">Training</span>
 							</h1>
 							<div className="flex gap-3 flex-wrap">
-								{["5 Days", "Video + Live", "Free"].map((label) => (
+								{["3 Days", "Video + Live", "Free"].map((label) => (
 									<div
 										key={label}
 										className="border border-[#423a2e] rounded-[4px] px-2 py-1 text-[#9a9a9a] text-[0.75rem] tracking-[0.075rem] uppercase whitespace-nowrap"
@@ -219,7 +219,7 @@ export default function TrainingPage() {
 									/>
 									<div className="flex flex-col gap-6">
 										<h2 className="font-serif text-[3.25rem] leading-[1.0] font-normal text-white">
-											The Free <span className={GOLD}>5-Day</span>
+											The Free <span className={GOLD}>3-Day</span>
 											<br />
 											Closer Training
 										</h2>

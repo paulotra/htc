@@ -24,8 +24,8 @@ export default function TrainingSidebar({
 	onGoToDay,
 	onOpenRecovery,
 }: TrainingSidebarProps) {
-	const progressPct = Math.max((completedDays / 5) * 100, 4);
-	const scoreBarPct = (totalScore / 15) * 100;
+	const progressPct = Math.max((completedDays / 3) * 100, 4);
+	const scoreBarPct = (totalScore / 9) * 100;
 
 	return (
 		<aside className="htc-sidebar md:fixed left-0 top-0 bottom-0 md:w-[300px] bg-[#070707] md:border-r border-[rgba(66,58,46,0.5)] flex flex-col z-10">
@@ -54,12 +54,15 @@ export default function TrainingSidebar({
 				</div>
 				<p className="text-xs text-white">
 					<span className="font-bold text-gold">{completedDays}</span>
-					{" of 5 days completed"}
+					{" of 3 days completed"}
 				</p>
 			</div>
 
 			{/* Day nav */}
-			<nav aria-label="Day navigation" className="flex-1 overflow-y-auto md:block hidden">
+			<nav
+				aria-label="Day navigation"
+				className="flex-1 overflow-y-auto md:block hidden"
+			>
 				{days.map((day, i) => {
 					const isUnlocked = i < unlockedDays;
 					const isDone = i < completedDays;
@@ -76,7 +79,7 @@ export default function TrainingSidebar({
 							onClick={() => isUnlocked && onGoToDay(i)}
 							disabled={!isUnlocked}
 							aria-current={isActive ? "step" : undefined}
-							aria-label={`${day.shortTitle}, Day ${i + 1}${isDone ? ', completed' : isActive ? ', current' : isUnlocked ? ', unlocked' : ', locked'}`}
+							aria-label={`${day.shortTitle}, Day ${i + 1}${isDone ? ", completed" : isActive ? ", current" : isUnlocked ? ", unlocked" : ", locked"}`}
 							className={`w-full text-left flex gap-[10px] items-start pl-4 pr-6 py-4 border-b border-[rgba(66,58,46,0.5)] transition-all ${isUnlocked ? "cursor-pointer" : "cursor-default opacity-20"}`}
 							style={
 								isActive

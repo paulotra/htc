@@ -74,7 +74,7 @@ export default function HeroSection() {
 							href="/application"
 							className="btn-cta-silver flex-1 flex items-center justify-center gap-2.5 px-11 py-4 md:py-6 rounded-[60px] text-lg font-light text-white no-underline whitespace-nowrap transition-opacity active:opacity-80"
 						>
-							Begin your 5-Day Training
+							Begin your 3-Day Training
 							{/* eslint-disable-next-line @next/next/no-img-element */}
 							<img
 								src="/images/figma/8bfb72c0-fdd2-41ca-83ec-d96dc00bd81d.svg"

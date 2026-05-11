@@ -134,7 +134,7 @@ function Portal() {
 		if (passed) {
 			const newCompleted = Math.max(completedDays, currentDay + 1);
 			setCompletedDays(newCompleted);
-			setUnlockedDays(Math.min(newCompleted + 1, 5));
+			setUnlockedDays(Math.min(newCompleted + 1, 3));
 			setDayCompleteScore(correct);
 			setShowDayComplete(true);
 			return;
@@ -149,17 +149,21 @@ function Portal() {
 				`<strong>${correct}/3 on Day 2.</strong> Go back and rewatch.`,
 			],
 			[
-				`<strong>${correct}/3 on Day 3.</strong> Day 4 unlocked.`,
+				`<strong>${correct}/3 on Day 3.</strong> Training complete.`,
 				`<strong>${correct}/3 on Day 3.</strong> The answers are in the video.`,
 			],
+			/* Day 4 toast — temporarily disabled
 			[
 				`<strong>${correct}/3 on Day 4.</strong> One more day.`,
 				`<strong>${correct}/3 on Day 4.</strong> Rewatch and lock it in.`,
 			],
+			*/
+			/* Day 5 toast — temporarily disabled
 			[
 				`<strong>${correct}/3 on Day 5.</strong> Training complete.`,
 				`<strong>${correct}/3 on Day 5.</strong> So close — rewatch and finish strong.`,
 			],
+			*/
 		];
 		showToast(passed ? toasts[currentDay][0] : toasts[currentDay][1]);
 	};
@@ -194,7 +198,7 @@ function Portal() {
 			month: "long",
 			day: "numeric",
 		});
-		const certHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>HTC Certificate</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400&family=DM+Mono:wght@400&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{background:#070707;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:40px;font-family:'DM Sans',sans-serif}.cert{background:#0d0a00;border:1px solid rgba(201,168,76,0.4);max-width:760px;width:100%;padding:72px 80px;position:relative;text-align:center}.cert::before,.cert::after{content:'';position:absolute;width:60px;height:60px;border-color:rgba(201,168,76,0.3);border-style:solid}.cert::before{top:16px;left:16px;border-width:1px 0 0 1px}.cert::after{bottom:16px;right:16px;border-width:0 1px 1px 0}.logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:#c9a84c;letter-spacing:4px;margin-bottom:40px}.presents{font-family:'DM Mono',monospace;font-size:10px;color:#555;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}.name{font-family:'Playfair Display',serif; font-weight: 500;font-size:40px;color:#fff;margin-bottom:4px}.title{font-family:'Playfair Display',serif;font-size:32px;font-weight:500;color:#f4efe5;line-height:1.05;margin-bottom:8px}.title em{color:#c9a84c}.divider{width:60px;height:1px;background:rgba(201,168,76,0.4);margin:32px auto}.score{font-family:'DM Mono',monospace;font-size:12px;color:#555;letter-spacing:3px;margin-bottom:24px}.score span{color:#c9a84c}.body{font-size:15px;color:#9a9080;line-height:1.7;max-width:480px;margin:0 auto 48px;font-weight:300}.footer{display:flex;justify-content:space-between;align-items:flex-end;padding-top:40px;border-top:1px solid #1c1c1c}.sig-name{font-family:'Playfair Display',serif;font-size:20px;color:#f4efe5}.sig-role{font-family:'DM Mono',monospace;font-size:10px;color:#555;letter-spacing:3px;text-transform:uppercase;margin-top:4px}.date{font-family:'DM Mono',monospace;font-size:10px;color:#555;letter-spacing:2px}</style></head><body><div class="cert"><div class="logo">HTC</div><div class="presents">High Ticket Consulting — Certifies That</div><div class="name">${name}</div><div class="title">HTC <span style="color: #c9a84c;">Foundation</span> Certificate</div><div class="divider"></div><div class="score">Quiz Score: <span>${totalScore} / 15</span></div><div class="body">Has successfully completed the HTC 5-Day Closer Training — demonstrating commitment, discipline, and the foundational knowledge required to operate as a high-ticket remote closer.</div><div class="footer"><div><div class="sig-name">Bruno Bajrami</div><div class="sig-role">Founder, High Ticket Consulting</div></div><div class="date">${today}</div></div></div></body></html>`;
+		const certHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>HTC Certificate</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400&family=DM+Mono:wght@400&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{background:#070707;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:40px;font-family:'DM Sans',sans-serif}.cert{background:#0d0a00;border:1px solid rgba(201,168,76,0.4);max-width:760px;width:100%;padding:72px 80px;position:relative;text-align:center}.cert::before,.cert::after{content:'';position:absolute;width:60px;height:60px;border-color:rgba(201,168,76,0.3);border-style:solid}.cert::before{top:16px;left:16px;border-width:1px 0 0 1px}.cert::after{bottom:16px;right:16px;border-width:0 1px 1px 0}.logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:#c9a84c;letter-spacing:4px;margin-bottom:40px}.presents{font-family:'DM Mono',monospace;font-size:10px;color:#555;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}.name{font-family:'Playfair Display',serif; font-weight: 500;font-size:40px;color:#fff;margin-bottom:4px}.title{font-family:'Playfair Display',serif;font-size:32px;font-weight:500;color:#f4efe5;line-height:1.05;margin-bottom:8px}.title em{color:#c9a84c}.divider{width:60px;height:1px;background:rgba(201,168,76,0.4);margin:32px auto}.score{font-family:'DM Mono',monospace;font-size:12px;color:#555;letter-spacing:3px;margin-bottom:24px}.score span{color:#c9a84c}.body{font-size:15px;color:#9a9080;line-height:1.7;max-width:480px;margin:0 auto 48px;font-weight:300}.footer{display:flex;justify-content:space-between;align-items:flex-end;padding-top:40px;border-top:1px solid #1c1c1c}.sig-name{font-family:'Playfair Display',serif;font-size:20px;color:#f4efe5}.sig-role{font-family:'DM Mono',monospace;font-size:10px;color:#555;letter-spacing:3px;text-transform:uppercase;margin-top:4px}.date{font-family:'DM Mono',monospace;font-size:10px;color:#555;letter-spacing:2px}</style></head><body><div class="cert"><div class="logo">HTC</div><div class="presents">High Ticket Consulting — Certifies That</div><div class="name">${name}</div><div class="title">HTC <span style="color: #c9a84c;">Foundation</span> Certificate</div><div class="divider"></div><div class="score">Quiz Score: <span>${totalScore} / 9</span></div><div class="body">Has successfully completed the HTC 3-Day Closer Training — demonstrating commitment, discipline, and the foundational knowledge required to operate as a high-ticket remote closer.</div><div class="footer"><div><div class="sig-name">Bruno Bajrami</div><div class="sig-role">Founder, High Ticket Consulting</div></div><div class="date">${today}</div></div></div></body></html>`;
 		const blob = new Blob([certHTML], { type: "text/html" });
 		const url = URL.createObjectURL(blob);
 		const win = window.open(url, "_blank");
@@ -205,20 +209,20 @@ function Portal() {
 	const d = DAYS[currentDay];
 	const isLocked = currentDay >= unlockedDays;
 	const isDone = currentDay < completedDays;
-	const certActive = completedDays >= 5;
+	const certActive = completedDays >= 3;
 	const submitted = quizSubmitted[currentDay];
 	const passed = quizPassed[currentDay];
 	const answers = quizAnswers[currentDay] || {};
 	const allAnswered = Object.keys(answers).length === 3;
 
 	const score = totalScore;
-	const qualifiesForCall = score >= 12;
-	const qualifiesForAcademy = score >= 10 && score < 12;
-	const scoreColor = score >= 12 ? C.gold : score >= 10 ? C.gold : "#e08888";
+	const qualifiesForCall = score >= 7;
+	const qualifiesForAcademy = score >= 6 && score < 7;
+	const scoreColor = score >= 7 ? C.gold : score >= 6 ? C.gold : "#e08888";
 	const scoreLabel =
-		score >= 12
+		score >= 7
 			? "Strategy Call Eligible"
-			: score >= 10
+			: score >= 6
 				? "Academy Eligible"
 				: "Retake Recommended";
 
@@ -234,7 +238,7 @@ function Portal() {
 					completedDays={Math.max(completedDays, currentDay + 1)}
 					onContinue={() => {
 						setShowDayComplete(false);
-						if (currentDay < 4) goToDay(currentDay + 1);
+						if (currentDay < 2) goToDay(currentDay + 1);
 					}}
 				/>
 			)}
@@ -302,13 +306,13 @@ function Portal() {
 								</div>
 								<div className="text-base text-[#9a9080] leading-[1.75] max-w-[520px] font-light">
 									Most people who found this training never finished Day 1. You
-									just finished all 5 — and proved you actually paid attention.
+									just finished all 3 — and proved you actually paid attention.
 									That tells me everything I need to know about you, {name}.
 								</div>
 								<div className="flex gap-x-20 gap-y-4 md:gap-10 mt-4 md:mt-10 pt-4 md:pt-10 border-t border-[rgba(66,58,46,0.5)] flex-wrap justify-center md:justify-start">
 									<div>
 										<div className="font-serif text-2xl font-bold text-[#c9a84c] leading-none">
-											5
+											3
 										</div>
 										<div className="text-[10px] text-[#555] tracking-[3px] uppercase mt-[6px]">
 											Days Completed
@@ -319,7 +323,7 @@ function Portal() {
 											className="font-serif text-2xl font-bold leading-none"
 											style={{ color: scoreColor }}
 										>
-											{score}/15
+											{score}/9
 										</div>
 										<div className="text-[10px] text-[#555] tracking-[3px] uppercase mt-[6px]">
 											Quiz Score
@@ -361,13 +365,13 @@ function Portal() {
 											}}
 										>
 											<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] self-start bg-[#c9a84c] text-[#070707] mx-auto md:mx-0">
-												You Qualified — {score}/15
+												You Qualified — {score}/9
 											</div>
 											<div className="font-serif text-[24px] font-bold text-[#f4efe5] leading-[1.2]">
 												Book a Free Strategy Call
 											</div>
 											<div className="text-sm text-[#9a9080] leading-[1.65] font-light flex-1">
-												You scored {score}/15. That puts you in the top tier. I
+												You scored {score}/9. That puts you in the top tier. I
 												take 5 strategy calls a week — I&apos;ll personally map
 												out your next 90 days, your offer, your income targets.
 												This is reserved for people who prove they&apos;re
@@ -439,13 +443,13 @@ function Portal() {
 											}}
 										>
 											<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] md:self-start bg-[#c9a84c] text-[#070707]">
-												Recommended — {score}/15
+												Recommended — {score}/9
 											</div>
 											<div className="font-serif text-[24px] font-bold text-[#f4efe5] leading-[1.2]">
 												Join HTC Academy
 											</div>
 											<div className="text-sm text-[#9a9080] leading-[1.65] font-light flex-1">
-												You scored {score}/15 — solid foundations. HTC Academy
+												You scored {score}/9 — solid foundations. HTC Academy
 												is the right next step. Full curriculum, live Zoom
 												sessions every 2 weeks where I personally coach you.
 											</div>
@@ -483,7 +487,7 @@ function Portal() {
 												Get there through Academy and you&apos;ll qualify.
 											</div>
 											<div className="text-xs text-[#555] tracking-[2px]">
-												Score 12/15 to unlock
+												Score 7/9 to unlock
 											</div>
 											<div className="pt-[16px] border-t border-[rgba(66,58,46,0.5)]">
 												<div className="text-[13px] font-medium text-[#555]">
@@ -498,13 +502,13 @@ function Portal() {
 										style={{ padding: "32px 28px" }}
 									>
 										<div className="text-[10px] tracking-[3px] uppercase py-[4px] px-[10px] rounded-[2px] self-start bg-[rgba(224,85,85,0.1)] border border-[rgba(224,85,85,0.3)] text-[#e08888]">
-											Score: {score}/15
+											Score: {score}/9
 										</div>
 										<div className="font-serif text-[24px] font-bold text-[#f4efe5] leading-[1.2]">
 											You&apos;re Not Ready Yet — And That&apos;s Okay.
 										</div>
 										<div className="text-sm text-[#9a9080] leading-[1.65] font-light">
-											You scored {score}/15. The material is in the videos — go
+											You scored {score}/9. The material is in the videos — go
 											back, rewatch, and retake. The closers who succeed are the
 											ones who take this seriously enough to go again.
 										</div>
@@ -539,10 +543,10 @@ function Portal() {
 										HTC Foundation Certificate
 									</div>
 									<div className="text-xs text-[#c9a84c] tracking-[2px] uppercase mb-[8px]">
-										Awarded to: {name} — Score: {score}/15
+										Awarded to: {name} — Score: {score}/9
 									</div>
 									<div className="text-[13px] text-[#555] leading-[1.5]">
-										Certified completion of the HTC 5-Day Closer Training. Share
+										Certified completion of the HTC 3-Day Closer Training. Share
 										it. You&apos;ve earned it.
 									</div>
 								</div>
@@ -747,7 +751,7 @@ function Portal() {
 										<div className="text-xs text-[#555] tracking-[2px]">
 											2/3 correct to unlock{" "}
 											<span className="text-[#c9a84c]">
-												Day {currentDay < 4 ? currentDay + 2 : "results"}
+												Day {currentDay < 2 ? currentDay + 2 : "results"}
 											</span>
 										</div>
 									)}
@@ -758,7 +762,7 @@ function Portal() {
 										<div className="text-xs text-[#555] tracking-[2px] p-[20px] text-center">
 											Quiz complete — day unlocked.
 										</div>
-										{currentDay === 4 && (
+										{currentDay === 2 && (
 											<button
 												className="htc-unlock btn-cta-gold inline-flex items-center gap-[10px] text-sm font-semibold rounded-[3px] cursor-pointer tracking-[0.3px] mt-[8px] transition-all duration-200 md:w-auto w-full justify-center md:justify-start"
 												style={{
@@ -909,9 +913,9 @@ function Portal() {
 													</div>
 													<div className="text-[13px] text-[#555] leading-[1.5] tracking-[0.5px]">
 														{passed
-															? currentDay < 4
+															? currentDay < 2
 																? `Day ${currentDay + 2} is now unlocked.`
-																: "All 5 days complete."
+																: "All 3 days complete."
 															: "You need 2/3 to pass. Rewatch the video and try again."}
 													</div>
 												</div>
@@ -925,12 +929,12 @@ function Portal() {
 																padding: "12px 24px",
 															}}
 															onClick={() =>
-																currentDay < 4
+																currentDay < 2
 																	? goToDay(currentDay + 1)
 																	: triggerCompletion()
 															}
 														>
-															{currentDay < 4
+															{currentDay < 2
 																? `Go to Day ${currentDay + 2}`
 																: "See Your Results"}
 															<svg

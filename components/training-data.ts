@@ -81,6 +81,7 @@ export const DAYS: DayData[] = [
 			{ q: "Why is mindset more important than skill on a sales call?", opts: ["Because scripts don't matter", "Because skill can be faked but mindset cannot", "Because prospects can sense your internal state and react to it", "Because mindset determines how many calls you book"], correct: 2, feedback: "Prospects feel your energy before they process your words. A calm, certain closer wins over a skilled but nervous one every time." },
 		],
 	},
+	/* Day 4 — temporarily disabled
 	{
 		title: "Your First Live\nClosing Framework",
 		shortTitle: "The Framework",
@@ -99,6 +100,8 @@ export const DAYS: DayData[] = [
 			{ q: "When a prospect says the price is too high, a closer should:", opts: ["Immediately lower the price", "Defend the price by listing features", "Reframe value by reconnecting them to the cost of NOT solving their problem", "Agree and offer a payment plan first"], correct: 2, feedback: "Price is never the real issue — perceived value is. Reconnect them to what staying stuck costs them, and the price becomes irrelevant." },
 		],
 	},
+	*/
+	/* Day 5 — temporarily disabled
 	{
 		title: "What's Holding You\nBack — And What's Next",
 		shortTitle: "Your Next Move",
@@ -117,4 +120,5 @@ export const DAYS: DayData[] = [
 			{ q: "After completing this training, what separates people who succeed from those who don't?", opts: ["Having a better script", "Taking immediate action on what they've learned", "Waiting until conditions are perfect", "Finding the cheapest program to join"], correct: 1, feedback: "Information without action is worthless. You now know more than 95% of people who call themselves closers. The only question is — what are you going to do with it?" },
 		],
 	},
+	*/
 ];
